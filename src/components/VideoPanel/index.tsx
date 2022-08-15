@@ -15,24 +15,20 @@ import Avatar from '@mui/material/Avatar';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
+// types
+import { videoPanelProps } from './types';
+
 // utils
 import { numberWithCommas } from '@/utils/texts';
 
 function VideoPanel({
-  videoId,
-  thumbnail,
+  time,
   title,
   views,
   likes,
-  time,
-}: {
-  videoId: string;
-  thumbnail: string;
-  title: string;
-  views: string;
-  likes: string;
-  time: string;
-}) {
+  videoId,
+  thumbnail,
+}: videoPanelProps) {
   return (
     <Link to={`/watch?id=${videoId}`}>
       <Card

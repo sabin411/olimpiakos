@@ -5,6 +5,7 @@ import VideoPanel from '@/components/VideoPanel';
 
 // images
 import thumbnail from '@/assets/images/thumbnail.webp';
+import Title from '@/components/Title';
 
 export default function VideoPanelPreview() {
   return (
@@ -18,6 +19,9 @@ export default function VideoPanelPreview() {
         title='Brazil vs Netherland - A dramatic Ending left everybody in shock.'
         thumbnail={thumbnail}
       />
+
+      <h1 className='text-h3'>title</h1>
+      <Title title='Football' />
     </div>
   );
 }
