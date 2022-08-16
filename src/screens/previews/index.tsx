@@ -17,7 +17,7 @@ export default function Preview() {
           setOpenMenu(true);
         }}
       />
-      {/* <Button onClick={() => setOpen(true)}>Open</Button> */}
+      <Button onClick={() => setOpenMenu(true)}>Open</Button>
       <Sidebar openMenu={openMenu} setOpenMenu={setOpenMenu} />
       {/* side nav rendered section start */}
       <Outlet />

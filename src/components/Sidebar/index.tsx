@@ -22,7 +22,6 @@ const Sidebar = ({
   openMenu: boolean;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  // const [open, setOpen] = useState(false);
   // function responsible for toggling the sidebar open/closed
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
