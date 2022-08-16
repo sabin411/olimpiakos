@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 // 1. packages
 import Box from '@mui/material/Box';
@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 // consts
 import { sidebar as sidebarConst } from '@/constants';
 
-function Sidebar() {
+const useSidebar = () => {
   const [open, setOpen] = useState(false);
   // function responsible for toggling the sidebar open/closed
   const toggleDrawer =
@@ -89,14 +89,24 @@ function Sidebar() {
       </List>
     </Box>
   );
-  return (
-    <div>
-      <Button onClick={() => setOpen(true)}>Open</Button>
-      <Drawer anchor={'left'} open={open} onClose={toggleDrawer(false)}>
-        {list()}
-      </Drawer>
-    </div>
-  );
-}
 
-export default Sidebar;
+  const Sidebar = () => {
+    return (
+      <div>
+        <Button onClick={() => setOpen(true)}>Open</Button>
+        <Drawer anchor={'left'} open={open} onClose={toggleDrawer(false)}>
+          {list()}
+        </Drawer>
+      </div>
+    );
+  };
+
+  return {
+    open,
+    setOpen,
+    toggleDrawer,
+    Sidebar,
+  };
+};
+
+export default useSidebar;
