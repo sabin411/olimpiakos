@@ -64,7 +64,7 @@ const footerConst = [
 function Footer() {
   return (
     <footer className='bg-primary-900'>
-      <div className='container-custom py-6 flex flex-col gap-y-7 md:flex-row'>
+      <div className='container-custom py-6 flex flex-col gap-y-7 lg:flex-row'>
         <div className='flex flex-col max-w-[580px]'>
           <Link to='/' className='w-[205px]'>
             <Logo />
@@ -86,7 +86,7 @@ function Footer() {
             Explore
           </Button>
         </div>
-        <div className='flex gap-x-11 flex-col md:flex-row'>
+        <div className='flex gap-x-11 flex-col md:flex-row '>
           {footerConst.map((footer, i) => {
             return (
               <div key={i + footer.title} className='w-full md:w-[183px]'>
