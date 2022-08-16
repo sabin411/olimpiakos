@@ -170,17 +170,12 @@ function AppBarComp({ onMenuClick }: { onMenuClick: () => void }) {
     </Menu>
   );
   return (
-    // <header className='bg-primary-900'>
-    <Box
-      sx={{
-        flexGrow: 1,
-        backgroundColor: 'var(--primary-900)',
-      }}
-    >
+    <>
       <AppBar
-        position='static'
+        position='sticky'
         sx={{
-          backgroundColor: 'inherit',
+          flexGrow: 1,
+          backgroundColor: 'var(--primary-900)',
         }}
       >
         <Toolbar className='container-custom'>
@@ -255,8 +250,7 @@ function AppBarComp({ onMenuClick }: { onMenuClick: () => void }) {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </Box>
-    // </header>
+    </>
   );
 }
 

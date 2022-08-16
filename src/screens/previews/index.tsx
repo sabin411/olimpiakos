@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 // components
+import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import AppBarComp from '@/components/AppBar';
 
@@ -22,6 +23,7 @@ export default function Preview() {
       {/* side nav rendered section start */}
       <Outlet />
       {/* side nav rendered section end */}
+      <Footer />
     </div>
   );
 }
