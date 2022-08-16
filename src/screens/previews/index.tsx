@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // components
-import useSideBar from '@/components/Sidebar';
+import Sidebar from '@/components/Sidebar';
 import AppBarComp from '@/components/AppBar';
 
 // package
@@ -10,16 +10,15 @@ import Button from '@mui/material/Button';
 
 export default function Preview() {
   const [openMenu, setOpenMenu] = useState(false);
-  const { toggleDrawer, Sidebar, setOpen } = useSideBar();
   return (
     <div>
       <AppBarComp
         onMenuClick={() => {
-          setOpen(true);
+          setOpenMenu(true);
         }}
       />
       {/* <Button onClick={() => setOpen(true)}>Open</Button> */}
-      <Sidebar />
+      <Sidebar openMenu={openMenu} setOpenMenu={setOpenMenu} />
       {/* side nav rendered section start */}
       <Outlet />
       {/* side nav rendered section end */}

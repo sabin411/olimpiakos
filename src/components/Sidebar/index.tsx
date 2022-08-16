@@ -15,8 +15,14 @@ import { Link } from 'react-router-dom';
 // consts
 import { sidebar as sidebarConst } from '@/constants';
 
-const useSidebar = () => {
-  const [open, setOpen] = useState(false);
+const Sidebar = ({
+  openMenu: open,
+  setOpenMenu: setOpen,
+}: {
+  openMenu: boolean;
+  setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  // const [open, setOpen] = useState(false);
   // function responsible for toggling the sidebar open/closed
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -90,23 +96,13 @@ const useSidebar = () => {
     </Box>
   );
 
-  const Sidebar = () => {
-    return (
-      <div>
-        <Button onClick={() => setOpen(true)}>Open</Button>
-        <Drawer anchor={'left'} open={open} onClose={toggleDrawer(false)}>
-          {list()}
-        </Drawer>
-      </div>
-    );
-  };
-
-  return {
-    open,
-    setOpen,
-    toggleDrawer,
-    Sidebar,
-  };
+  return (
+    <div>
+      <Drawer anchor={'left'} open={open} onClose={toggleDrawer(false)}>
+        {list()}
+      </Drawer>
+    </div>
+  );
 };
 
-export default useSidebar;
+export default Sidebar;
