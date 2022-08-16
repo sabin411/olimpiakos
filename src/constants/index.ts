@@ -25,5 +25,6 @@ export const sidebar = {
     { title: 'Latest', icon: FiberNewIcon, linkTo: '/latest' },
     { title: 'Liked Videos', icon: ThumbUpOutlinedIcon, linkTo: '/liked' },
     { title: 'Watched', icon: LiveTvOutlinedIcon, linkTo: '/history' },
+    { title: 'Video Panel', icon: LiveTvOutlinedIcon, linkTo: 'video-panel' },
   ],
 };
