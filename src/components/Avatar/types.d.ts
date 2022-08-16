@@ -4,5 +4,6 @@ export type AvatarWithNameProps = {
   likes?: string;
   avatarImage?: string;
   avatarStyle?: string;
+  showViewsAndLikes?: boolean;
   avatarSize: 'sml' | 'lrg' | number;
 };

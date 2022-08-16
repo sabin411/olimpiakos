@@ -9,6 +9,7 @@ import { AvatarWithNameProps } from './types';
 // icons
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const AvatarWithName: React.FC<AvatarWithNameProps> = ({
   text,
@@ -17,6 +18,7 @@ const AvatarWithName: React.FC<AvatarWithNameProps> = ({
   avatarSize,
   avatarImage,
   avatarStyle,
+  showViewsAndLikes,
 }) => {
   return (
     <div className='flex w-full'>
@@ -43,21 +45,29 @@ const AvatarWithName: React.FC<AvatarWithNameProps> = ({
           <Avatar alt='Remy Sharp' src={avatarImage} sizes='44px' />
         ) : (
           <div className='h-full w-full flex items-center justify-center'>
-            <i className='fa fa-user' />
+            <AccountCircleIcon
+              sx={{
+                width: '100%',
+                height: '100%',
+              }}
+            />
           </div>
         )}
       </div>
-      <div>
-        <h4>{text}</h4>
-        <div className='flex'>
-          <p className={`text-p text-neutral-900`}>
-            <VisibilityIcon /> {views}
-          </p>
-          <p className={`ml-3 text-s text-neutral-700`}>
-            <ThumbUpIcon />
-            {likes}
-          </p>
-        </div>
+
+      <div className={`${!showViewsAndLikes && 'flex items-center'}`}>
+        <h4 className='ml-3 text-neutral-500'>{text}</h4>
+        {showViewsAndLikes && (
+          <div className='flex'>
+            <p className={`text-p text-neutral-900`}>
+              <VisibilityIcon /> {views}
+            </p>
+            <p className={`ml-3 text-s text-neutral-700`}>
+              <ThumbUpIcon />
+              {likes}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
