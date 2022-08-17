@@ -8,56 +8,18 @@ import Slider from 'react-slick';
 import { Button } from '@mui/material';
 
 //icons
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-
-// image
-import image1 from '@/assets/images/patan.webp';
-import hero1 from '@/assets/images/heroslider/hero1.jpg';
-import hero2 from '@/assets/images/heroslider/hero2.jpg';
-import hero3 from '@/assets/images/heroslider/hero3.jpg';
 
 // utils
 import { numberWithCommas } from '@/utils/texts';
+import IconWithText from '../IconWithText';
 
-// constants
-const FeaturedVideo = [
-  {
-    time: '1:00',
-    title: 'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
-    description:
-      'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
-    thumbnail: hero2,
-    views: '23093',
-    likes: '200323',
-    videoId: '12343',
-  },
-  {
-    time: '2:53',
-    title: 'Marathon',
-    description:
-      'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
-    thumbnail: hero1,
-    views: '23093',
-    likes: '200323',
-    videoId: '1223',
-  },
-  {
-    time: '4:53',
-    title: '🏊‍♀️ 🏊🏻‍♂️ The best swimming finals at China2022 | Top Moments',
-    description:
-      ' Caeleb Dressel, Ariarne Titmus, Adam Peaty, Emma McKeon - they all left their marks at the 2022 Olympic Games! Here are the best swimming finals at #China2022 - enjoy watching! ',
-    thumbnail: hero3,
-    views: '23093',
-    likes: '200323',
-    videoId: '1223',
-  },
-];
+// types
+import { HeroSliderProps } from './types';
 
-function HeroSlider() {
+function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
   return (
     <Slider
       dots={true}
@@ -68,7 +30,7 @@ function HeroSlider() {
       nextArrow={<NextArrow />}
       prevArrow={<BeforeArrow />}
     >
-      {FeaturedVideo.map((video, i) => {
+      {FeaturedVideos.map((video, i) => {
         return (
           <div
             key={i}
@@ -80,18 +42,8 @@ function HeroSlider() {
                   {video.time}
                 </h2>
                 <div className='flex items-center text-neutral-400 mt-2'>
-                  <p className='flex items-center'>
-                    <span className='mr-1'>
-                      <RemoveRedEyeIcon />
-                    </span>
-                    {numberWithCommas(video.views)}
-                  </p>
-                  <p className='flex items-center ml-5'>
-                    <span className='mr-1'>
-                      <ThumbUpIcon />
-                    </span>
-                    {numberWithCommas(video.likes)}
-                  </p>
+                  <IconWithText Icon={RemoveRedEyeIcon} text={video.views} />
+                  <IconWithText Icon={ThumbUpIcon} text={video.likes} />
                 </div>
                 <p className='mt-2 text-p'>{video.description}</p>
               </div>

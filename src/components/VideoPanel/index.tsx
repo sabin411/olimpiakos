@@ -1,15 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 // component
-import AvatarWithName from '../Avatar';
+import IconWithText from '@/components/IconWithText';
 
 // packages
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
+import CardContent from '@mui/material/CardContent';
 
 // icons
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -17,9 +15,6 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 // types
 import { videoPanelProps } from './types';
-
-// utils
-import { numberWithCommas } from '@/utils/texts';
 
 function VideoPanel({
   time,
@@ -52,18 +47,8 @@ function VideoPanel({
           <div className='ml-2'>
             <h5 className='text-s font-semi-bold text-neutral-100'>{title}</h5>
             <div className='flex items-center text-neutral-400 mt-2'>
-              <p className='flex items-center'>
-                <span className='mr-1'>
-                  <RemoveRedEyeIcon />
-                </span>
-                {numberWithCommas(views)}
-              </p>
-              <p className='flex items-center ml-5'>
-                <span className='mr-1'>
-                  <ThumbUpIcon />
-                </span>
-                {numberWithCommas(likes)}
-              </p>
+              <IconWithText Icon={RemoveRedEyeIcon} text={views} />
+              <IconWithText Icon={ThumbUpIcon} text={likes} />
             </div>
           </div>
         </CardContent>
