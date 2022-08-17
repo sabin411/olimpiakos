@@ -3,3 +3,10 @@
     @apply container mx-auto px-4;
   }
 }
+// slick navigation dots
+.slick-dots li.slick-active button:before {
+  color: var(--primary-100);
+}
+.slick-dots li button:before {
+  color: var(--neutral-100);
+}
