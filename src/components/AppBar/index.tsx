@@ -178,7 +178,7 @@ function AppBarComp({ onMenuClick }: { onMenuClick: () => void }) {
           backgroundColor: 'var(--primary-900)',
         }}
       >
-        <Toolbar className='container-custom'>
+        <Toolbar className='!container-custom'>
           <IconButton
             size='large'
             edge='start'
