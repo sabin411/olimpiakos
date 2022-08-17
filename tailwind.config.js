@@ -5,6 +5,7 @@ module.exports = {
     // 1. Colors
     colors: {
       // 1.0. Primary Colors
+      'primary-1000': 'var(--primary-1000)',
       'primary-900': 'var(--primary-900)',
       'primary-800': 'var(--primary-800)',
       'primary-700': 'var(--primary-700)',

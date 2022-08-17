@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 export default function Preview() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
-    <div>
+    <div className='bg-primary-1000'>
       <AppBarComp
         onMenuClick={() => {
           setOpenMenu(true);
