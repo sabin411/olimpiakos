@@ -59,73 +59,75 @@ const FeaturedVideo = [
 
 function HeroSlider() {
   return (
-    <section>
-      <Slider
-        dots={true}
-        infinite
-        speed={500}
-        slidesToShow={1}
-        slidesToScroll={1}
-        nextArrow={<NextArrow />}
-        prevArrow={<BeforeArrow />}
-        className='container-custom mx-auto'
-      >
-        {FeaturedVideo.map((video, i) => {
-          return (
-            <div className=' w-full relative h-[592px] bg-secondary-700 text-neutral-400'>
-              <div className='absolute h-full w-full py-5 px-6 lg:py-16 lg:px-16 backdrop-brightness-75'>
-                <div className='lg:max-w-[50%]'>
-                  <h4 className='text-h2'>{video.time}</h4>
-                  <div className='flex items-center text-neutral-400 mt-2'>
-                    <p className='flex items-center'>
-                      <span className='mr-1'>
-                        <RemoveRedEyeIcon />
-                      </span>
-                      {numberWithCommas(video.views)}
-                    </p>
-                    <p className='flex items-center ml-5'>
-                      <span className='mr-1'>
-                        <ThumbUpIcon />
-                      </span>
-                      {numberWithCommas(video.likes)}
-                    </p>
-                  </div>
-                  <p className='mt-2 text-p'>{video.description}</p>
+    <Slider
+      dots={true}
+      infinite
+      speed={500}
+      slidesToShow={1}
+      slidesToScroll={1}
+      nextArrow={<NextArrow />}
+      prevArrow={<BeforeArrow />}
+    >
+      {FeaturedVideo.map((video, i) => {
+        return (
+          <div
+            key={i}
+            className=' w-full relative h-[592px] bg-secondary-700 text-neutral-400'
+          >
+            <div className='absolute h-full w-full py-5 px-6 lg:py-16 lg:px-16 backdrop-brightness-75'>
+              <div className='lg:max-w-[50%]'>
+                <h2 className='font-semi-bold text-neutral-300'>
+                  {video.time}
+                </h2>
+                <div className='flex items-center text-neutral-400 mt-2'>
+                  <p className='flex items-center'>
+                    <span className='mr-1'>
+                      <RemoveRedEyeIcon />
+                    </span>
+                    {numberWithCommas(video.views)}
+                  </p>
+                  <p className='flex items-center ml-5'>
+                    <span className='mr-1'>
+                      <ThumbUpIcon />
+                    </span>
+                    {numberWithCommas(video.likes)}
+                  </p>
                 </div>
-                <div className='mt-10 lg:mt-24'>
-                  <h3 className='text-h3 font-semi-bold md:max-w-[70%]'>
-                    {video.title}
-                  </h3>
-                  <Button
-                    sx={{
-                      backgroundColor: 'var(--secondary-800)',
-                      paddingInline: '1.5rem',
-                      marginTop: '24px',
-                      ':hover': {
-                        backgroundColor: 'var(--secondary-900)',
-                      },
-                      '.MuiTouchRipple-child': {
-                        backgroundColor: 'var(--secondary-200)',
-                      },
-                    }}
-                    startIcon={
-                      <PlayCircleOutlineIcon className='text-neutral-200' />
-                    }
-                  >
-                    <span className='text-neutral-200'>Watch Now</span>
-                  </Button>
-                </div>
+                <p className='mt-2 text-p'>{video.description}</p>
               </div>
-              <img
-                src={video.thumbnail}
-                className='h-full w-full object-cover'
-                alt=''
-              />
+              <div className='mt-10 lg:mt-24'>
+                <h3 className='font-semi-bold text-neutral-300 md:max-w-[70%]'>
+                  {video.title}
+                </h3>
+                <Button
+                  sx={{
+                    backgroundColor: 'var(--secondary-800)',
+                    paddingInline: '1.5rem',
+                    marginTop: '24px',
+                    ':hover': {
+                      backgroundColor: 'var(--secondary-900)',
+                    },
+                    '.MuiTouchRipple-child': {
+                      backgroundColor: 'var(--secondary-200)',
+                    },
+                  }}
+                  startIcon={
+                    <PlayCircleOutlineIcon className='text-neutral-200' />
+                  }
+                >
+                  <span className='text-neutral-200'>Watch Now</span>
+                </Button>
+              </div>
             </div>
-          );
-        })}
-      </Slider>
-    </section>
+            <img
+              src={video.thumbnail}
+              className='h-full w-full object-cover'
+              alt=''
+            />
+          </div>
+        );
+      })}
+    </Slider>
   );
 }
 

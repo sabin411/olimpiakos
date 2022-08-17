@@ -21,6 +21,7 @@ export const NextArrow = (props: ArrowProps) => {
       border-neutral-300 w-9 h-9 
       justify-center rounded-full 
       -translate-y-2/4 text-neutral-700 
+      translate-x-1/2
 
       right-0
     '
@@ -42,6 +43,8 @@ export const BeforeArrow = (props: ArrowProps) => {
       -translate-y-2/4 
       shadow-main top-2/4 
       rounded-full  border-2 border-neutral-300
+      -translate-x-1/2
+
 
       left-0'
       onClick={onClick}
