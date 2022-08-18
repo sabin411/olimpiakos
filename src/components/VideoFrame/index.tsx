@@ -2,21 +2,20 @@ import React from 'react';
 import IconWithText from '../IconWithText';
 
 // packages
-import Tooltip from '@mui/material/Tooltip';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 // icons
+import FlagIcon from '@mui/icons-material/Flag';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import IconButton from '@mui/material/IconButton/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
-
 // types
 import { VideoFrameProps } from './types';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton/IconButton';
-import FlagIcon from '@mui/icons-material/Flag';
 
 function VideoFrame({
   embedId,
@@ -26,6 +25,9 @@ function VideoFrame({
   videoDislikes,
   videoViews,
   isLiked,
+  isDisliked,
+  handleLikes,
+  handleDislikes,
   videoComments,
   reportHandler,
 }: VideoFrameProps) {
@@ -100,15 +102,19 @@ function VideoFrame({
               }`}
               handleUserInteraction={() => {
                 console.log('liked the video');
+                handleLikes(!isLiked);
               }}
             />
             <IconWithText
-              Icon={ThumbDownOffAltIcon}
+              Icon={isDisliked ? ThumbDownIcon : ThumbDownOffAltIcon}
               text={videoDislikes}
               containerStyle='text-neutral-500'
               enableInteraction
-              className='text-neutral-500'
+              className={`${
+                isDisliked ? 'text-secondary-800' : 'text-neutral-500'
+              }`}
               handleUserInteraction={() => {
+                handleDislikes(!isDisliked);
                 console.log('disliked the video');
               }}
             />

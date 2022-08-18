@@ -15,6 +15,21 @@ import Title from '@/components/Title';
 import { dummyFeaturedVideo, dummyComments, categoriesData } from '@/constants';
 
 export default function VideoPanelPreview() {
+  const [isLiked, setIsLiked] = React.useState(false);
+  const [isDisliked, setIsDisliked] = React.useState(false);
+  const handleLikes = (likeStatus: boolean) => {
+    setIsLiked(likeStatus);
+    if (likeStatus) {
+      setIsDisliked(false);
+    }
+  };
+  const handleDislikes = (dislikeStatus: boolean) => {
+    setIsDisliked(dislikeStatus);
+    if (dislikeStatus) {
+      setIsLiked(false);
+    }
+  };
+
   return (
     <section className='container-custom mx-auto'>
       <div className='my-6'>
@@ -47,16 +62,19 @@ export default function VideoPanelPreview() {
       <div className='my-4'>
         <Title title='Video frame' containerStyle='mb-4 w-1/4' />
         <VideoFrame
-          isLiked={true}
+          isLiked={isLiked}
           videoDescription=' The Football final of the Olympic Games 2016 was between the host nation Brazil and the reigning World Cup Champion Germany. With top players like Neymar, Gabriel Jesus, Marquinhos, Niklas Süle and the Bender Twins on the pitch, it promised to be an exciting fight for the gold medal - and indeed, it was a more than thrilling showdown at the Maracanã!'
           videoTitle="Brazil vs Germany - FULL Match - Men's Football Final Rio 2016 | Throwback Thursday"
           videoLikes='76322'
           videoViews='8900818'
           videoDislikes='7235'
           embedId='kn5uevla61U'
+          isDisliked={isDisliked}
+          handleDislikes={handleDislikes}
           reportHandler={() => {
             console.log('kn5uevla61U, reported the video');
           }}
+          handleLikes={handleLikes}
         />
       </div>
     </section>
