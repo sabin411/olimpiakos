@@ -23,16 +23,17 @@ function VideoPanel({
   likes,
   videoId,
   thumbnail,
+  containerStyle,
 }: videoPanelProps) {
   return (
-    <Link to={`/watch?id=${videoId}`}>
+    <Link to={`/watch?id=${videoId}`} className={`${containerStyle}`}>
       <Card
         sx={{
           backgroundColor: 'var(--primary-800)',
           cursor: 'pointer',
         }}
       >
-        <div className='h-[212px] relative overflow-hidden'>
+        <div className='aspect-video relative overflow-hidden'>
           <img
             src={thumbnail}
             className='w-full h-full object-cover peer hover:scale-105 transition-all duration-200'
@@ -45,10 +46,22 @@ function VideoPanel({
         <CardContent className='flex'>
           <Avatar src='https://yt3.ggpht.com/ytc/AMLnZu91Flh7ObCO6aMLS5lzF4Z0xBYecb6hXLb26azOGyc=s176-c-k-c0x00ffffff-no-rj' />
           <div className='ml-2'>
-            <h5 className='text-s font-semi-bold text-neutral-100'>{title}</h5>
+            <h5 className='text-s font-semi-bold text-neutral-100 line-clamp-2'>
+              {title}
+            </h5>
             <div className='flex items-center text-neutral-400 mt-2'>
-              <IconWithText Icon={RemoveRedEyeIcon} text={views} />
-              <IconWithText Icon={ThumbUpIcon} text={likes} />
+              <IconWithText
+                Icon={RemoveRedEyeIcon}
+                text={views}
+                containerStyle='!m-0 text-s'
+                className='!text-p'
+              />
+              <IconWithText
+                Icon={ThumbUpIcon}
+                text={likes}
+                containerStyle='text-s ml-4'
+                className='!text-p'
+              />
             </div>
           </div>
         </CardContent>

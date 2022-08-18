@@ -57,7 +57,7 @@ export default function VideoPanelPreview() {
       </div>
       <div className='my-4'>
         <Title title='Selection Tab' containerStyle='mb-4 w-1/4' />
-        <SelectionTab items={categoriesData} />
+        <SelectionTab items={categoriesData.items} />
       </div>
       <div className='my-4'>
         <Title title='Video frame' containerStyle='mb-4 w-1/4' />

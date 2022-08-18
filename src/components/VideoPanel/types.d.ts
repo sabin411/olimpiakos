@@ -5,4 +5,5 @@ export type videoPanelProps = {
   views: string;
   likes: string;
   time: string;
+  containerStyle?: string;
 };
