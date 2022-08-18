@@ -21,7 +21,7 @@ export default function ScrollableTabsButtonForce({
   };
 
   return (
-    <Box sx={{ bgcolor: 'var(--primary-1000)' }}>
+    <Box sx={{ bgcolor: 'var(--primary-1000)', marginLeft: '-40px' }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -54,7 +54,10 @@ export default function ScrollableTabsButtonForce({
                 borderRadius: '25px',
                 padding: '12px 40px',
                 '&:hover': {
-                  bgcolor: 'var(--primary-900)',
+                  color: 'var(--neutral-100)',
+                  fontWeight: 'var(--semi-bold)',
+                  bgcolor: 'var(--primary-700)',
+                  border: '2px solid var(--primary-700)',
                 },
                 '&.Mui-selected': {
                   color: 'var(--neutral-100)',
