@@ -4,7 +4,7 @@ import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 // types
 import { SelectionTabProps } from './types';
@@ -42,32 +42,37 @@ export default function ScrollableTabsButtonForce({
       >
         {items.map((category, i) => {
           return (
-            <Tab
-              label={category.name}
-              component={Link}
-              to={category.linkTo}
-              sx={{
-                marginInline: '4px',
-                bgcolor: 'transparent',
-                border: '2px solid var(--primary-900)',
-                color: 'var(--neutral-700)',
-                borderRadius: '25px',
-                padding: '12px 40px',
-                '&:hover': {
-                  color: 'var(--neutral-100)',
-                  fontWeight: 'var(--semi-bold)',
-                  bgcolor: 'var(--primary-700)',
-                  border: '2px solid var(--primary-700)',
-                },
-                '&.Mui-selected': {
-                  color: 'var(--neutral-100)',
-                  fontWeight: 'var(--semi-bold)',
-                  bgcolor: 'var(--primary-600)',
-                  border: '2px solid var(--primary-600)',
-                },
+            <NavLink to={category.linkTo} key={i + category.linkTo}>
+              {({ isActive }) => {
+                return (
+                  <Tab
+                    label={category.name}
+                    className={isActive ? 'Mui-selected' : ''}
+                    sx={{
+                      marginInline: '4px',
+                      bgcolor: 'transparent',
+                      border: '2px solid var(--primary-900)',
+                      color: 'var(--neutral-700)',
+                      borderRadius: '25px',
+                      padding: '12px 40px',
+                      '&:hover': {
+                        color: 'var(--neutral-100)',
+                        // fontWeight: 'var(--semi-bold)',
+                        bgcolor: 'var(--primary-700)',
+                        border: '2px solid var(--primary-700)',
+                      },
+                      '&.Mui-selected': {
+                        color: 'var(--neutral-100)',
+                        // fontWeight: 'var(--semi-bold)',
+                        bgcolor: 'var(--primary-600)',
+                        border: '2px solid var(--primary-600)',
+                      },
+                    }}
+                    color='var(--neutral-200)'
+                  />
+                );
               }}
-              color='var(--neutral-200)'
-            />
+            </NavLink>
           );
         })}
       </Tabs>

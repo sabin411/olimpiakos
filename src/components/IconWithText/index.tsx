@@ -16,7 +16,7 @@ export default function IconWithText({
   handleUserInteraction,
 }: IconWithTextProps) {
   return (
-    <p className={`flex items-center ml-5 ${containerStyle}`}>
+    <p className={`flex items-center ${containerStyle}`}>
       {enableInteraction ? (
         <IconButton onClick={handleUserInteraction}>
           <Icon className={`${className}`} />

@@ -86,7 +86,7 @@ function Footer() {
             Explore
           </Button>
         </div>
-        <div className='flex gap-x-11 flex-col md:flex-row '>
+        <div className='flex gap-11 flex-col md:flex-row '>
           {footerConst.map((footer, i) => {
             return (
               <div key={i + footer.title} className='w-full md:w-[183px]'>

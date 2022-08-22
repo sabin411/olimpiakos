@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 // package
-import { Avatar } from '@mui/material';
+import { Avatar, Tooltip } from '@mui/material';
 
 //icons
 import SendIcon from '@mui/icons-material/Send';
@@ -21,7 +21,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 }) => {
   return (
     <form
-      className={`flex h-12 rounded-lg 
+      className={`flex h-12 min-h-[48px] rounded-lg 
       items-center border 
       border-primary-800 
       relative bg-primary-800 
@@ -63,7 +63,13 @@ const SearchInput: React.FC<SearchInputProps> = ({
   );
 };
 
-function CommentBox({ comments }: { comments: CommentDataProp[] }) {
+function CommentBox({
+  comments,
+  containerStyle,
+}: {
+  comments: CommentDataProp[];
+  containerStyle?: string;
+}) {
   const [value, setValue] = useState('');
   const [liveComments, setLiveComments] = useState(comments);
   const bottomRef = useRef(null);
@@ -71,9 +77,11 @@ function CommentBox({ comments }: { comments: CommentDataProp[] }) {
   // This function returns jsx for each comment
   const Comment = ({ avatar, text }: { avatar: string; text: string }) => {
     return (
-      <div className='flex items-center p-4'>
-        <Avatar src={avatar} />
-        <p className='ml-3 text-neutral-400'>{text}</p>
+      <div className='flex p-4'>
+        <Avatar src={avatar} className='mt-2' />
+        <Tooltip title={text}>
+          <p className='ml-3 text-neutral-400 line-clamp-3'>{text}</p>
+        </Tooltip>
       </div>
     );
   };
@@ -96,11 +104,10 @@ function CommentBox({ comments }: { comments: CommentDataProp[] }) {
   };
 
   return (
-    <div className='w-full flex flex-col justify-between bg-primary-900 p-5'>
-      <div
-        ref={bottomRef}
-        className='flex-1 flex flex-col max-h-[500px] overflow-y-scroll'
-      >
+    <div
+      className={`w-full flex max-h-full flex-col justify-between bg-primary-900 p-5 ${containerStyle}`}
+    >
+      <div ref={bottomRef} className='flex-1 flex flex-col  overflow-y-scroll'>
         {liveComments.map((cmnt, i) => {
           return (
             <Comment

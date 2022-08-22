@@ -34,7 +34,7 @@ const MainPage = () => {
       {/* Explore Latest section starts */}
       <section className='my-10 container-custom'>
         <Title title={latestSection.title} extraButtonTitle='Explore more' />
-        <div className='flex gap-3 mt-16'>
+        <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
           {latestSection.items.map((item, index) => {
             return (
               <VideoPanel
@@ -56,7 +56,7 @@ const MainPage = () => {
       {/* Explore Trending section starts */}
       <section className='my-10 container-custom'>
         <Title title={trendingSection.title} extraButtonTitle='Explore more' />
-        <div className='flex gap-3 mt-16'>
+        <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
           {trendingSection.items.map((item, index) => {
             return (
               <VideoPanel

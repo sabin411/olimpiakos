@@ -11,4 +11,5 @@ export type VideoFrameProps = {
   handleDislikes: (isDisliked: boolean) => void;
   videoComments?: CommentDataProp[];
   reportHandler: () => void;
+  containerStyle?: string;
 };

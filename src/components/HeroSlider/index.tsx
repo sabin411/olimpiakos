@@ -48,7 +48,7 @@ function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
                 <p className='mt-2 text-p'>{video.description}</p>
               </div>
               <div className='mt-10 lg:mt-24'>
-                <h3 className='font-semi-bold text-neutral-300 md:max-w-[70%]'>
+                <h3 className='font-semi-bold text-neutral-300 text-h5 md:text-h3 md:max-w-[70%]'>
                   {video.title}
                 </h3>
                 <Button

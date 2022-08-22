@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IconWithText from '../IconWithText';
 
 // packages
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { Tooltip } from '@mui/material';
 
 // icons
 import FlagIcon from '@mui/icons-material/Flag';
@@ -30,7 +31,9 @@ function VideoFrame({
   handleDislikes,
   videoComments,
   reportHandler,
+  containerStyle,
 }: VideoFrameProps) {
+  const [seeMoreDescription, setSeeMoreDescription] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,6 +59,7 @@ function VideoFrame({
           vertical: 'top',
           horizontal: 'left',
         }}
+        className={`${containerStyle}`}
       >
         <MenuItem
           onClick={() => {
@@ -95,7 +99,7 @@ function VideoFrame({
             <IconWithText
               Icon={isLiked ? ThumbUpIcon : ThumbUpOffAltIcon}
               text={videoLikes}
-              containerStyle='text-neutral-500'
+              containerStyle='text-neutral-500 ml-3'
               enableInteraction
               className={`${
                 isLiked ? 'text-secondary-800' : 'text-neutral-500'
@@ -108,7 +112,7 @@ function VideoFrame({
             <IconWithText
               Icon={isDisliked ? ThumbDownIcon : ThumbDownOffAltIcon}
               text={videoDislikes}
-              containerStyle='text-neutral-500'
+              containerStyle='text-neutral-500 ml-3'
               enableInteraction
               className={`${
                 isDisliked ? 'text-secondary-800' : 'text-neutral-500'
@@ -132,7 +136,23 @@ function VideoFrame({
             </IconButton>
           </div>
         </div>
-        <p className='mt-5 text-neutral-500 max-w-[65%]'>{videoDescription}</p>
+        <Tooltip title={videoDescription}>
+          <>
+            <p
+              className={`mt-5 text-neutral-500 max-w-[80%] ${
+                seeMoreDescription ? '' : 'line-clamp-3'
+              }`}
+            >
+              {videoDescription}{' '}
+            </p>
+            <button
+              onClick={() => setSeeMoreDescription(!seeMoreDescription)}
+              className='font-semi-bold text-neutral-200 text-p hover:underline'
+            >
+              {!seeMoreDescription ? 'See more' : 'See less'}
+            </button>
+          </>
+        </Tooltip>
       </div>
       <RenderMoreMenu />
     </>
