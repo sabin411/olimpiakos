@@ -34,21 +34,21 @@ function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
         return (
           <div
             key={i}
-            className=' w-full relative h-[592px] bg-secondary-700 text-neutral-400'
+            className=' w-full relative h-[620px] bg-secondary-700 text-neutral-400'
           >
             <div className='absolute h-full w-full py-5 px-6 lg:py-16 lg:px-16 backdrop-brightness-75'>
-              <div className='lg:max-w-[50%]'>
+              <div className='lg:max-w-[90%]'>
                 <h2 className='font-semi-bold text-neutral-300'>
                   {video.time}
                 </h2>
-                <div className='flex items-center text-neutral-400 mt-2'>
+                <div className='flex items-center gap-x-3 text-neutral-400 mt-2'>
                   <IconWithText Icon={RemoveRedEyeIcon} text={video.views} />
                   <IconWithText Icon={ThumbUpIcon} text={video.likes} />
                 </div>
-                <p className='mt-2 text-p'>{video.description}</p>
+                <p className='mt-2 text-p line-clamp-3'>{video.description}</p>
               </div>
-              <div className='mt-10 lg:mt-24'>
-                <h3 className='font-semi-bold text-neutral-300 text-h5 md:text-h3 md:max-w-[70%]'>
+              <div className='mt-10 lg:mt-12'>
+                <h3 className='font-semi-bold text-neutral-300 text-h5 md:text-h3 md:max-w-full line-clamp-2'>
                   {video.title}
                 </h3>
                 <Button

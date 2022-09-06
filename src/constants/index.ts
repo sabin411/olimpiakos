@@ -36,6 +36,52 @@ export const sidebar = {
   ],
 };
 
+// latest news constants
+export const latestNews = {
+  title: 'Latest News',
+  news: [
+    {
+      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      createdAt: new Date('2022-04-01'),
+    },
+    {
+      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      createdAt: new Date('2022-02-01'),
+    },
+    {
+      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      createdAt: new Date('2022-05-01'),
+    },
+    {
+      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      createdAt: new Date('2022-03-07'),
+    },
+    {
+      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      createdAt: new Date('2022-03-07'),
+    },
+  ],
+};
+
+// latest photos
+export const latestPhotos = {
+  title: 'Latest Photos',
+  photos: [
+    {
+      image:
+        'https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?cs=srgb&dl=pexels-pixabay-274422.jpg&fm=jpg',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      timeStamp: new Date('2022-04-01'),
+    },
+    {
+      image:
+        'https://images.pexels.com/photos/1618200/pexels-photo-1618200.jpeg?cs=srgb&dl=pexels-football-wife-1618200.jpg&fm=jpg',
+      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      timeStamp: new Date('2022-02-01'),
+    },
+  ],
+};
+
 // consts
 export const dummyFeaturedVideo = [
   {

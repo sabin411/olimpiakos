@@ -75,7 +75,7 @@ function VideoFrame({
   return (
     <>
       <div className='bg-transparent'>
-        <div className='w-full h-[300px] lg:h-[570px]'>
+        <div className='w-full aspect-video relative'>
           <iframe
             width='100%'
             height='100%'
@@ -85,6 +85,24 @@ function VideoFrame({
             allowFullScreen
             title='Embedded youtube'
           />
+          <div
+            className='
+          bg-error-600 h-4 w-4 
+          rounded-full absolute 
+          right-20  top-7
+          
+          after:content-["Live"] 
+          after:absolute after:left-full
+          after:top-1/2 
+          after:-translate-y-1/2
+          after:translate-x-2
+          after:bg-primary-900 
+          after:rounded-4
+          after:text-neutral-400
+          after:py-1 after:px-3
+
+          '
+          ></div>
         </div>
         <div className='mt-5 flex flex-col justify-start items-start lg:flex-row lg:justify-between'>
           <div className='lg:w-1/2'>

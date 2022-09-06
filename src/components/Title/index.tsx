@@ -1,5 +1,8 @@
 import React from 'react';
 
+// components
+import { Link } from 'react-router-dom';
+
 // packages
 import Button from '@mui/material/Button';
 
@@ -7,10 +10,12 @@ function Title({
   title,
   containerStyle,
   extraButtonTitle,
+  exploreMoreLink,
 }: {
   title: string;
   containerStyle?: string;
   extraButtonTitle?: string;
+  exploreMoreLink?: string;
 }) {
   return (
     <div
@@ -19,7 +24,7 @@ function Title({
       <h4 className='w-fit border-b-secondary-800 border-b-4 text-p xs:text-h4 capitalize'>
         {title}
       </h4>
-      {extraButtonTitle && (
+      {extraButtonTitle && exploreMoreLink ? (
         <Button
           variant='outlined'
           color='inherit'
@@ -28,9 +33,9 @@ function Title({
             marginBottom: '8px',
           }}
         >
-          {extraButtonTitle}
+          <Link to={exploreMoreLink}>{extraButtonTitle}</Link>
         </Button>
-      )}
+      ) : null}
     </div>
   );
 }
