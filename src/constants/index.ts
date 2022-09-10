@@ -19,19 +19,23 @@ export const sidebar = {
     {
       title: 'Categories',
       icon: CategoryOutlinedIcon,
-      linkTo: '/categories',
+      linkTo: '/category/sports/all',
     },
     {
       title: 'Explore',
       icon: ExploreOutlinedIcon,
-      linkTo: '/explore',
+      linkTo: '/category/sports/all',
     },
   ],
   secondaryLinks: [
-    { title: 'Trending', icon: TrendingUpIcon, linkTo: '/trending' },
-    { title: 'Latest', icon: FiberNewIcon, linkTo: '/latest' },
-    { title: 'Liked Videos', icon: ThumbUpOutlinedIcon, linkTo: '/liked' },
-    { title: 'Watched', icon: LiveTvOutlinedIcon, linkTo: '/history' },
+    { title: 'Trending', icon: TrendingUpIcon, linkTo: '/feed/trending' },
+    { title: 'Latest', icon: FiberNewIcon, linkTo: '/feed/latest' },
+    {
+      title: 'Liked Videos',
+      icon: ThumbUpOutlinedIcon,
+      linkTo: '/feed/likedVideos',
+    },
+    { title: 'Watched', icon: LiveTvOutlinedIcon, linkTo: '/feed/history' },
     { title: 'Video Panel', icon: LiveTvOutlinedIcon, linkTo: 'video-panel' },
   ],
 };

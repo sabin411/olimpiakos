@@ -7,21 +7,23 @@ import Button from '@/components/Button';
 import { Route, Routes } from 'react-router-dom';
 
 // screens
-import Home from '@/screens/Home';
+import Feed from '@/screens/feed';
+import Watch from '@/screens/watch';
+import Layout from '@/screens/Layout';
 import Preview from '@/screens/previews';
-import MainPage from '@/screens/MainPage';
+import MainPage from '@/screens/mainPage';
+import Category from '@/screens/category';
+import Sports from '@/screens/category/Sports';
 import VideoPanel from '@/screens/previews/VideoPanelPreview';
-import Category from '@/screens/Category';
-import Sports from '@/screens/Category/Sports';
-import Watch from '@/screens/Watch';
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Home />}>
+      <Route path='/' element={<Layout />}>
         <Route path='' element={<MainPage />} />
         <Route path='watch' element={<Watch />} />
         <Route path='video-panel' element={<VideoPanel />} />
+        <Route path='feed/:list' element={<Feed />} />
       </Route>
 
       <Route path='category' element={<Category />}>

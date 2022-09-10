@@ -11,12 +11,12 @@ import { LatestNews, PhotoWrapper } from './common/index';
 
 // constants
 import {
-  dummyFeaturedVideo,
-  categoriesData,
-  latestSection,
-  trendingSection,
   latestNews,
   latestPhotos,
+  latestSection,
+  categoriesData,
+  trendingSection,
+  dummyFeaturedVideo,
 } from '@/constants';
 import { Link } from 'react-router-dom';
 
