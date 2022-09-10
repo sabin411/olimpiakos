@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from '@/components/Sidebar';
 import AppBarComp from '@/components/AppBar';
 
-export default function Home() {
+export default function Layout() {
   const [openMenu, setOpenMenu] = useState(false);
   return (
     <main className='bg-primary-1000'>

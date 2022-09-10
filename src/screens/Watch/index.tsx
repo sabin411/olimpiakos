@@ -55,6 +55,7 @@ function Watch() {
           containerStyle='max-h-[600px] lg:max-h-[800px]'
         />
       </section>
+      {/* recommended video section starts */}
       <section className='container-custom my-16'>
         <Title title='Recommended for you' extraButtonTitle='Explore more' />
 
@@ -88,6 +89,7 @@ function Watch() {
         </div>
         {/* Recommended videos ends */}
       </section>
+      {/* recommended video section ends */}
     </>
   );
 }

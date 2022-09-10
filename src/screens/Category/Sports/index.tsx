@@ -23,12 +23,11 @@ function Sports() {
       {currentGames?.length ? (
         <div
           className='
-          grid grid-cols-1 gap-4 mt-8
+          grid grid-cols-1 gap-4 my-8
 
           md:grid-cols-2 
 
           lg:grid-cols-3 
-          lg:mt-16
 
           xl:grid-cols-4 xl:gap-3  
         '

@@ -6,17 +6,15 @@ import { Link } from 'react-router-dom';
 // packages
 import Button from '@mui/material/Button';
 
+// type
+import { TitleProps } from './type';
+
 function Title({
   title,
   containerStyle,
   extraButtonTitle,
   exploreMoreLink,
-}: {
-  title: string;
-  containerStyle?: string;
-  extraButtonTitle?: string;
-  exploreMoreLink?: string;
-}) {
+}: TitleProps) {
   return (
     <div
       className={`font-semi-bold border-b-primary-600 border-b-2 text-neutral-200 flex justify-between ${containerStyle}`}
