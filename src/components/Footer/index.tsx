@@ -31,31 +31,39 @@ const footerConst = [
         title: 'Swimming',
         linkTo: '/swimming',
       },
-    ],
-  },
-  {
-    title: 'Category',
-    links: [
       {
-        title: 'Athelets',
-        linkTo: '/athelets',
-      },
-      {
-        title: 'Sports',
-        linkTo: '/category',
+        title: 'More...',
+        linkTo: '/category/sports/all',
       },
     ],
   },
   {
-    title: 'News',
+    title: 'Follow us',
     links: [
       {
-        title: 'PodCast',
-        linkTo: '/podcast',
+        title: 'Facebook',
+        linkTo: 'https://www.facebook.com/olympics',
       },
       {
-        title: 'Topics',
-        linkTo: '/topics',
+        title: 'Instagram',
+        linkTo: 'https://www.instagram.com/olympics/',
+      },
+      {
+        title: 'Twitter',
+        linkTo: 'https://twitter.com/Olympics',
+      },
+    ],
+  },
+  {
+    title: 'Other',
+    links: [
+      {
+        title: 'News',
+        linkTo: '/news',
+      },
+      {
+        title: 'Gallery',
+        linkTo: '/gallery',
       },
     ],
   },
@@ -69,49 +77,57 @@ function Footer() {
           <Link to='/' className='w-[205px]'>
             <Logo />
           </Link>
-          <p className='mt-5 text-neutral-400 mb-10'>
+          <p className='mt-5 text-neutral-400 mb-6'>
             Watch your favorite sports, discover award-winning Original Films
             and Series and explore our 24/7 thematic linear channels.
           </p>
-          <Button
-            variant='contained'
-            sx={{
-              backgroundColor: 'var(--secondary-800)',
-              maxWidth: '220px',
-              ':hover': {
-                backgroundColor: 'var(--secondary-700)',
-              },
-            }}
-          >
-            Explore
-          </Button>
+          <Link className='inline-block w-full' to='/category/sports/all'>
+            <Button
+              variant='contained'
+              sx={{
+                backgroundColor: 'var(--secondary-800)',
+                maxWidth: '220px',
+                paddingInline: '3rem',
+                ':hover': {
+                  backgroundColor: 'var(--secondary-700)',
+                },
+              }}
+            >
+              Explore
+            </Button>
+          </Link>
         </div>
-        <div className='flex gap-11 flex-col md:flex-row '>
+        <div className='flex gap-14 flex-col md:flex-row '>
           {footerConst.map((footer, i) => {
             return (
               <div key={i + footer.title} className='w-full md:w-[183px]'>
                 <Title title={footer.title} containerStyle='mb-7' />
                 <ul className='flex flex-col gap-3'>
                   {footer.links.map((link, index) => {
+                    if (footer.title !== 'Follow us') {
+                      return (
+                        <li key={link.title + index}>
+                          <Link
+                            to={{ pathname: link.linkTo }}
+                            className='text-neutral-400 hover:text-secondary-800'
+                          >
+                            {link.title}
+                          </Link>
+                        </li>
+                      );
+                    }
                     return (
                       <li key={link.title + index}>
-                        <Link
-                          to={link.linkTo}
+                        <a
+                          href={link.linkTo}
                           className='text-neutral-400 hover:text-secondary-800'
+                          target='_blank'
                         >
                           {link.title}
-                        </Link>
+                        </a>
                       </li>
                     );
                   })}
-                  <li>
-                    <Link
-                      to='/category'
-                      className='text-neutral-400 hover:text-secondary-800'
-                    >
-                      More...
-                    </Link>
-                  </li>
                 </ul>
               </div>
             );

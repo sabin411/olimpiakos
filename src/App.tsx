@@ -9,8 +9,9 @@ import { Route, Routes } from 'react-router-dom';
 // screens
 import Feed from '@/screens/feed';
 import Watch from '@/screens/watch';
-import Layout from '@/screens/Layout';
+import Layout from '@/screens/layout';
 import Preview from '@/screens/previews';
+import Gallery from '@/screens/gallery';
 import MainPage from '@/screens/mainPage';
 import Category from '@/screens/category';
 import Sports from '@/screens/category/Sports';
@@ -23,6 +24,7 @@ function App() {
         <Route path='' element={<MainPage />} />
         <Route path='watch' element={<Watch />} />
         <Route path='video-panel' element={<VideoPanel />} />
+        <Route path='gallery' element={<Gallery />} />
         <Route path='feed/:list' element={<Feed />} />
       </Route>
 
