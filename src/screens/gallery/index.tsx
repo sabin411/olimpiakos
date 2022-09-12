@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // components
 import Title from '@/components/Title';
+import { useLightBox } from './common';
 
 // packages
 import ImageList from '@mui/material/ImageList';
@@ -9,7 +10,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 // commons
-const useLightBox = required('./common/index.jsx');
+// const useLightBox = required('./common/index.jsx');
 
 // images
 const itemData = [
@@ -75,8 +76,16 @@ const itemData = [
 ];
 
 function Gallery() {
+  const [currentImage, setCurrentImage] = useState('');
+  const { LightBox, isLightBoxOpen } = useLightBox();
+
   return (
     <section className='container-custom my-8'>
+      <LightBox
+        imageLink={currentImage}
+        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+        title='This is a Title'
+      />
       <Title containerStyle='mb-10' title='Gallery' />
 
       <ImageList className='' variant='masonry' cols={3} gap={8}>
@@ -87,6 +96,10 @@ function Gallery() {
               srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading='lazy'
+              onClick={() => {
+                setCurrentImage(item.img);
+                isLightBoxOpen(true);
+              }}
             />
           </ImageListItem>
         ))}

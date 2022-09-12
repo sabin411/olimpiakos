@@ -88,7 +88,7 @@ const MainPage = () => {
       <section className='my-10 container-custom'>
         <Title
           title={latestSection.title}
-          exploreMoreLink='/latest'
+          exploreMoreLink='/feed/latest'
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
@@ -114,7 +114,7 @@ const MainPage = () => {
       <section className='my-10 container-custom'>
         <Title
           title={trendingSection.title}
-          exploreMoreLink='/trending'
+          exploreMoreLink='/feed/trending'
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>

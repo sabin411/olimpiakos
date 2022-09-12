@@ -27,11 +27,16 @@ function Title({
           variant='outlined'
           color='inherit'
           sx={{
-            padding: '8px 20px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '0',
             marginBottom: '8px',
           }}
         >
-          <Link to={exploreMoreLink}>{extraButtonTitle}</Link>
+          <Link to={exploreMoreLink} className='px-5'>
+            {extraButtonTitle}
+          </Link>
         </Button>
       ) : null}
     </div>
