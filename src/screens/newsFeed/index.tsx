@@ -3,7 +3,7 @@ import React from 'react';
 // components
 import Title from '@/components/Title';
 import NewsCard from '@/components/Cards/News';
-import { PhotoWrapper } from '../mainPage/common';
+import { PhotoWrapper } from '@/screens/mainPage/common';
 
 // packages
 import { Link } from 'react-router-dom';
