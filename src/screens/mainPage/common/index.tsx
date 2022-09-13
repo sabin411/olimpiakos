@@ -33,7 +33,7 @@ export const PhotoWrapper = ({
   linkTo,
 }: LatestPhotoWrapperProps) => {
   return (
-    <Link to={linkTo} className={`inline-block group ${containerStyle}`}>
+    <Link to={'/gallery'} className={`inline-block group ${containerStyle}`}>
       <div className='rounded-lg overflow-hidden h-[166px] w-full'>
         <img
           className='w-full h-full object-cover'
