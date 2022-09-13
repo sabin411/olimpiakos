@@ -486,4 +486,15 @@ export const newsFeed = {
         'On a rain-curtailed day at Headingley, Essex elected to bowl first and managed to bowl out Yorkshire for a paltry total of 134. Right-arm pacer Sam Cook was quite impressive with the new ball as he dismissed opener Finlay Bean for a duck. Cook picked three wickets and was the pick of the bowlers for Essex as most of them were top-order scalps. Barring George Hill and Jonathan Tattersall, none of the batters were able to chip in with handy contributions as Yorkshire kept losing wickets at regular intervals throughout the innings.',
     },
   ],
+  latestPhotostitle: 'Latest Photos',
+  latestPhotosMore: 'More phots...',
+};
+
+// individual news constant
+export const individualNews = {
+  sponser: 'Fun Olympic 2022',
+  latestNews: {
+    title: 'Latest News',
+    more: 'More news...',
+  },
 };

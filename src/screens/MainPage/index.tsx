@@ -8,7 +8,6 @@ import SelectionTab from '@/components/SelectionTab';
 
 // common
 import { LatestNews, PhotoWrapper } from './common/index';
-import { newsFeed } from '@/constants';
 
 // constants
 import {
@@ -19,6 +18,7 @@ import {
   trendingSection,
   dummyFeaturedVideo,
 } from '@/constants';
+import { newsData } from '@/global/constants';
 import { Link } from 'react-router-dom';
 
 const MainPage = () => {
@@ -29,18 +29,19 @@ const MainPage = () => {
         {/* Latest News section starts */}
         <div className='hidden w-[25%] bg-primary-900 py-4 px-5 lg:block'>
           <h4 className='mb-1'>{latestNews.title}</h4>
-          {newsFeed.news.map((items, i) => {
-            return (
-              <LatestNews
-                key={items.title + i}
-                news={items.title}
-                timeStamp={items.createdAt}
-                linkTo={`/news/${items.id}`}
-                containerStyle={`py-3 border-b-1 border-neutral-800 ${
-                  i === latestNews.news.length - 1 && 'border-b-0'
-                }`}
-              />
-            );
+          {newsData.map((items, i) => {
+            if (i < 5)
+              return (
+                <LatestNews
+                  key={items.title + i}
+                  news={items.title}
+                  timeStamp={items.createdAt}
+                  linkTo={`/news/${items.id}`}
+                  containerStyle={`py-3 border-b-1 border-neutral-800 ${
+                    i === latestNews.news.length - 1 && 'border-b-0'
+                  }`}
+                />
+              );
           })}
           <Link
             className='text-secondary-800 hover:text-secondary-900'
