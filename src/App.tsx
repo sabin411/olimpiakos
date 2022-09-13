@@ -15,7 +15,7 @@ import Gallery from '@/screens/gallery';
 import NewsFeed from '@/screens/newsFeed';
 import MainPage from '@/screens/mainPage';
 import Category from '@/screens/category';
-import Sports from '@/screens/category/Sports';
+import Sports from '@/screens/category/sports';
 import VideoPanel from '@/screens/previews/VideoPanelPreview';
 
 function App() {
