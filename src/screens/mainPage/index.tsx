@@ -18,6 +18,7 @@ import {
   trendingSection,
   dummyFeaturedVideo,
 } from '@/constants';
+import { newsData } from '@/global/constants';
 import { Link } from 'react-router-dom';
 
 const MainPage = () => {
@@ -28,21 +29,23 @@ const MainPage = () => {
         {/* Latest News section starts */}
         <div className='hidden w-[25%] bg-primary-900 py-4 px-5 lg:block'>
           <h4 className='mb-1'>{latestNews.title}</h4>
-          {latestNews.news.map((items, i) => {
-            return (
-              <LatestNews
-                key={items.title + i}
-                news={items.title}
-                timeStamp={items.createdAt}
-                containerStyle={`py-3 border-b-1 border-neutral-800 ${
-                  i === latestNews.news.length - 1 && 'border-b-0'
-                }`}
-              />
-            );
+          {newsData.map((items, i) => {
+            if (i < 5)
+              return (
+                <LatestNews
+                  key={items.title + i}
+                  news={items.title}
+                  timeStamp={items.createdAt}
+                  linkTo={`/news/${items.id}`}
+                  containerStyle={`py-3 border-b-1 border-neutral-800 ${
+                    i === latestNews.news.length - 1 && 'border-b-0'
+                  }`}
+                />
+              );
           })}
           <Link
             className='text-secondary-800 hover:text-secondary-900'
-            to={'/news'}
+            to={'/news-feed'}
           >
             More news...
           </Link>
@@ -63,6 +66,7 @@ const MainPage = () => {
                 description={items.description}
                 timeStamp={items.timeStamp}
                 containerStyle='my-3'
+                linkTo={`/gallery/${items}`}
               />
             );
           })}
@@ -88,7 +92,7 @@ const MainPage = () => {
       <section className='my-10 container-custom'>
         <Title
           title={latestSection.title}
-          exploreMoreLink='/latest'
+          exploreMoreLink='/feed/latest'
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
@@ -114,7 +118,7 @@ const MainPage = () => {
       <section className='my-10 container-custom'>
         <Title
           title={trendingSection.title}
-          exploreMoreLink='/trending'
+          exploreMoreLink='/feed/trending'
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
