@@ -10,6 +10,7 @@ import { Route, Routes } from 'react-router-dom';
 import Feed from '@/screens/feed';
 import News from '@/screens/news';
 import Watch from '@/screens/watch';
+import Signup from '@/screens/signup';
 import Layout from '@/screens/layout';
 import Gallery from '@/screens/gallery';
 import NewsFeed from '@/screens/newsFeed';
@@ -30,6 +31,7 @@ function App() {
         <Route path='news-feed' element={<NewsFeed />} />
         <Route path='news/:newsId' element={<News />} />
       </Route>
+      <Route path='register' element={<Signup />} />
 
       <Route path='category' element={<Category />}>
         <Route path='sports/:game' element={<Sports />} />
