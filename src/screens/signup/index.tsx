@@ -21,7 +21,9 @@ export const Signup = () => {
       <div className='flex-1 bg-primary-1000 flex flex-col items-center overflow-y-auto py-5'>
         <div className='w-full px-6 sm:w-[70%] md:w-[100%] xl:w-[60%]'>
           <div className='w-20 h-20'>
-            <Logo />
+            <Link to='/'>
+              <Logo />
+            </Link>
           </div>
           <div className='text-left'>
             <h3 className='text-neutral-400'>Get Started</h3>
