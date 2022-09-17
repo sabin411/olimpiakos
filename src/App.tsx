@@ -10,7 +10,7 @@ import { Route, Routes } from 'react-router-dom';
 import Feed from '@/screens/feed';
 import News from '@/screens/news';
 import Watch from '@/screens/watch';
-import Login from '@/screens/login';
+import Signup from '@/screens/signup';
 import Layout from '@/screens/layout';
 import Gallery from '@/screens/gallery';
 import NewsFeed from '@/screens/newsFeed';
@@ -22,8 +22,6 @@ import VideoPanel from '@/screens/previews/VideoPanelPreview';
 function App() {
   return (
     <Routes>
-      <Route path='login' element={<Login/>}/>
-
       <Route path='/' element={<Layout />}>
         <Route path='' element={<MainPage />} />
         <Route path='watch' element={<Watch />} />
@@ -33,6 +31,7 @@ function App() {
         <Route path='news-feed' element={<NewsFeed />} />
         <Route path='news/:newsId' element={<News />} />
       </Route>
+      <Route path='register' element={<Signup />} />
 
       <Route path='category' element={<Category />}>
         <Route path='sports/:game' element={<Sports />} />
