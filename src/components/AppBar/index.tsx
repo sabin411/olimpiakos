@@ -1,5 +1,8 @@
 import React from 'react';
 
+// component
+import Button from '../Button';
+
 // packages
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
@@ -28,7 +31,13 @@ import { Logo } from '@/global/common';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-function AppBarComp({ onMenuClick }: { onMenuClick: () => void }) {
+function AppBarComp({
+  onMenuClick,
+  isLoggedIn,
+}: {
+  onMenuClick: () => void;
+  isLoggedIn: boolean;
+}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -202,50 +211,79 @@ function AppBarComp({ onMenuClick }: { onMenuClick: () => void }) {
               </span>
             </Link>
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder='Search…'
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size='large'
-              aria-label='show 17 new notifications'
-              color='inherit'
-            >
-              <Badge badgeContent={17} color='error'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size='large'
-              edge='end'
-              aria-label='account of current user'
-              aria-haspopup='true'
-              onClick={handleProfileMenuOpen}
-              color='inherit'
-            >
-              <Avatar src={dummyImage} />
-              {/* <AccountCircle /> */}
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size='large'
-              aria-label='show more'
-              aria-controls={mobileMenuId}
-              aria-haspopup='true'
-              onClick={handleMobileMenuOpen}
-              color='inherit'
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
+          {isLoggedIn ? (
+            <>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder='Search…'
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <IconButton
+                  size='large'
+                  aria-label='show 17 new notifications'
+                  color='inherit'
+                >
+                  <Badge badgeContent={17} color='error'>
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  size='large'
+                  edge='end'
+                  aria-label='account of current user'
+                  aria-haspopup='true'
+                  onClick={handleProfileMenuOpen}
+                  color='inherit'
+                >
+                  <Avatar src={dummyImage} />
+                  {/* <AccountCircle /> */}
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size='large'
+                  aria-label='show more'
+                  aria-controls={mobileMenuId}
+                  aria-haspopup='true'
+                  onClick={handleMobileMenuOpen}
+                  color='inherit'
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </>
+          ) : (
+            <div className='flex gap-x-5'>
+              <Link to='/login'>
+                <Button
+                  buttonSize='medium'
+                  variant='outlined'
+                  title='Login'
+                  type='button'
+                  containerStyle={{
+                    borderRadius: '25px',
+                  }}
+                />
+              </Link>
+              <Link to='/register'>
+                <Button
+                  buttonSize='medium'
+                  variant='contained'
+                  title='Sign up'
+                  type='button'
+                  containerStyle={{
+                    borderRadius: '25px',
+                  }}
+                />
+              </Link>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

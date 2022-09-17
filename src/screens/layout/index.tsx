@@ -12,6 +12,7 @@ export default function Layout() {
     <main className='bg-primary-1000'>
       {/* header starts */}
       <AppBarComp
+        isLoggedIn={false}
         onMenuClick={() => {
           setOpenMenu(true);
         }}
@@ -19,7 +20,11 @@ export default function Layout() {
       {/* header ends */}
 
       {/* sidebar starts */}
-      <Sidebar openMenu={openMenu} setOpenMenu={setOpenMenu} />
+      <Sidebar
+        isLoggedIn={false}
+        openMenu={openMenu}
+        setOpenMenu={setOpenMenu}
+      />
       {/* sidebar ends */}
 
       {/* main content starts */}

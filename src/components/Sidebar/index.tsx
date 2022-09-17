@@ -1,21 +1,22 @@
 import React, { useCallback, useState } from 'react';
 
 // 1. packages
+import Button from '../Button';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
+import { Link } from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
-import IconButton from '@mui/material/IconButton';
-import { Link } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
 
 // 2. icons
 import MenuIcon from '@mui/icons-material/Menu';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 // consts
 import { sidebar as sidebarConst } from '@/constants';
@@ -25,9 +26,11 @@ import { Logo } from '@/global/common';
 
 const Sidebar = ({
   openMenu: open,
+  isLoggedIn,
   setOpenMenu: setOpen,
 }: {
   openMenu: boolean;
+  isLoggedIn: boolean;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // function responsible for toggling the sidebar open/closed
@@ -141,7 +144,56 @@ const Sidebar = ({
             </Link>
           </Typography>
         </Box>
-        {list()}
+        {isLoggedIn ? (
+          list()
+        ) : (
+          <Box
+            style={{
+              width: 250,
+              height: '100%',
+              backgroundColor: 'var(--primary-900)',
+              color: 'var(--neutral-400)',
+            }}
+          >
+            <List>
+              <ListItem disablePadding>
+                <Link to={'/'} className='inline-block w-full'>
+                  <ListItemButton
+                    sx={{
+                      ':hover': {
+                        background: 'var(--primary-800)',
+                      },
+                    }}
+                    onClick={() => {
+                      toggleDrawer(false);
+                    }}
+                  >
+                    <ListItemIcon>
+                      <HomeOutlinedIcon className='text-neutral-400' />
+                    </ListItemIcon>
+                    <ListItemText primary={'Home'} />
+                  </ListItemButton>
+                </Link>
+                {/* </Link> */}
+              </ListItem>
+            </List>
+            <div className='px-[18px] mt-6'>
+              <p>Sign in to like videos, comment, and subscribe.</p>
+              <Link to='/login' className='mt-3 block'>
+                <Button
+                  buttonSize='medium'
+                  variant='contained'
+                  title='login'
+                  type='button'
+                  containerStyle={{
+                    width: '100%',
+                    maxWidth: '100%',
+                  }}
+                />
+              </Link>
+            </div>
+          </Box>
+        )}
       </Drawer>
     </div>
   );
