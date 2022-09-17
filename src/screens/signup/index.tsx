@@ -17,10 +17,10 @@ import { Link } from 'react-router-dom';
 
 export const Signup = () => {
   return (
-    <section className='flex h-screen'>
-      <div className='flex-1 bg-primary-1000 flex flex-col items-center pt-60'>
+    <section className='flex h-screen '>
+      <div className='flex-1 bg-primary-1000 flex flex-col items-center overflow-y-auto py-5'>
         <div className='w-full px-6 sm:w-[70%] md:w-[100%] xl:w-[60%]'>
-          <div className='w-20 h-20 mt-14'>
+          <div className='w-20 h-20'>
             <Logo />
           </div>
           <div className='text-left'>
