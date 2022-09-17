@@ -12,13 +12,15 @@ import { Checkbox, FormControl, FormControlLabel } from '@mui/material';
 import { Logo } from '@/global/common';
 
 // constants
+import { signUp } from '@/constants';
 import { countries } from './common/constants';
 import { Link } from 'react-router-dom';
 
 export const Signup = () => {
+  const { inputFields } = signUp.form;
   return (
     <section className='flex h-screen '>
-      <div className='flex-1 bg-primary-1000 flex flex-col items-center overflow-y-auto py-5'>
+      <div className='flex-1 bg-primary-1000 flex flex-col items-center overflow-y-auto py-16 md:py-5'>
         <div className='w-full px-6 sm:w-[70%] md:w-[100%] xl:w-[60%]'>
           <div className='w-20 h-20'>
             <Link to='/'>
@@ -26,21 +28,43 @@ export const Signup = () => {
             </Link>
           </div>
           <div className='text-left'>
-            <h3 className='text-neutral-400'>Get Started</h3>
-            <p className='text-neutral-500'>Register your account here.</p>
+            <h3 className='text-neutral-400'>{signUp.title}</h3>
+            <p className='text-neutral-500'>{signUp.subTitle}</p>
           </div>
           <form className=''>
-            <Input label='Full Name' />
-            <Input label='Email' />
-            <Input label='Username' />
-            <Input label='Phone Number' />
+            <Input
+              label={inputFields.fullName.label}
+              name={inputFields.fullName.name}
+              type={inputFields.fullName.type}
+            />
+            <Input
+              label={inputFields.email.label}
+              name={inputFields.email.name}
+              type={inputFields.email.type}
+            />
+            <Input
+              label={inputFields.userName.label}
+              name={inputFields.userName.name}
+              type={inputFields.userName.type}
+            />
+            <Input
+              label={inputFields.phoneNumber.label}
+              name={inputFields.phoneNumber.name}
+              type={inputFields.phoneNumber.type}
+            />
+
             <DropDown
-              name='country'
-              label='Country'
+              label={inputFields.country.label}
+              name={inputFields.country.name}
               dropDownItems={countries}
               onChange={data => console.log(data)}
             />
-            <Input label='Password' />
+
+            <Input
+              label={inputFields.password.label}
+              name={inputFields.password.name}
+              type={inputFields.password.type}
+            />
 
             <FormControlLabel
               sx={{
@@ -60,12 +84,12 @@ export const Signup = () => {
               }
               label={
                 <p className='text-neutral-300'>
-                  I agree to the{' '}
+                  {signUp.form.termsAndconditions.text}{' '}
                   <Link
                     to='/terms-of-services'
                     className='text-secondary-800 hover:text-secondary-900'
                   >
-                    Terms of Service
+                    {signUp.form.termsAndconditions.terms}
                   </Link>{' '}
                   and{' '}
                   <Link
@@ -73,7 +97,7 @@ export const Signup = () => {
                     className='text-secondary-800 hover:text-secondary-900'
                   >
                     {' '}
-                    Privacy Policy{' '}
+                    {signUp.form.termsAndconditions.privacyPolicy}{' '}
                   </Link>
                 </p>
               }
@@ -86,16 +110,16 @@ export const Signup = () => {
                 width: '100%',
                 maxWidth: '100%',
               }}
-              title='Register'
+              title={signUp.form.submitButton}
             />
           </form>
           <p className='mt-4 text-neutral-400 self-end text-right'>
-            Already have an account?{' '}
+            {signUp.form.alreadyHaveAccount}{' '}
             <Link
               to='login'
               className='text-secondary-800 hover:text-secondary-900'
             >
-              Login
+              {signUp.form.login}
             </Link>
           </p>
         </div>

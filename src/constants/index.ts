@@ -498,3 +498,74 @@ export const individualNews = {
     more: 'More news...',
   },
 };
+
+// Sign up page
+export const signUp = {
+  title: "Let's get started",
+  subTitle: 'Create an account to get all features',
+  form: {
+    inputFields: {
+      fullName: {
+        name: 'fullName',
+        label: 'Full Name',
+        type: 'text',
+      },
+      email: {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+      },
+      userName: {
+        name: 'userName',
+        label: 'User Name',
+        type: 'text',
+      },
+      phoneNumber: {
+        name: 'phoneNumber',
+        label: 'Phone Number',
+        type: 'number',
+      },
+      country: {
+        name: 'country',
+        label: 'Country',
+      },
+      password: {
+        name: 'password',
+        label: 'Password',
+        type: 'password',
+      },
+    },
+    termsAndconditions: {
+      text: 'I agree to the',
+      terms: 'Terms & Conditions',
+      privacyPolicy: 'Privacy Policy.',
+    },
+    submitButton: 'Register',
+    alreadyHaveAccount: 'Already have an account?',
+    login: 'Login',
+  },
+};
+
+// login constant
+export const login = {
+  title: 'Welcome back',
+  subTitle: 'Login to your account',
+  form: {
+    inputFields: {
+      email: {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+      },
+      password: {
+        name: 'password',
+        label: 'Password',
+        type: 'password',
+      },
+    },
+    submitButton: 'Login',
+    forgotPassword: 'Forgot Password?',
+    dontHaveAccount: "Don't have an account?",
+    signUp: 'Sign Up',
+  },
+};
