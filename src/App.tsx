@@ -22,8 +22,6 @@ import VideoPanel from '@/screens/previews/VideoPanelPreview';
 function App() {
   return (
     <Routes>
-      <Route path='login' element={<Login/>}/>
-
       <Route path='/' element={<Layout />}>
         <Route path='' element={<MainPage />} />
         <Route path='watch' element={<Watch />} />
