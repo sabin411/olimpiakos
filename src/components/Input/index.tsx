@@ -1,8 +1,8 @@
 import React from 'react';
 
 // packages
-import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
+import { FormControl, FormHelperText, TextField } from '@mui/material';
 
 type InputProps = {
   label: string;
@@ -11,17 +11,17 @@ type InputProps = {
   type?: string;
   name?: string;
   error?: boolean;
-  helperText?: string;
+  errorMessage?: string;
 };
 
 const Input = ({
-  label,
-  required,
-  className,
   type,
   name,
+  label,
   error,
-  helperText,
+  required,
+  className,
+  errorMessage,
 }: InputProps) => {
   // custom styled Textfield
   const CustomInput = styled(TextField)({
@@ -32,7 +32,7 @@ const Input = ({
       color: 'var(--primary-400)',
     },
     '& label.Mui-focused': {
-      color: 'var(--primary-400)',
+      color: 'var(--secondary-700)',
     },
     '& .MuiInput-underline:after': {
       borderBottomColor: 'var(--primary-400)',
@@ -42,27 +42,33 @@ const Input = ({
         borderColor: 'var(--primary-400)',
       },
       '&:hover fieldset': {
-        borderColor: 'var(--primary-400)',
+        borderColor: 'var(--secondary-700)',
       },
       '&.Mui-focused fieldset': {
-        borderColor: 'var(--primary-400)',
+        borderColor: 'var(--secondary-700)',
       },
+    },
+    '& .MuiFormHelperText-root': {
+      color: 'var(--secondary-900)',
+      fontSize: 'var(--p)',
     },
   });
 
   return (
-    <CustomInput
-      type={type}
-      name={name}
-      error={error}
-      label={label}
-      required={required}
-      className={className}
-      helperText={helperText}
-      fullWidth
-      color='error'
-      margin='normal'
-    />
+    <FormControl fullWidth>
+      <CustomInput
+        type={type}
+        name={name}
+        error={error}
+        label={label}
+        required={required}
+        className={className}
+        helperText={errorMessage}
+        color='error'
+        fullWidth
+        margin='normal'
+      />
+    </FormControl>
   );
 };
 
