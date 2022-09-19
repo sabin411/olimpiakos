@@ -2,8 +2,8 @@ export type videoPanelProps = {
   videoId: string;
   thumbnail: string;
   title: string;
-  views: string;
-  likes: string;
+  views: number;
+  likes: number;
   time: string;
   containerStyle?: string;
 };

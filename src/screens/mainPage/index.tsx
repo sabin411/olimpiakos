@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // components
 import Title from '@/components/Title';
 import HeroSlider from '@/components/HeroSlider';
 import VideoPanel from '@/components/VideoPanel';
 import SelectionTab from '@/components/SelectionTab';
+
+// apollo client query
+import { GET_LATEST_VIDEOS } from '@/graphql/query.graphql';
+
+// apollo client
+import { useQuery } from '@apollo/client';
 
 // common
 import { LatestNews, PhotoWrapper } from './common/index';
@@ -21,7 +27,23 @@ import {
 import { newsData } from '@/global/constants';
 import { Link } from 'react-router-dom';
 
+// types
+import {
+  LatestVideos,
+  LatestVideosVariables,
+} from '@/graphql/__generated__/LatestVideos';
+
 const MainPage = () => {
+  // Query for latest news
+  const { data, loading, error } = useQuery<
+    LatestVideos,
+    LatestVideosVariables
+  >(GET_LATEST_VIDEOS, {
+    variables: {
+      sort: ['createdAt:desc'],
+    },
+  });
+
   return (
     <>
       {/* Slider section starts */}
@@ -96,16 +118,19 @@ const MainPage = () => {
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
-          {latestSection.items.map((item, index) => {
+          {data?.videos?.data.map((item, index) => {
             return (
               <VideoPanel
-                key={index + item.embedId}
-                videoId={item.embedId}
-                likes={item.videoDislikes}
-                views={item.videoDislikes}
-                time={item.videoDuration}
-                title={item.videoTitle}
-                thumbnail={item.thumbnail}
+                key={index}
+                videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
+                views={0}
+                time={'4:20'}
+                title={item.attributes?.title || ''}
+                thumbnail={
+                  'http://localhost:1337' +
+                    item.attributes?.thumbnail?.data[0].attributes?.url || ''
+                }
                 containerStyle='flex-1'
               />
             );
@@ -122,16 +147,19 @@ const MainPage = () => {
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
-          {trendingSection.items.map((item, index) => {
+          {data?.videos?.data.map((item, index) => {
             return (
               <VideoPanel
-                key={index + item.embedId}
-                videoId={item.embedId}
-                likes={item.videoDislikes}
-                views={item.videoDislikes}
-                time={item.videoDuration}
-                title={item.videoTitle}
-                thumbnail={item.thumbnail}
+                key={index}
+                videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
+                views={0}
+                time={'4:20'}
+                title={item.attributes?.title || ''}
+                thumbnail={
+                  'http://localhost:1337' +
+                    item.attributes?.thumbnail?.data[0].attributes?.url || ''
+                }
                 containerStyle='flex-1'
               />
             );
