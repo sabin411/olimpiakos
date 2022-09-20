@@ -15,7 +15,7 @@ export function LatestNews({
 }: LatestNewsProps) {
   return (
     <Link to={linkTo} className={`inline-block group ${containerStyle}`}>
-      <p className='text-neutral-300 line-clamp-2 group-hover:text-secondary-800'>
+      <p className='text-neutral-300 line-clamp-2 group-hover:text-secondary-800 group-hover:underline'>
         {news}
       </p>
       <p className='text-neutral-500 mt-1'>

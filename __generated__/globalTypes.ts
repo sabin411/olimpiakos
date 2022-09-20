@@ -40,6 +40,7 @@ export interface CategoryFiltersInput {
   id?: IDFilterInput | null;
   name?: StringFilterInput | null;
   videos?: VideoFiltersInput | null;
+  featured_events?: FeaturedEventFiltersInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
   publishedAt?: DateTimeFilterInput | null;
@@ -53,6 +54,7 @@ export interface CommentFiltersInput {
   comment?: StringFilterInput | null;
   video?: VideoFiltersInput | null;
   user?: UsersPermissionsUserFiltersInput | null;
+  featured_event?: FeaturedEventFiltersInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
   publishedAt?: DateTimeFilterInput | null;
@@ -83,6 +85,25 @@ export interface DateTimeFilterInput {
   in?: (any | null)[] | null;
   notIn?: (any | null)[] | null;
   between?: (any | null)[] | null;
+}
+
+export interface FeaturedEventFiltersInput {
+  id?: IDFilterInput | null;
+  title?: StringFilterInput | null;
+  description?: StringFilterInput | null;
+  embedId?: StringFilterInput | null;
+  category?: CategoryFiltersInput | null;
+  liked_bies?: UsersPermissionsUserFiltersInput | null;
+  dislikedBy?: UsersPermissionsUserFiltersInput | null;
+  viewd_bies?: UsersPermissionsUserFiltersInput | null;
+  comments?: CommentFiltersInput | null;
+  duration?: StringFilterInput | null;
+  createdAt?: DateTimeFilterInput | null;
+  updatedAt?: DateTimeFilterInput | null;
+  publishedAt?: DateTimeFilterInput | null;
+  and?: (FeaturedEventFiltersInput | null)[] | null;
+  or?: (FeaturedEventFiltersInput | null)[] | null;
+  not?: FeaturedEventFiltersInput | null;
 }
 
 export interface IDFilterInput {
@@ -131,6 +152,39 @@ export interface LongFilterInput {
   in?: (any | null)[] | null;
   notIn?: (any | null)[] | null;
   between?: (any | null)[] | null;
+}
+
+export interface NewsFiltersInput {
+  id?: IDFilterInput | null;
+  title?: StringFilterInput | null;
+  imageUrl?: StringFilterInput | null;
+  description?: StringFilterInput | null;
+  createdAt?: DateTimeFilterInput | null;
+  updatedAt?: DateTimeFilterInput | null;
+  publishedAt?: DateTimeFilterInput | null;
+  and?: (NewsFiltersInput | null)[] | null;
+  or?: (NewsFiltersInput | null)[] | null;
+  not?: NewsFiltersInput | null;
+}
+
+export interface PaginationArg {
+  page?: number | null;
+  pageSize?: number | null;
+  start?: number | null;
+  limit?: number | null;
+}
+
+export interface PhotoFiltersInput {
+  id?: IDFilterInput | null;
+  imageUrl?: StringFilterInput | null;
+  title?: StringFilterInput | null;
+  description?: StringFilterInput | null;
+  createdAt?: DateTimeFilterInput | null;
+  updatedAt?: DateTimeFilterInput | null;
+  publishedAt?: DateTimeFilterInput | null;
+  and?: (PhotoFiltersInput | null)[] | null;
+  or?: (PhotoFiltersInput | null)[] | null;
+  not?: PhotoFiltersInput | null;
 }
 
 export interface StringFilterInput {
@@ -200,6 +254,9 @@ export interface UsersPermissionsUserFiltersInput {
   disliked_videos?: VideoFiltersInput | null;
   viewed_videos?: VideoFiltersInput | null;
   comments?: CommentFiltersInput | null;
+  LIkedFeaturedEvents?: FeaturedEventFiltersInput | null;
+  dislikedFeaturedEvents?: FeaturedEventFiltersInput | null;
+  viewedFeaturedEvents?: FeaturedEventFiltersInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
   and?: (UsersPermissionsUserFiltersInput | null)[] | null;

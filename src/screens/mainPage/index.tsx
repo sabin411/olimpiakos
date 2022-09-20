@@ -5,15 +5,30 @@ import Title from '@/components/Title';
 import HeroSlider from '@/components/HeroSlider';
 import VideoPanel from '@/components/VideoPanel';
 import SelectionTab from '@/components/SelectionTab';
+import {
+  VideoPanelSkeleton,
+  NewsSkeleton,
+  PhotosSkeleton,
+} from '@/components/Skeleton/index';
+// import NewsSkeleton from '@/components/Skeleton/News/News';
 
 // apollo client query
-import { GET_LATEST_VIDEOS } from '@/graphql/query.graphql';
+import {
+  GET_ALL_NEWS,
+  GET_ALL_PHOTOS,
+  GET_FEATURED_VIDEOS,
+  GET_LATEST_VIDEOS,
+  GET_LIMITED_PHOTOS,
+} from '@/graphql/query.graphql';
 
 // apollo client
 import { useQuery } from '@apollo/client';
 
 // common
 import { LatestNews, PhotoWrapper } from './common/index';
+
+// assets
+import { imageDummy } from '@/assets/images/dummyImages';
 
 // constants
 import {
@@ -27,23 +42,96 @@ import {
 import { newsData } from '@/global/constants';
 import { Link } from 'react-router-dom';
 
-// types
+// ENV
+import { BASE_URL } from '@/env';
+
+// graphql generated types
 import {
   LatestVideos,
   LatestVideosVariables,
 } from '@/graphql/__generated__/LatestVideos';
+import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
+import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
+import {
+  LimitedPhotos,
+  LimitedPhotosVariables,
+} from '@/graphql/__generated__/LimitedPhotos';
+import {
+  FeaturedVideos,
+  FeaturedVideosVariables,
+} from '@/graphql/__generated__/FeaturedVideos';
+import { HeroSliderProps } from '@/components/HeroSlider/types';
 
 const MainPage = () => {
-  // Query for latest news
-  const { data, loading, error } = useQuery<
-    LatestVideos,
-    LatestVideosVariables
-  >(GET_LATEST_VIDEOS, {
+  const [featureEvents, setFeatureEvents] = React.useState<HeroSliderProps>();
+  // Query for latest videos
+  const {
+    data: LatestVideosData,
+    loading: loadingLatestVideos,
+    error: errorLatestVideos,
+  } = useQuery<LatestVideos, LatestVideosVariables>(GET_LATEST_VIDEOS, {
     variables: {
       sort: ['createdAt:desc'],
     },
   });
 
+  // querying for latest news
+  const {
+    data: latestNewsData,
+    loading: loadingLatestNews,
+    error: errorLatestNews,
+  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
+    variables: {
+      sort: ['createdAt:desc'],
+    },
+  });
+
+  // querying for latest photos
+  const {
+    data: photosData,
+    loading: loadingPhotos,
+    error: errorPhotos,
+  } = useQuery<LimitedPhotos, LimitedPhotosVariables>(GET_LIMITED_PHOTOS, {
+    variables: {
+      sort: ['createdAt:desc'],
+      pagination: {
+        limit: 2,
+      },
+    },
+  });
+
+  // querying for featured event videos
+  const {
+    data: featuredVideosData,
+    loading: loadingFeaturedVideos,
+    error: errorFeaturedVideos,
+  } = useQuery<FeaturedVideos, FeaturedVideosVariables>(GET_FEATURED_VIDEOS, {
+    variables: {
+      pagination: {
+        limit: 4,
+      },
+    },
+  });
+  useEffect(() => {
+    if (featuredVideosData) {
+      const updatedData = featuredVideosData.featuredEvents?.data.map(item => {
+        const data = item.attributes;
+        return {
+          time: data?.duration || '00:00',
+          title: data?.title || 'Title not available',
+          description: data?.description || 'Description not available',
+          thumbnail: data?.thumbnail.data?.attributes?.url || imageDummy,
+          views: data?.viewd_bies?.data.length || 0,
+          likes: data?.liked_bies?.data.length || 0,
+          videoId: item.id,
+          embedId: data?.embedId || 'dQw4w9WgXcQ',
+        };
+      });
+      setFeatureEvents(updatedData);
+    }
+  }, [featuredVideosData]);
+
+  console.log({ featureEvents });
   return (
     <>
       {/* Slider section starts */}
@@ -51,20 +139,24 @@ const MainPage = () => {
         {/* Latest News section starts */}
         <div className='hidden w-[25%] bg-primary-900 py-4 px-5 lg:block'>
           <h4 className='mb-1'>{latestNews.title}</h4>
-          {newsData.map((items, i) => {
-            if (i < 5)
-              return (
-                <LatestNews
-                  key={items.title + i}
-                  news={items.title}
-                  timeStamp={items.createdAt}
-                  linkTo={`/news/${items.id}`}
-                  containerStyle={`py-3 border-b-1 border-neutral-800 ${
-                    i === latestNews.news.length - 1 && 'border-b-0'
-                  }`}
-                />
-              );
-          })}
+          {loadingLatestNews
+            ? [1, 2, 3, 4, 5].map((index, i) => <NewsSkeleton key={i} />)
+            : latestNewsData?.allNews?.data.map((items, i) => {
+                if (i < 5)
+                  return (
+                    <LatestNews
+                      key={items?.attributes?.title && +i}
+                      news={items?.attributes?.title || 'Ted'}
+                      timeStamp={
+                        new Date(items?.attributes?.createdAt || '2021-01-01')
+                      }
+                      linkTo={`/news/${items.id}`}
+                      containerStyle={`py-3 border-b-1 border-neutral-800 ${
+                        i === 4 && 'border-b-0 pb-9'
+                      }`}
+                    />
+                  );
+              })}
           <Link
             className='text-secondary-800 hover:text-secondary-900'
             to={'/news-feed'}
@@ -74,23 +166,24 @@ const MainPage = () => {
         </div>
         {/* Latest News section ends */}
         <div className='w-full lg:w-[50%]'>
-          <HeroSlider FeaturedVideos={dummyFeaturedVideo} />
+          <HeroSlider FeaturedVideos={featureEvents || dummyFeaturedVideo} />
         </div>
 
         {/* Latest photos section starts */}
         <div className='hidden w-[25%] bg-primary-900 py-4 px-5 lg:block'>
           <h4 className='mb-1'>Latest Photos</h4>
-          {latestPhotos.photos.map((items, i) => {
-            return (
-              <PhotoWrapper
-                key={items.image + i}
-                image={items.image}
-                description={items.description}
-                timeStamp={items.timeStamp}
-                containerStyle='my-3'
-                linkTo={`/gallery/${items}`}
-              />
-            );
+          {photosData?.photos?.data.map((items, i) => {
+            if (items.attributes)
+              return (
+                <PhotoWrapper
+                  key={items.attributes.title + i}
+                  image={items.attributes.imageUrl || imageDummy}
+                  description={items.attributes.description}
+                  timeStamp={new Date(items.attributes.publishedAt)}
+                  containerStyle='my-3'
+                  linkTo={`/gallery`}
+                />
+              );
           })}
           <Link
             className='text-secondary-800 hover:text-secondary-900'
@@ -102,14 +195,12 @@ const MainPage = () => {
         {/* Latest photos section ends */}
       </section>
       {/* Slider section ends */}
-
       {/* Explore new section starts */}
       <section className='my-5 container-custom'>
         <h4 className='text-neutral-400 mb-2'>{categoriesData.title}</h4>
         <SelectionTab items={categoriesData.items} />
       </section>
       {/* Explore new section ends */}
-
       {/* Explore Latest section starts */}
       <section className='my-10 container-custom'>
         <Title
@@ -118,27 +209,31 @@ const MainPage = () => {
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
-          {data?.videos?.data.map((item, index) => {
-            return (
-              <VideoPanel
-                key={index}
-                videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
-                likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
-                views={0}
-                time={'4:20'}
-                title={item.attributes?.title || ''}
-                thumbnail={
-                  'http://localhost:1337' +
-                    item.attributes?.thumbnail?.data[0].attributes?.url || ''
-                }
-                containerStyle='flex-1'
-              />
-            );
-          })}
+          {loadingLatestVideos
+            ? [1, 2, 3, 4].map((item, i) => (
+                <VideoPanelSkeleton containerStyle='flex-1' key={i} />
+              ))
+            : LatestVideosData?.videos?.data.map((item, index) => {
+                return (
+                  <VideoPanel
+                    key={index}
+                    videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                    likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
+                    views={3450}
+                    time={'4:20'}
+                    title={item.attributes?.title || ''}
+                    thumbnail={
+                      BASE_URL +
+                        item.attributes?.thumbnail?.data[0].attributes?.url ||
+                      ''
+                    }
+                    containerStyle='flex-1'
+                  />
+                );
+              })}
         </div>
       </section>
       {/* Explore latest section ends */}
-
       {/* Explore Trending section starts */}
       <section className='my-10 container-custom'>
         <Title
@@ -147,23 +242,28 @@ const MainPage = () => {
           extraButtonTitle='Explore more'
         />
         <div className='flex flex-col gap-4 mt-10 lg:flex-row lg:gap-3'>
-          {data?.videos?.data.map((item, index) => {
-            return (
-              <VideoPanel
-                key={index}
-                videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
-                likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
-                views={0}
-                time={'4:20'}
-                title={item.attributes?.title || ''}
-                thumbnail={
-                  'http://localhost:1337' +
-                    item.attributes?.thumbnail?.data[0].attributes?.url || ''
-                }
-                containerStyle='flex-1'
-              />
-            );
-          })}
+          {loadingLatestVideos
+            ? [1, 2, 3, 4].map((item, i) => (
+                <VideoPanelSkeleton containerStyle='flex-1' key={i} />
+              ))
+            : LatestVideosData?.videos?.data.map((item, index) => {
+                return (
+                  <VideoPanel
+                    key={index}
+                    videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                    likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
+                    views={0}
+                    time={'4:20'}
+                    title={item.attributes?.title || ''}
+                    thumbnail={
+                      'http://localhost:1337' +
+                        item.attributes?.thumbnail?.data[0].attributes?.url ||
+                      ''
+                    }
+                    containerStyle='flex-1'
+                  />
+                );
+              })}
         </div>
       </section>
       {/* Explore Trending section ends */}

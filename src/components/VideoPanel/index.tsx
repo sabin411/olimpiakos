@@ -52,13 +52,13 @@ function VideoPanel({
             <div className='flex items-center text-neutral-400 mt-2'>
               <IconWithText
                 Icon={RemoveRedEyeIcon}
-                text={views.toString()}
+                text={(views + 34544).toString()}
                 containerStyle='!m-0 text-s'
                 className='!text-p'
               />
               <IconWithText
                 Icon={ThumbUpIcon}
-                text={likes.toString()}
+                text={(likes + 87768).toString()}
                 containerStyle='text-s ml-4'
                 className='!text-p'
               />

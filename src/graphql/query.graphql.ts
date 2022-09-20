@@ -75,15 +75,64 @@ export const GET_ALL_NEWS = gql`
   }
 `;
 
-export const GET_ALL_PHOTOS = gql`
-  query Photos {
-    photos {
+export const GET_LIMITED_NEWS = gql`
+  query LimitedNews(
+    $pagination: PaginationArg
+    $filters: NewsFiltersInput
+    $sort: [String]
+  ) {
+    allNews(pagination: $pagination, filters: $filters, sort: $sort) {
+      meta {
+        pagination {
+          total
+          page
+          pageSize
+          pageCount
+        }
+      }
       data {
+        id
+        attributes {
+          title
+          imageUrl
+          description
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ALL_PHOTOS = gql`
+  query Photos($pagination: PaginationArg) {
+    photos(pagination: $pagination) {
+      data {
+        id
+        attributes {
+          title
+          description
+          imageUrl
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
+export const GET_LIMITED_PHOTOS = gql`
+  query LimitedPhotos(
+    $filters: PhotoFiltersInput
+    $pagination: PaginationArg
+    $sort: [String]
+  ) {
+    photos(filters: $filters, pagination: $pagination, sort: $sort) {
+      data {
+        id
         attributes {
           imageUrl
           title
           description
-          createdAt
+          publishedAt
         }
       }
     }
@@ -205,6 +254,66 @@ export const GET_VIDEO_BY_ID = gql`
               }
             }
           }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_FEATURED_VIDEOS = gql`
+  query FeaturedVideos($pagination: PaginationArg, $sort: [String]) {
+    featuredEvents(pagination: $pagination, sort: $sort) {
+      data {
+        id
+        attributes {
+          title
+          description
+          embedId
+          liked_bies {
+            data {
+              attributes {
+                email
+              }
+            }
+          }
+          dislikedBy {
+            data {
+              attributes {
+                email
+              }
+            }
+          }
+          viewd_bies {
+            data {
+              attributes {
+                email
+              }
+            }
+          }
+          comments {
+            data {
+              attributes {
+                user {
+                  data {
+                    attributes {
+                      email
+                      name
+                    }
+                  }
+                }
+                publishedAt
+              }
+            }
+          }
+          publishedAt
+          thumbnail {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          duration
         }
       }
     }

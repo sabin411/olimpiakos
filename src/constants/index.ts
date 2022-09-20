@@ -95,30 +95,11 @@ export const dummyFeaturedVideo = [
     title: 'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
     description:
       'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
-    thumbnail: hero2,
-    views: '23093',
-    likes: '200323',
-    videoId: '12343',
-  },
-  {
-    time: '2:53',
-    title: 'Marathon',
-    description:
-      'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
     thumbnail: hero1,
-    views: '23093',
-    likes: '200323',
-    videoId: '1223',
-  },
-  {
-    time: '4:53',
-    title: '🏊‍♀️ 🏊🏻‍♂️ The best swimming finals at China2022 | Top Moments',
-    description:
-      ' Caeleb Dressel, Ariarne Titmus, Adam Peaty, Emma McKeon - they all left their marks at the 2022 Olympic Games! Here are the best swimming finals at #China2022 - enjoy watching! ',
-    thumbnail: hero3,
-    views: '23093',
-    likes: '200323',
-    videoId: '1223',
+    views: 23093,
+    likes: 200323,
+    videoId: '12343',
+    embedId: 'dQw4w9WgXcQ',
   },
 ];
 
