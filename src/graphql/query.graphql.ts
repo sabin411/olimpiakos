@@ -1,8 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const GET_ALL_VIDEOS = gql`
-  query Videos {
-    videos {
+  query Videos(
+    $pagination: PaginationArg
+    $filters: VideoFiltersInput
+    $sort: [String]
+  ) {
+    videos(pagination: $pagination, filters: $filters, sort: $sort) {
       data {
         id
         attributes {
@@ -24,6 +28,59 @@ export const GET_ALL_VIDEOS = gql`
               }
             }
           }
+          category {
+            data {
+              id
+              attributes {
+                name
+              }
+            }
+          }
+          dislikedBy {
+            data {
+              id
+            }
+          }
+          viewedBy {
+            data {
+              id
+            }
+          }
+          comments {
+            data {
+              id
+              attributes {
+                comment
+                user {
+                  data {
+                    attributes {
+                      email
+                      name
+                      profilePic {
+                        data {
+                          id
+                          attributes {
+                            url
+                          }
+                        }
+                      }
+                    }
+                    id
+                  }
+                }
+              }
+            }
+          }
+          duration
+          publishedAt
+        }
+      }
+      meta {
+        pagination {
+          total
+          page
+          pageSize
+          pageCount
         }
       }
     }

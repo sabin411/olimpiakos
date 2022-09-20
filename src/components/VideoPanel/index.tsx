@@ -15,6 +15,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 // types
 import { videoPanelProps } from './types';
+import { BASE_URL } from '@/env';
 
 function VideoPanel({
   time,
@@ -39,7 +40,7 @@ function VideoPanel({
       >
         <div className='aspect-video relative overflow-hidden'>
           <img
-            src={thumbnail}
+            src={BASE_URL + thumbnail}
             className='w-full h-full object-cover peer hover:scale-105 transition-all duration-200'
             alt={title + 'thumbnail'}
           />

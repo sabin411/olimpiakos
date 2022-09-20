@@ -222,9 +222,7 @@ const MainPage = () => {
                     time={item.attributes?.duration || '00:00'}
                     title={item.attributes?.title || ''}
                     thumbnail={
-                      BASE_URL +
-                        item.attributes?.thumbnail?.data[0].attributes?.url ||
-                      ''
+                      item.attributes?.thumbnail?.data[0].attributes?.url || ''
                     }
                     containerStyle='flex-1'
                   />
@@ -256,9 +254,7 @@ const MainPage = () => {
                     time={'4:20'}
                     title={item.attributes?.title || ''}
                     thumbnail={
-                      'http://localhost:1337' +
-                        item.attributes?.thumbnail?.data[0].attributes?.url ||
-                      ''
+                      item.attributes?.thumbnail?.data[0].attributes?.url || ''
                     }
                     containerStyle='flex-1'
                   />

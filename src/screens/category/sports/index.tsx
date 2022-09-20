@@ -6,15 +6,48 @@ import VideoPanel from '@/components/VideoPanel';
 import Title from '@/components/Title';
 import { capitalize, Pagination } from '@mui/material';
 
+// packages
+import { useQuery } from '@apollo/client';
+
 // images
 import emptyImage from '@/assets/images/svg/empty.svg';
 
 // constants
 import { games } from '../constans';
 
+// utils
+import { mapVideoPanelProps } from '@/utils/mapper';
+
+// graphql query
+import { GET_ALL_VIDEOS } from '@/graphql/query.graphql';
+import { Videos, VideosVariables } from '@/graphql/__generated__/Videos';
+
+// types
+import { videoPanelProps } from '@/components/VideoPanel/types';
+
 function Sports() {
   const { game } = useParams();
-  const currentGames = games[game ?? 'empty'];
+  const [currentGames, setCurrentGames] = useState<videoPanelProps[]>();
+
+  const {
+    data: videoData,
+    loading,
+    error,
+  } = useQuery<Videos, VideosVariables>(GET_ALL_VIDEOS, {
+    variables: {
+      filters: {
+        category: {
+          name: {
+            containsi: game,
+          },
+        },
+      },
+    },
+  });
+
+  useEffect(() => {
+    setCurrentGames(mapVideoPanelProps(videoData?.videos?.data));
+  }, [videoData]);
 
   return (
     <section className='container-custom mt-10'>
@@ -36,11 +69,12 @@ function Sports() {
             return (
               <VideoPanel
                 key={i + game.embedId}
-                videoId={game.embedId}
-                likes={game.videoDislikes}
-                views={game.videoDislikes}
-                time={game.videoDuration}
-                title={game.videoTitle}
+                embedId={game.embedId}
+                videoId={game.videoId}
+                likes={game.likes}
+                views={game.views}
+                time={game.time}
+                title={game.title}
                 thumbnail={game.thumbnail}
                 containerStyle=''
               />

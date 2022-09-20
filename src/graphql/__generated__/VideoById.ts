@@ -56,8 +56,8 @@ export interface VideoById_video_data_attributes_comments_data_attributes_user_d
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes {
   __typename: "UsersPermissionsUser";
   email: string;
-  name: string | null;
-  profilePic: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic | null;
+  name: string;
+  profilePic: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic;
 }
 
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data {
