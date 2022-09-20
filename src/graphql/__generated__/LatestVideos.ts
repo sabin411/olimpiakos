@@ -49,6 +49,7 @@ export interface LatestVideos_videos_data_attributes {
 
 export interface LatestVideos_videos_data {
   __typename: "VideoEntity";
+  id: string | null;
   attributes: LatestVideos_videos_data_attributes | null;
 }
 

@@ -2,9 +2,9 @@ export type VideoFrameProps = {
   embedId: string;
   videoTitle: string;
   videoDescription: string;
-  videoLikes: string;
-  videoDislikes: string;
-  videoViews: string;
+  videoLikes: number;
+  videoDislikes: number;
+  videoViews: number;
   isLiked?: boolean;
   isDisliked?: boolean;
   handleLikes: (likeStatus: boolean) => void;

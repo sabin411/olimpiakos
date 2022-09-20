@@ -37,9 +37,27 @@ export interface VideoById_video_data_attributes_dislikedBy {
   data: VideoById_video_data_attributes_dislikedBy_data[];
 }
 
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data_attributes {
+  __typename: "UploadFile";
+  url: string;
+}
+
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data {
+  __typename: "UploadFileEntity";
+  id: string | null;
+  attributes: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data_attributes | null;
+}
+
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic {
+  __typename: "UploadFileRelationResponseCollection";
+  data: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data[];
+}
+
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes {
   __typename: "UsersPermissionsUser";
   email: string;
+  name: string | null;
+  profilePic: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic | null;
 }
 
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data {
@@ -54,12 +72,14 @@ export interface VideoById_video_data_attributes_comments_data_attributes_user {
 
 export interface VideoById_video_data_attributes_comments_data_attributes {
   __typename: "Comment";
+  publishedAt: any | null;
   comment: string;
   user: VideoById_video_data_attributes_comments_data_attributes_user | null;
 }
 
 export interface VideoById_video_data_attributes_comments_data {
   __typename: "CommentEntity";
+  id: string | null;
   attributes: VideoById_video_data_attributes_comments_data_attributes | null;
 }
 
@@ -96,6 +116,7 @@ export interface VideoById_video_data_attributes {
 
 export interface VideoById_video_data {
   __typename: "VideoEntity";
+  id: string | null;
   attributes: VideoById_video_data_attributes | null;
 }
 

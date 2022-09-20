@@ -24,9 +24,13 @@ function VideoPanel({
   videoId,
   thumbnail,
   containerStyle,
+  embedId,
 }: videoPanelProps) {
   return (
-    <Link to={`/watch?id=${videoId}`} className={`${containerStyle}`}>
+    <Link
+      to={`/watch?id=${videoId}&embedId=${embedId}`}
+      className={`${containerStyle}`}
+    >
       <Card
         sx={{
           backgroundColor: 'var(--primary-800)',

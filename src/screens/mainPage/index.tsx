@@ -131,7 +131,6 @@ const MainPage = () => {
     }
   }, [featuredVideosData]);
 
-  console.log({ featureEvents });
   return (
     <>
       {/* Slider section starts */}
@@ -217,7 +216,8 @@ const MainPage = () => {
                 return (
                   <VideoPanel
                     key={index}
-                    videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                    videoId={item.id || '1'}
+                    embedId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
                     likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
                     views={3450}
                     time={'4:20'}
@@ -250,7 +250,8 @@ const MainPage = () => {
                 return (
                   <VideoPanel
                     key={index}
-                    videoId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                    videoId={item.id || '1'}
+                    embedId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
                     likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
                     views={0}
                     time={'4:20'}

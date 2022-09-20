@@ -329,6 +329,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 2,
@@ -336,6 +338,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 3,
@@ -343,6 +347,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 4,
@@ -350,6 +356,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 5,
@@ -357,6 +365,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 6,
@@ -364,6 +374,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 7,
@@ -371,6 +383,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 8,
@@ -378,6 +392,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 9,
@@ -385,6 +401,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 10,
@@ -392,6 +410,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 11,
@@ -399,6 +419,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 12,
@@ -406,6 +428,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
   {
     commentId: 13,
@@ -413,6 +437,8 @@ export const dummyComments = [
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
 ];
 

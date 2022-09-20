@@ -59,7 +59,6 @@ function VideoFrame({
           vertical: 'top',
           horizontal: 'left',
         }}
-        className={`${containerStyle}`}
       >
         <MenuItem
           onClick={() => {
@@ -74,7 +73,7 @@ function VideoFrame({
   };
   return (
     <>
-      <div className='bg-transparent'>
+      <div className={`bg-transparent ${containerStyle}`}>
         <div className='w-full aspect-video relative'>
           <iframe
             width='100%'
@@ -111,12 +110,12 @@ function VideoFrame({
           <div className='flex mt-4 lg:m-0'>
             <IconWithText
               Icon={RemoveRedEyeIcon}
-              text={videoViews}
+              text={videoViews.toString()}
               containerStyle='text-neutral-500 ml-0'
             />
             <IconWithText
               Icon={isLiked ? ThumbUpIcon : ThumbUpOffAltIcon}
-              text={videoLikes}
+              text={videoLikes.toString()}
               containerStyle='text-neutral-500 ml-3'
               enableInteraction
               className={`${
@@ -129,7 +128,7 @@ function VideoFrame({
             />
             <IconWithText
               Icon={isDisliked ? ThumbDownIcon : ThumbDownOffAltIcon}
-              text={videoDislikes}
+              text={videoDislikes.toString()}
               containerStyle='text-neutral-500 ml-3'
               enableInteraction
               className={`${

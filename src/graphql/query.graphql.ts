@@ -34,6 +34,7 @@ export const GET_LATEST_VIDEOS = gql`
   query LatestVideos($sort: [String]) {
     videos(sort: $sort) {
       data {
+        id
         attributes {
           embedId
           title
@@ -215,6 +216,7 @@ export const GET_VIDEO_BY_ID = gql`
   query VideoById($videoId: ID) {
     video(id: $videoId) {
       data {
+        id
         attributes {
           embedId
           title
@@ -235,12 +237,23 @@ export const GET_VIDEO_BY_ID = gql`
           }
           comments {
             data {
+              id
               attributes {
+                publishedAt
                 comment
                 user {
                   data {
                     attributes {
                       email
+                      name
+                      profilePic {
+                        data {
+                          id
+                          attributes {
+                            url
+                          }
+                        }
+                      }
                     }
                   }
                 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // component
 import Title from '@/components/Title';
@@ -7,42 +7,77 @@ import VideoFrame from '@/components/VideoFrame';
 import VideoPanel from '@/components/VideoPanel';
 
 // pacakges
+import { useQuery } from '@apollo/client';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 // constants
 import { dummyComments } from '@/constants/index';
-import { recommendedvids } from './constants';
+import { mapComment, recommendedvids } from './common';
+
+// graphql generated types
+import {
+  VideoById,
+  VideoByIdVariables,
+} from '@/graphql/__generated__/VideoById';
+import { GET_VIDEO_BY_ID } from '@/graphql/query.graphql';
 
 function Watch() {
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-
+  let currentVideo;
+  let comments;
   const [isLiked, setIsLiked] = React.useState(false);
   const [isDisliked, setIsDisliked] = React.useState(false);
+  const [searchParams] = useSearchParams();
+  const videoId = searchParams.get('id');
+  const embedId = searchParams.get('embedId');
+
+  // if videoId is available then fetch video by id
+  if (videoId) {
+    const { data, loading, error } = useQuery<VideoById, VideoByIdVariables>(
+      GET_VIDEO_BY_ID,
+      {
+        variables: {
+          videoId: videoId,
+        },
+      },
+    );
+    currentVideo = data?.video?.data?.attributes;
+    comments = mapComment(currentVideo?.comments?.data);
+
+    console.log({ currentVideo });
+  }
+
+  // if use has not liked the video already then like the video and remove dislike if disliked
   const handleLikes = (likeStatus: boolean) => {
     setIsLiked(likeStatus);
     if (likeStatus) {
       setIsDisliked(false);
     }
   };
+
+  // if use has not disliked the video already then dislike the video and remove like if liked
   const handleDislikes = (dislikeStatus: boolean) => {
     setIsDisliked(dislikeStatus);
     if (dislikeStatus) {
       setIsLiked(false);
     }
   };
+
+  console.log({ geda: comments });
+
   return (
     <>
       <section className='flex flex-col h-max mt-2 container-custom gap-4 lg:flex-row '>
         <VideoFrame
-          containerStyle='w-[90%]'
+          containerStyle='w-[70%]'
           isLiked={isLiked}
-          videoDescription=' The Football final of the Olympic Games 2016 was between the host nation Brazil and the reigning World Cup Champion Germany. With top players like Neymar, Gabriel Jesus, Marquinhos, Niklas Süle and the Bender Twins on the pitch, it promised to be an exciting fight for the gold medal - and indeed, it was a more than thrilling showdown at the Maracanã!'
-          videoTitle="Brazil vs Germany - FULL Match - Men's Football Final Rio 2016 | Throwback Thursday"
-          videoLikes='76322'
-          videoViews='8900818'
-          videoDislikes='7235'
-          embedId={searchParams.get('id') as string}
+          videoDescription={
+            currentVideo?.description || 'Description is not available'
+          }
+          videoTitle={currentVideo?.title || 'Title is not available'}
+          videoLikes={currentVideo?.likedBy?.data.length || 0}
+          videoViews={currentVideo?.viewedBy?.data.length || 0}
+          videoDislikes={currentVideo?.dislikedBy?.data.length || 0}
+          embedId={embedId as string}
           isDisliked={isDisliked}
           handleDislikes={handleDislikes}
           reportHandler={() => {
@@ -50,10 +85,12 @@ function Watch() {
           }}
           handleLikes={handleLikes}
         />
-        <CommentBox
-          comments={dummyComments}
-          containerStyle='max-h-[600px] lg:max-h-[800px]'
-        />
+        <div className='w-[40%] max-h-[600px] lg:max-h-[800px]'>
+          <CommentBox
+            comments={comments || dummyComments}
+            containerStyle='h-full'
+          />
+        </div>
       </section>
       {/* recommended video section starts */}
       <section className='container-custom my-16'>
@@ -75,10 +112,11 @@ function Watch() {
           {recommendedvids.map((game, i) => {
             return (
               <VideoPanel
+                embedId='kn5uevla61U'
                 key={i + game.embedId}
                 videoId={game.embedId}
-                likes={game.videoDislikes}
-                views={game.videoDislikes}
+                likes={0}
+                views={0}
                 time={game.videoDuration}
                 title={game.videoTitle}
                 thumbnail={game.thumbnail}

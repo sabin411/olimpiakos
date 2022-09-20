@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 
 // package
 import { Avatar, Tooltip } from '@mui/material';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 //icons
 import SendIcon from '@mui/icons-material/Send';
@@ -10,7 +11,7 @@ import SendIcon from '@mui/icons-material/Send';
 import dummyImage from '@/assets/images/dummy.jpg';
 
 // types
-import { SearchInputProps } from './types';
+import { SearchInputProps, SingleCommentProps } from './types';
 import { CommentDataProp } from '@/global/types';
 
 const SearchInput: React.FC<SearchInputProps> = ({
@@ -74,14 +75,37 @@ function CommentBox({
   const [liveComments, setLiveComments] = useState(comments);
   const bottomRef = useRef(null);
 
+  React.useEffect(() => {
+    setLiveComments(comments);
+  }, [comments]);
+
+  console.log({ liveComments, comments });
+
   // This function returns jsx for each comment
-  const Comment = ({ avatar, text }: { avatar: string; text: string }) => {
+  const Comment = ({
+    avatar,
+    text,
+    timeStamp,
+    userName,
+  }: SingleCommentProps) => {
     return (
-      <div className='flex p-4'>
-        <Avatar src={avatar} className='mt-2' />
-        <Tooltip title={text}>
-          <p className='ml-3 text-neutral-400 line-clamp-3'>{text}</p>
-        </Tooltip>
+      <div className='py-3 mr-3'>
+        <div className='flex'>
+          <Avatar src={'http://localhost:1337' + avatar} className='mr-3' />
+          <div>
+            <h6 className='text-p font-semi-bold text-neutral-400'>
+              {userName}
+              <span className='text-s font-regular text-primary-600 ml-5'>
+                {formatDistanceToNowStrict(timeStamp, { addSuffix: true })}
+              </span>
+            </h6>
+            <Tooltip title={text} className='mt-1'>
+              <p className='text-neutral-500 text-[12px] line-clamp-3'>
+                {text}
+              </p>
+            </Tooltip>
+          </div>
+        </div>
       </div>
     );
   };
@@ -95,6 +119,8 @@ function CommentBox({
         comment: value,
         commentUserImg:
           'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+        timeStamp: new Date(),
+        userName: 'John Doe',
       },
     ]);
     setValue('');
@@ -114,6 +140,8 @@ function CommentBox({
               key={i}
               avatar={cmnt.commentUserImg ?? dummyImage}
               text={cmnt.comment}
+              timeStamp={cmnt.timeStamp}
+              userName={cmnt.userName || 'John Doe'}
             />
           );
         })}

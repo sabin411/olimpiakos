@@ -4,3 +4,10 @@ export type SearchInputProps = {
   onSubmit: () => void;
   containerStyle?: string;
 };
+
+export type SingleCommentProps = {
+  avatar: string;
+  text: string;
+  timeStamp: Date;
+  userName: string;
+};
