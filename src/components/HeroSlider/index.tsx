@@ -30,6 +30,8 @@ function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
       slidesToScroll={1}
       nextArrow={<NextArrow />}
       prevArrow={<BeforeArrow />}
+      autoplay={true}
+      autoplaySpeed={5000}
     >
       {FeaturedVideos.map((video, i) => {
         return (
@@ -58,7 +60,9 @@ function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
                 <h3 className='font-semi-bold text-neutral-300 text-h5 md:text-h3 md:max-w-full line-clamp-2'>
                   {video.title}
                 </h3>
-                <Link to={`watch?id=${video.embedId}`}>
+                <Link
+                  to={`/watch?id=${video.videoId}&embedId=${video.embedId}`}
+                >
                   <Button
                     sx={{
                       backgroundColor: 'var(--secondary-800)',

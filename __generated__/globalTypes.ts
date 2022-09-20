@@ -106,6 +106,17 @@ export interface FeaturedEventFiltersInput {
   not?: FeaturedEventFiltersInput | null;
 }
 
+export interface FeaturedVideoFiltersInput {
+  id?: IDFilterInput | null;
+  videos?: VideoFiltersInput | null;
+  createdAt?: DateTimeFilterInput | null;
+  updatedAt?: DateTimeFilterInput | null;
+  publishedAt?: DateTimeFilterInput | null;
+  and?: (FeaturedVideoFiltersInput | null)[] | null;
+  or?: (FeaturedVideoFiltersInput | null)[] | null;
+  not?: FeaturedVideoFiltersInput | null;
+}
+
 export interface IDFilterInput {
   and?: (string | null)[] | null;
   or?: (string | null)[] | null;
@@ -274,6 +285,8 @@ export interface VideoFiltersInput {
   dislikedBy?: UsersPermissionsUserFiltersInput | null;
   viewedBy?: UsersPermissionsUserFiltersInput | null;
   comments?: CommentFiltersInput | null;
+  featured_video?: FeaturedVideoFiltersInput | null;
+  duration?: StringFilterInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
   publishedAt?: DateTimeFilterInput | null;

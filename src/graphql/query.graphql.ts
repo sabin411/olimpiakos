@@ -31,8 +31,8 @@ export const GET_ALL_VIDEOS = gql`
 `;
 
 export const GET_LATEST_VIDEOS = gql`
-  query LatestVideos($sort: [String]) {
-    videos(sort: $sort) {
+  query LatestVideos($pagination: PaginationArg, $sort: [String]) {
+    videos(pagination: $pagination, sort: $sort) {
       data {
         id
         attributes {
@@ -42,9 +42,6 @@ export const GET_LATEST_VIDEOS = gql`
           likedBy {
             data {
               id
-              attributes {
-                email
-              }
             }
           }
           thumbnail {
@@ -54,6 +51,12 @@ export const GET_LATEST_VIDEOS = gql`
               }
             }
           }
+          viewedBy {
+            data {
+              id
+            }
+          }
+          duration
         }
       }
     }
@@ -273,60 +276,39 @@ export const GET_VIDEO_BY_ID = gql`
   }
 `;
 
-export const GET_FEATURED_VIDEOS = gql`
-  query FeaturedVideos($pagination: PaginationArg, $sort: [String]) {
-    featuredEvents(pagination: $pagination, sort: $sort) {
+export const GET_FEATURED_EVENTS = gql`
+  query FeaturedEvents {
+    featuredVideos {
       data {
-        id
         attributes {
-          title
-          description
-          embedId
-          liked_bies {
+          videos {
             data {
+              id
               attributes {
-                email
-              }
-            }
-          }
-          dislikedBy {
-            data {
-              attributes {
-                email
-              }
-            }
-          }
-          viewd_bies {
-            data {
-              attributes {
-                email
-              }
-            }
-          }
-          comments {
-            data {
-              attributes {
-                user {
+                embedId
+                title
+                thumbnail {
                   data {
                     attributes {
-                      email
-                      name
+                      url
                     }
                   }
                 }
-                publishedAt
+                description
+                likedBy {
+                  data {
+                    id
+                  }
+                }
+                viewedBy {
+                  data {
+                    id
+                  }
+                }
+                duration
               }
             }
           }
-          publishedAt
-          thumbnail {
-            data {
-              attributes {
-                url
-              }
-            }
-          }
-          duration
         }
       }
     }

@@ -16,7 +16,7 @@ import {
 import {
   GET_ALL_NEWS,
   GET_ALL_PHOTOS,
-  GET_FEATURED_VIDEOS,
+  GET_FEATURED_EVENTS,
   GET_LATEST_VIDEOS,
   GET_LIMITED_PHOTOS,
 } from '@/graphql/query.graphql';
@@ -56,10 +56,7 @@ import {
   LimitedPhotos,
   LimitedPhotosVariables,
 } from '@/graphql/__generated__/LimitedPhotos';
-import {
-  FeaturedVideos,
-  FeaturedVideosVariables,
-} from '@/graphql/__generated__/FeaturedVideos';
+import { FeaturedEvents } from '@/graphql/__generated__/FeaturedEvents';
 import { HeroSliderProps } from '@/components/HeroSlider/types';
 
 const MainPage = () => {
@@ -72,6 +69,9 @@ const MainPage = () => {
   } = useQuery<LatestVideos, LatestVideosVariables>(GET_LATEST_VIDEOS, {
     variables: {
       sort: ['createdAt:desc'],
+      pagination: {
+        limit: 4,
+      },
     },
   });
 
@@ -105,28 +105,25 @@ const MainPage = () => {
     data: featuredVideosData,
     loading: loadingFeaturedVideos,
     error: errorFeaturedVideos,
-  } = useQuery<FeaturedVideos, FeaturedVideosVariables>(GET_FEATURED_VIDEOS, {
-    variables: {
-      pagination: {
-        limit: 4,
-      },
-    },
-  });
+  } = useQuery<FeaturedEvents>(GET_FEATURED_EVENTS);
   useEffect(() => {
     if (featuredVideosData) {
-      const updatedData = featuredVideosData.featuredEvents?.data.map(item => {
-        const data = item.attributes;
-        return {
-          time: data?.duration || '00:00',
-          title: data?.title || 'Title not available',
-          description: data?.description || 'Description not available',
-          thumbnail: data?.thumbnail.data?.attributes?.url || imageDummy,
-          views: data?.viewd_bies?.data.length || 0,
-          likes: data?.liked_bies?.data.length || 0,
-          videoId: item.id,
-          embedId: data?.embedId || 'dQw4w9WgXcQ',
-        };
-      });
+      const updatedData =
+        featuredVideosData.featuredVideos?.data[0].attributes?.videos?.data.map(
+          item => {
+            const data = item.attributes;
+            return {
+              time: data?.duration || '00:00',
+              title: data?.title || 'Title not available',
+              description: data?.description || 'Description not available',
+              thumbnail: data?.thumbnail.data[0].attributes?.url || imageDummy,
+              views: data?.viewedBy?.data.length || 0,
+              likes: data?.likedBy?.data.length || 0,
+              videoId: item.id,
+              embedId: data?.embedId || 'dQw4w9WgXcQ',
+            };
+          },
+        );
       setFeatureEvents(updatedData);
     }
   }, [featuredVideosData]);
@@ -219,8 +216,10 @@ const MainPage = () => {
                     videoId={item.id || '1'}
                     embedId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
                     likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
-                    views={3450}
-                    time={'4:20'}
+                    views={
+                      3450 + (item.attributes?.viewedBy?.data?.length || 0)
+                    }
+                    time={item.attributes?.duration || '00:00'}
                     title={item.attributes?.title || ''}
                     thumbnail={
                       BASE_URL +
