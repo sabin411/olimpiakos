@@ -18,7 +18,8 @@ import {
   LimitedNewsVariables,
   LimitedNews_allNews_data,
 } from '@/graphql/__generated__/LimitedNews';
-import { GET_LIMITED_NEWS } from '@/graphql/query.graphql';
+import { GET_ALL_NEWS } from '@/graphql/query.graphql';
+import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
 
 export const News = () => {
   const { newsId } = useParams();
@@ -36,7 +37,7 @@ export const News = () => {
     data: currentNews,
     loading,
     error,
-  } = useQuery<LimitedNews, LimitedNewsVariables>(GET_LIMITED_NEWS, {
+  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
     variables: {
       sort: ['createdAt:desc'],
       pagination: {
@@ -54,7 +55,7 @@ export const News = () => {
     data: newsData,
     loading: loadingAllNews,
     error: errorAllNews,
-  } = useQuery<LimitedNews, LimitedNewsVariables>(GET_LIMITED_NEWS, {
+  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
     variables: {
       sort: ['createdAt:desc'],
       pagination: {

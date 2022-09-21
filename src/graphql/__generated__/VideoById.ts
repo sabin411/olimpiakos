@@ -56,9 +56,26 @@ export interface VideoById_video_data_attributes_viewedBy {
   data: VideoById_video_data_attributes_viewedBy_data[];
 }
 
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes_profilePic_data_attributes {
+  __typename: "UploadFile";
+  url: string;
+}
+
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes_profilePic_data {
+  __typename: "UploadFileEntity";
+  id: string | null;
+  attributes: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes_profilePic_data_attributes | null;
+}
+
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes_profilePic {
+  __typename: "UploadFileEntityResponse";
+  data: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes_profilePic_data | null;
+}
+
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes {
   __typename: "UserInformation";
   fullName: string;
+  profilePic: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes_profilePic;
 }
 
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data {
@@ -92,7 +109,7 @@ export interface VideoById_video_data_attributes_comments_data_attributes {
   __typename: "Comment";
   comment: string;
   user: VideoById_video_data_attributes_comments_data_attributes_user | null;
-  publishedAt: any | null;
+  createdAt: any | null;
 }
 
 export interface VideoById_video_data_attributes_comments_data {
@@ -133,7 +150,7 @@ export interface VideoById {
 }
 
 export interface VideoByIdVariables {
-  videoId?: string | null;
   pagination?: PaginationArg | null;
   sort?: (string | null)[] | null;
+  videoId?: string | null;
 }

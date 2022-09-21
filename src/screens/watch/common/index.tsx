@@ -14,10 +14,12 @@ export const mapComment = (
     commentId: comment.id || '32423432',
     comment: comment.attributes?.comment || 'This comment is unavailable',
     commentUserImg:
-      comment.attributes?.user?.data?.attributes?.profilePic?.data[0].attributes
-        ?.url || imageDummy,
-    timeStamp: new Date(comment.attributes?.publishedAt) || new Date(),
-    userName: comment.attributes?.user?.data?.attributes?.name || 'Anonymous',
+      comment.attributes?.user?.data?.attributes?.user_information?.data
+        ?.attributes?.profilePic.data?.attributes?.url || imageDummy,
+    timeStamp: new Date(comment.attributes?.createdAt) || new Date(),
+    userName:
+      comment.attributes?.user?.data?.attributes?.user_information?.data
+        ?.attributes?.fullName || 'Anonymous',
   }));
 };
 

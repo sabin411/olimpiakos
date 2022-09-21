@@ -291,7 +291,7 @@ export const GET_UPCOMING_EVENTS = gql`
 // ! deprecated
 
 export const GET_VIDEO_BY_ID = gql`
-  query VideoById($videoId: ID, $pagination: PaginationArg, $sort: [String]) {
+  query VideoById($pagination: PaginationArg, $sort: [String], $videoId: ID) {
     video(id: $videoId) {
       data {
         id
@@ -336,13 +336,21 @@ export const GET_VIDEO_BY_ID = gql`
                           id
                           attributes {
                             fullName
+                            profilePic {
+                              data {
+                                id
+                                attributes {
+                                  url
+                                }
+                              }
+                            }
                           }
                         }
                       }
                     }
                   }
                 }
-                publishedAt
+                createdAt
               }
             }
           }
@@ -385,6 +393,19 @@ export const GET_FEATURED_EVENTS = gql`
               }
             }
           }
+        }
+      }
+    }
+  }
+`;
+
+export const CREATE_UPLOAD_FILE = gql`
+  mutation CreateUploadFile($data: UploadFileInput!) {
+    createUploadFile(data: $data) {
+      data {
+        id
+        attributes {
+          url
         }
       }
     }

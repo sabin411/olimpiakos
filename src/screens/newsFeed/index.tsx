@@ -18,7 +18,7 @@ import { newsData } from '@/global/constants';
 import { imageDummy } from '@/assets/images/dummyImages';
 
 // graphql
-import { GET_LIMITED_NEWS, GET_LIMITED_PHOTOS } from '@/graphql/query.graphql';
+import { GET_ALL_NEWS, GET_ALL_PHOTOS } from '@/graphql/query.graphql';
 
 // 1. graphql generated types
 import {
@@ -29,6 +29,8 @@ import {
   LimitedPhotos,
   LimitedPhotosVariables,
 } from '@/graphql/__generated__/LimitedPhotos';
+import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
+import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
 
 const NewsFeed = () => {
   const uniqueId = useId();
@@ -38,7 +40,7 @@ const NewsFeed = () => {
     data: newsData,
     loading,
     error,
-  } = useQuery<LimitedNews, LimitedNewsVariables>(GET_LIMITED_NEWS, {
+  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
     variables: {
       sort: ['createdAt:desc'],
       pagination: {
@@ -52,7 +54,7 @@ const NewsFeed = () => {
     data: photosData,
     loading: loadingPhotos,
     error: errorPhotos,
-  } = useQuery<LimitedPhotos, LimitedPhotosVariables>(GET_LIMITED_PHOTOS, {
+  } = useQuery<Photos, PhotosVariables>(GET_ALL_PHOTOS, {
     variables: {
       sort: ['createdAt:desc'],
       pagination: {
@@ -102,7 +104,7 @@ const NewsFeed = () => {
               description={
                 items.attributes?.description || 'Description not found'
               }
-              timeStamp={new Date(items.attributes?.publishedAt)}
+              timeStamp={new Date(items.attributes?.createdAt)}
               containerStyle='my-3'
             />
           );

@@ -18,7 +18,8 @@ import {
   LimitedPhotos,
   LimitedPhotosVariables,
 } from '@/graphql/__generated__/LimitedPhotos';
-import { GET_LIMITED_PHOTOS } from '@/graphql/query.graphql';
+import { GET_ALL_PHOTOS } from '@/graphql/query.graphql';
+import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
 
 // images
 const itemData = [
@@ -99,7 +100,7 @@ function Gallery() {
     data: photosData,
     loading: loadingPhotos,
     error: errorPhotos,
-  } = useQuery<LimitedPhotos, LimitedPhotosVariables>(GET_LIMITED_PHOTOS, {
+  } = useQuery<Photos, PhotosVariables>(GET_ALL_PHOTOS, {
     variables: {
       sort: ['createdAt:desc'],
     },

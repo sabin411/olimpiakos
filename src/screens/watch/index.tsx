@@ -62,8 +62,6 @@ function Watch() {
     }
   };
 
-  console.log({ geda: comments });
-
   return (
     <>
       <section className='flex flex-col h-max mt-2 container-custom gap-4 lg:flex-row '>

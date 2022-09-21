@@ -57,10 +57,16 @@ export interface CommentFiltersInput {
   featured_event?: FeaturedEventFiltersInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
-  publishedAt?: DateTimeFilterInput | null;
   and?: (CommentFiltersInput | null)[] | null;
   or?: (CommentFiltersInput | null)[] | null;
   not?: CommentFiltersInput | null;
+}
+
+export interface CommentInput {
+  comment?: string | null;
+  video?: string | null;
+  user?: string | null;
+  featured_event?: string | null;
 }
 
 export interface DateTimeFilterInput {
@@ -222,6 +228,25 @@ export interface StringFilterInput {
   between?: (string | null)[] | null;
 }
 
+export interface UploadFileInput {
+  name?: string | null;
+  alternativeText?: string | null;
+  caption?: string | null;
+  width?: number | null;
+  height?: number | null;
+  formats?: any | null;
+  hash?: string | null;
+  ext?: string | null;
+  mime?: string | null;
+  size?: number | null;
+  url?: string | null;
+  previewUrl?: string | null;
+  provider?: string | null;
+  provider_metadata?: any | null;
+  folder?: string | null;
+  folderPath?: string | null;
+}
+
 export interface UserInformationFiltersInput {
   id?: IDFilterInput | null;
   fullName?: StringFilterInput | null;
@@ -236,6 +261,21 @@ export interface UserInformationFiltersInput {
   not?: UserInformationFiltersInput | null;
 }
 
+export interface UserInformationInput {
+  fullName?: string | null;
+  Country?: string | null;
+  phoneNumber?: any | null;
+  isOnline?: boolean | null;
+  users_permissions_user?: string | null;
+  profilePic?: string | null;
+}
+
+export interface UsersPermissionsLoginInput {
+  identifier: string;
+  password: string;
+  provider: string;
+}
+
 export interface UsersPermissionsPermissionFiltersInput {
   id?: IDFilterInput | null;
   action?: StringFilterInput | null;
@@ -245,6 +285,12 @@ export interface UsersPermissionsPermissionFiltersInput {
   and?: (UsersPermissionsPermissionFiltersInput | null)[] | null;
   or?: (UsersPermissionsPermissionFiltersInput | null)[] | null;
   not?: UsersPermissionsPermissionFiltersInput | null;
+}
+
+export interface UsersPermissionsRegisterInput {
+  username: string;
+  email: string;
+  password: string;
 }
 
 export interface UsersPermissionsRoleFiltersInput {

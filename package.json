@@ -27,6 +27,7 @@
     "react-hook-form": "^7.36.0",
     "react-router-dom": "^6.3.0",
     "react-slick": "^0.29.0",
+    "react-toastify": "^9.0.8",
     "sass": "^1.54.4",
     "slick-carousel": "^1.8.1",
     "vite-tsconfig-paths": "^3.5.0",

@@ -8,12 +8,16 @@ function ButtonComp({
   title,
   containerStyle,
   type,
+  disabled,
+  onClick,
 }: {
   variant: 'contained' | 'outlined' | 'text';
   buttonSize: 'small' | 'medium' | 'large';
   title: string;
   containerStyle?: React.CSSProperties;
   type: 'button' | 'submit' | 'reset' | undefined;
+  disabled?: boolean;
+  onClick?: () => void;
 }) {
   // containedButton render
   const ContainedButton = () => (
@@ -21,6 +25,8 @@ function ButtonComp({
       type={type}
       variant='contained'
       size={buttonSize}
+      disabled={disabled}
+      onClick={onClick}
       sx={{
         backgroundColor: 'var(--secondary-800)',
         maxWidth: '220px',
@@ -41,6 +47,8 @@ function ButtonComp({
       type={type}
       variant='outlined'
       size={buttonSize}
+      disabled={disabled}
+      onClick={onClick}
       sx={{
         borderColor: 'var(--secondary-800)',
         color: 'var(--secondary-800)',
@@ -64,6 +72,8 @@ function ButtonComp({
       type={type}
       variant='text'
       size={buttonSize}
+      disabled={disabled}
+      onClick={onClick}
       sx={{
         color: 'var(--secondary-800)',
         maxWidth: '220px',

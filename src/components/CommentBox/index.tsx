@@ -14,6 +14,9 @@ import dummyImage from '@/assets/images/dummy.jpg';
 import { SearchInputProps, SingleCommentProps } from './types';
 import { CommentDataProp } from '@/global/types';
 
+// CONSTANTS
+import { BASE_URL } from '@/env';
+
 const SearchInput: React.FC<SearchInputProps> = ({
   value,
   onChange,
@@ -91,7 +94,10 @@ function CommentBox({
     return (
       <div className='py-3 mr-3'>
         <div className='flex'>
-          <Avatar src={'http://localhost:1337' + avatar} className='mr-3' />
+          <Avatar
+            src={avatar.includes('http') ? avatar : BASE_URL + avatar}
+            className='mr-3'
+          />
           <div>
             <h6 className='text-p font-semi-bold text-neutral-400'>
               {userName}
