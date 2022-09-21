@@ -16,9 +16,8 @@ import {
 import {
   GET_ALL_NEWS,
   GET_ALL_PHOTOS,
+  GET_ALL_VIDEOS,
   GET_FEATURED_EVENTS,
-  GET_LATEST_VIDEOS,
-  GET_LIMITED_PHOTOS,
 } from '@/graphql/query.graphql';
 
 // apollo client
@@ -52,21 +51,17 @@ import {
 } from '@/graphql/__generated__/LatestVideos';
 import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
 import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
-import {
-  LimitedPhotos,
-  LimitedPhotosVariables,
-} from '@/graphql/__generated__/LimitedPhotos';
 import { FeaturedEvents } from '@/graphql/__generated__/FeaturedEvents';
 import { HeroSliderProps } from '@/components/HeroSlider/types';
+import { Videos, VideosVariables } from '@/graphql/__generated__/Videos';
 
 const MainPage = () => {
   const [featureEvents, setFeatureEvents] = React.useState<HeroSliderProps>();
   // Query for latest videos
-  const {
-    data: LatestVideosData,
-    loading: loadingLatestVideos,
-    error: errorLatestVideos,
-  } = useQuery<LatestVideos, LatestVideosVariables>(GET_LATEST_VIDEOS, {
+  const { data: LatestVideosData, loading: loadingLatestVideos } = useQuery<
+    Videos,
+    VideosVariables
+  >(GET_ALL_VIDEOS, {
     variables: {
       sort: ['createdAt:desc'],
       pagination: {
@@ -76,29 +71,27 @@ const MainPage = () => {
   });
 
   // querying for latest news
-  const {
-    data: latestNewsData,
-    loading: loadingLatestNews,
-    error: errorLatestNews,
-  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
+  const { data: latestNewsData, loading: loadingLatestNews } = useQuery<
+    AllNews,
+    AllNewsVariables
+  >(GET_ALL_NEWS, {
     variables: {
       sort: ['createdAt:desc'],
     },
   });
 
   // querying for latest photos
-  const {
-    data: photosData,
-    loading: loadingPhotos,
-    error: errorPhotos,
-  } = useQuery<LimitedPhotos, LimitedPhotosVariables>(GET_LIMITED_PHOTOS, {
-    variables: {
-      sort: ['createdAt:desc'],
-      pagination: {
-        limit: 2,
+  const { data: photosData } = useQuery<Photos, PhotosVariables>(
+    GET_ALL_PHOTOS,
+    {
+      variables: {
+        sort: ['createdAt:desc'],
+        pagination: {
+          limit: 2,
+        },
       },
     },
-  });
+  );
 
   // querying for featured event videos
   const {
@@ -175,7 +168,7 @@ const MainPage = () => {
                   key={items.attributes.title + i}
                   image={items.attributes.imageUrl || imageDummy}
                   description={items.attributes.description}
-                  timeStamp={new Date(items.attributes.publishedAt)}
+                  timeStamp={new Date(items.attributes.createdAt)}
                   containerStyle='my-3'
                   linkTo={`/gallery`}
                 />

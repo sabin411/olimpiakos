@@ -3,17 +3,31 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { PaginationArg } from "./../../../__generated__/globalTypes";
+
 // ====================================================
 // GraphQL query operation: VideoById
 // ====================================================
 
+export interface VideoById_video_data_attributes_likedBy_data_attributes_user_information_data {
+  __typename: "UserInformationEntity";
+  id: string | null;
+}
+
+export interface VideoById_video_data_attributes_likedBy_data_attributes_user_information {
+  __typename: "UserInformationEntityResponse";
+  data: VideoById_video_data_attributes_likedBy_data_attributes_user_information_data | null;
+}
+
 export interface VideoById_video_data_attributes_likedBy_data_attributes {
   __typename: "UsersPermissionsUser";
   email: string;
+  user_information: VideoById_video_data_attributes_likedBy_data_attributes_user_information | null;
 }
 
 export interface VideoById_video_data_attributes_likedBy_data {
   __typename: "UsersPermissionsUserEntity";
+  id: string | null;
   attributes: VideoById_video_data_attributes_likedBy_data_attributes | null;
 }
 
@@ -22,14 +36,9 @@ export interface VideoById_video_data_attributes_likedBy {
   data: VideoById_video_data_attributes_likedBy_data[];
 }
 
-export interface VideoById_video_data_attributes_dislikedBy_data_attributes {
-  __typename: "UsersPermissionsUser";
-  email: string;
-}
-
 export interface VideoById_video_data_attributes_dislikedBy_data {
   __typename: "UsersPermissionsUserEntity";
-  attributes: VideoById_video_data_attributes_dislikedBy_data_attributes | null;
+  id: string | null;
 }
 
 export interface VideoById_video_data_attributes_dislikedBy {
@@ -37,31 +46,40 @@ export interface VideoById_video_data_attributes_dislikedBy {
   data: VideoById_video_data_attributes_dislikedBy_data[];
 }
 
-export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data_attributes {
-  __typename: "UploadFile";
-  url: string;
-}
-
-export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data {
-  __typename: "UploadFileEntity";
+export interface VideoById_video_data_attributes_viewedBy_data {
+  __typename: "UsersPermissionsUserEntity";
   id: string | null;
-  attributes: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data_attributes | null;
 }
 
-export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic {
-  __typename: "UploadFileRelationResponseCollection";
-  data: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data[];
+export interface VideoById_video_data_attributes_viewedBy {
+  __typename: "UsersPermissionsUserRelationResponseCollection";
+  data: VideoById_video_data_attributes_viewedBy_data[];
+}
+
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes {
+  __typename: "UserInformation";
+  fullName: string;
+}
+
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data {
+  __typename: "UserInformationEntity";
+  id: string | null;
+  attributes: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes | null;
+}
+
+export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information {
+  __typename: "UserInformationEntityResponse";
+  data: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information_data | null;
 }
 
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data_attributes {
   __typename: "UsersPermissionsUser";
-  email: string;
-  name: string;
-  profilePic: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_profilePic;
+  user_information: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes_user_information | null;
 }
 
 export interface VideoById_video_data_attributes_comments_data_attributes_user_data {
   __typename: "UsersPermissionsUserEntity";
+  id: string | null;
   attributes: VideoById_video_data_attributes_comments_data_attributes_user_data_attributes | null;
 }
 
@@ -72,9 +90,9 @@ export interface VideoById_video_data_attributes_comments_data_attributes_user {
 
 export interface VideoById_video_data_attributes_comments_data_attributes {
   __typename: "Comment";
-  publishedAt: any | null;
   comment: string;
   user: VideoById_video_data_attributes_comments_data_attributes_user | null;
+  publishedAt: any | null;
 }
 
 export interface VideoById_video_data_attributes_comments_data {
@@ -88,21 +106,6 @@ export interface VideoById_video_data_attributes_comments {
   data: VideoById_video_data_attributes_comments_data[];
 }
 
-export interface VideoById_video_data_attributes_viewedBy_data_attributes {
-  __typename: "UsersPermissionsUser";
-  email: string;
-}
-
-export interface VideoById_video_data_attributes_viewedBy_data {
-  __typename: "UsersPermissionsUserEntity";
-  attributes: VideoById_video_data_attributes_viewedBy_data_attributes | null;
-}
-
-export interface VideoById_video_data_attributes_viewedBy {
-  __typename: "UsersPermissionsUserRelationResponseCollection";
-  data: VideoById_video_data_attributes_viewedBy_data[];
-}
-
 export interface VideoById_video_data_attributes {
   __typename: "Video";
   embedId: string;
@@ -110,8 +113,8 @@ export interface VideoById_video_data_attributes {
   description: string;
   likedBy: VideoById_video_data_attributes_likedBy | null;
   dislikedBy: VideoById_video_data_attributes_dislikedBy | null;
-  comments: VideoById_video_data_attributes_comments | null;
   viewedBy: VideoById_video_data_attributes_viewedBy | null;
+  comments: VideoById_video_data_attributes_comments | null;
 }
 
 export interface VideoById_video_data {
@@ -131,4 +134,6 @@ export interface VideoById {
 
 export interface VideoByIdVariables {
   videoId?: string | null;
+  pagination?: PaginationArg | null;
+  sort?: (string | null)[] | null;
 }

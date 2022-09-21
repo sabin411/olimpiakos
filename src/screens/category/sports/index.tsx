@@ -28,6 +28,18 @@ import { videoPanelProps } from '@/components/VideoPanel/types';
 function Sports() {
   const { game } = useParams();
   const [currentGames, setCurrentGames] = useState<videoPanelProps[]>();
+  let isFilter =
+    game !== 'all'
+      ? {
+          filters: {
+            category: {
+              name: {
+                containsi: game,
+              },
+            },
+          },
+        }
+      : null;
 
   const {
     data: videoData,
@@ -35,13 +47,7 @@ function Sports() {
     error,
   } = useQuery<Videos, VideosVariables>(GET_ALL_VIDEOS, {
     variables: {
-      filters: {
-        category: {
-          name: {
-            containsi: game,
-          },
-        },
-      },
+      ...isFilter,
     },
   });
 

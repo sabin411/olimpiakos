@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // component
 import Button from '../Button';
 
 // packages
 import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
+import { Navigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { styled, alpha } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
 
 // icons
 import MenuIcon from '@mui/icons-material/Menu';
@@ -31,6 +32,9 @@ import { Logo } from '@/global/common';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
+// commons
+import { SearchForm } from './common';
+
 function AppBarComp({
   onMenuClick,
   isLoggedIn,
@@ -39,10 +43,12 @@ function AppBarComp({
   isLoggedIn: boolean;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [searchValue, setSearchValue] = useState('');
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const navigate = useNavigate();
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -178,6 +184,7 @@ function AppBarComp({
       </MenuItem>
     </Menu>
   );
+
   return (
     <>
       <AppBar
@@ -213,15 +220,7 @@ function AppBarComp({
           </Typography>
           {isLoggedIn ? (
             <>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder='Search…'
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </Search>
+              <SearchForm />
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton

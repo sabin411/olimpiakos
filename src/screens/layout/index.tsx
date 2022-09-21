@@ -28,7 +28,9 @@ export default function Layout() {
       {/* sidebar ends */}
 
       {/* main content starts */}
-      <Outlet />
+      <section className='min-h-[60vh]'>
+        <Outlet />
+      </section>
       {/* main content ends */}
 
       {/* footer starts */}

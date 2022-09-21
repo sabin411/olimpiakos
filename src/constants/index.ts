@@ -108,39 +108,39 @@ export const categoriesData = {
   title: 'Explore More',
   items: [
     {
-      id: 1,
+      id: 8,
       name: 'All',
       linkTo: '/category/sports/all',
     },
     {
-      id: 2,
+      id: 1,
       name: 'Football',
       linkTo: '/category/sports/football',
     },
     {
+      id: 2,
+      name: 'Volleyball',
+      linkTo: '/category/sports/volleyball',
+    },
+    {
       id: 3,
-      name: 'Basketball',
-      linkTo: '/category/sports/basketball',
+      name: 'Cricket',
+      linkTo: '/category/sports/cricket',
     },
     {
       id: 4,
-      name: 'Baseball',
-      linkTo: '/category/sports/baseball',
-    },
-    {
-      id: 5,
-      name: 'Hockey',
-      linkTo: '/category/sports/hockey',
+      name: 'Swimming',
+      linkTo: '/category/sports/swimming',
     },
     {
       id: 6,
-      name: 'Soccer',
-      linkTo: '/category/sports/soccer',
+      name: 'Golf',
+      linkTo: '/category/sports/golf',
     },
     {
       id: 7,
-      name: 'Tennis',
-      linkTo: '/category/sports/tennis',
+      name: 'Marathon',
+      linkTo: '/category/sports/marathon',
     },
     {
       id: 8,
@@ -149,13 +149,13 @@ export const categoriesData = {
     },
     {
       id: 9,
-      name: 'Swimming',
-      linkTo: '/category/sports/swimming',
+      name: 'Basketball',
+      linkTo: '/category/sports/basketball',
     },
     {
       id: 10,
-      name: 'Golf',
-      linkTo: '/category/sports/golf',
+      name: 'Baseball',
+      linkTo: '/category/sports/baseball',
     },
     {
       id: 11,

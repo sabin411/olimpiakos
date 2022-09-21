@@ -13,6 +13,7 @@
     "@apollo/client": "^3.6.9",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@hookform/resolvers": "^2.9.8",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.0",
     "@tailwindcss/line-clamp": "^0.4.0",
@@ -23,11 +24,13 @@
     "graphql": "^16.6.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-hook-form": "^7.36.0",
     "react-router-dom": "^6.3.0",
     "react-slick": "^0.29.0",
     "sass": "^1.54.4",
     "slick-carousel": "^1.8.1",
-    "vite-tsconfig-paths": "^3.5.0"
+    "vite-tsconfig-paths": "^3.5.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "^18.7.16",

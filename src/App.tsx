@@ -11,6 +11,7 @@ import Feed from '@/screens/feed';
 import News from '@/screens/news';
 import Watch from '@/screens/watch';
 import Signup from '@/screens/signup';
+import Search from '@/screens/search';
 import Login from '@/screens/login';
 import Layout from '@/screens/layout';
 import Gallery from '@/screens/gallery';
@@ -28,6 +29,7 @@ function App() {
         <Route path='watch' element={<Watch />} />
         <Route path='video-panel' element={<VideoPanel />} />
         <Route path='gallery' element={<Gallery />} />
+        <Route path='search' element={<Search />} />
         <Route path='feed/:list' element={<Feed />} />
         <Route path='news-feed' element={<NewsFeed />} />
         <Route path='news/:newsId' element={<News />} />

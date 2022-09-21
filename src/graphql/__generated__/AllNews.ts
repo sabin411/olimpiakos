@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { NewsFiltersInput, PaginationArg } from "./../../../__generated__/globalTypes";
+
 // ====================================================
 // GraphQL query operation: AllNews
 // ====================================================
@@ -32,4 +34,6 @@ export interface AllNews {
 
 export interface AllNewsVariables {
   sort?: (string | null)[] | null;
+  filters?: NewsFiltersInput | null;
+  pagination?: PaginationArg | null;
 }

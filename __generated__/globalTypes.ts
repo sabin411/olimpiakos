@@ -222,6 +222,20 @@ export interface StringFilterInput {
   between?: (string | null)[] | null;
 }
 
+export interface UserInformationFiltersInput {
+  id?: IDFilterInput | null;
+  fullName?: StringFilterInput | null;
+  Country?: StringFilterInput | null;
+  phoneNumber?: LongFilterInput | null;
+  isOnline?: BooleanFilterInput | null;
+  users_permissions_user?: UsersPermissionsUserFiltersInput | null;
+  createdAt?: DateTimeFilterInput | null;
+  updatedAt?: DateTimeFilterInput | null;
+  and?: (UserInformationFiltersInput | null)[] | null;
+  or?: (UserInformationFiltersInput | null)[] | null;
+  not?: UserInformationFiltersInput | null;
+}
+
 export interface UsersPermissionsPermissionFiltersInput {
   id?: IDFilterInput | null;
   action?: StringFilterInput | null;
@@ -258,9 +272,6 @@ export interface UsersPermissionsUserFiltersInput {
   confirmed?: BooleanFilterInput | null;
   blocked?: BooleanFilterInput | null;
   role?: UsersPermissionsRoleFiltersInput | null;
-  country?: StringFilterInput | null;
-  name?: StringFilterInput | null;
-  phoneNumber?: LongFilterInput | null;
   likedvideos?: VideoFiltersInput | null;
   disliked_videos?: VideoFiltersInput | null;
   viewed_videos?: VideoFiltersInput | null;
@@ -268,6 +279,7 @@ export interface UsersPermissionsUserFiltersInput {
   LIkedFeaturedEvents?: FeaturedEventFiltersInput | null;
   dislikedFeaturedEvents?: FeaturedEventFiltersInput | null;
   viewedFeaturedEvents?: FeaturedEventFiltersInput | null;
+  user_information?: UserInformationFiltersInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
   and?: (UsersPermissionsUserFiltersInput | null)[] | null;

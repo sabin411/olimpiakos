@@ -76,33 +76,32 @@ export interface Videos_videos_data_attributes_viewedBy {
   data: Videos_videos_data_attributes_viewedBy_data[];
 }
 
-export interface Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data_attributes {
-  __typename: "UploadFile";
-  url: string;
+export interface Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes {
+  __typename: "UserInformation";
+  fullName: string;
 }
 
-export interface Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data {
-  __typename: "UploadFileEntity";
+export interface Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_user_information_data {
+  __typename: "UserInformationEntity";
   id: string | null;
-  attributes: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data_attributes | null;
+  attributes: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_user_information_data_attributes | null;
 }
 
-export interface Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_profilePic {
-  __typename: "UploadFileRelationResponseCollection";
-  data: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_profilePic_data[];
+export interface Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_user_information {
+  __typename: "UserInformationEntityResponse";
+  data: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_user_information_data | null;
 }
 
 export interface Videos_videos_data_attributes_comments_data_attributes_user_data_attributes {
   __typename: "UsersPermissionsUser";
   email: string;
-  name: string;
-  profilePic: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_profilePic;
+  user_information: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes_user_information | null;
 }
 
 export interface Videos_videos_data_attributes_comments_data_attributes_user_data {
   __typename: "UsersPermissionsUserEntity";
-  attributes: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes | null;
   id: string | null;
+  attributes: Videos_videos_data_attributes_comments_data_attributes_user_data_attributes | null;
 }
 
 export interface Videos_videos_data_attributes_comments_data_attributes_user {

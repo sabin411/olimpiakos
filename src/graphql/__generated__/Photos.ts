@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PaginationArg } from "./../../../__generated__/globalTypes";
+import { PaginationArg, PhotoFiltersInput } from "./../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL query operation: Photos
@@ -34,4 +34,6 @@ export interface Photos {
 
 export interface PhotosVariables {
   pagination?: PaginationArg | null;
+  filters?: PhotoFiltersInput | null;
+  sort?: (string | null)[] | null;
 }
