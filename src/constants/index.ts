@@ -13,6 +13,37 @@ import hero2 from '@/assets/images/heroslider/hero2.jpg';
 import hero3 from '@/assets/images/heroslider/hero3.jpg';
 import thumbnail from '../assets/images/thumbnail.webp';
 
+// errror image
+export const errorMessages = {
+  fullNameRequired: 'Please enter your full name.',
+  fullNameMin: 'Name must be at least 3 characters.',
+  fullNameMax: 'Name must be less than 25 characters.',
+
+  phoneNumberRequired: 'Please enter your phone number.',
+  phoneNumberMin: 'Phone number must be at least 10 characters.',
+  phoneNumberMax: 'Phone number must be less than 15 characters.',
+
+  userNameRequired: 'Please enter your username.',
+  userNameMin: 'Username must be at least 4 characters.',
+  userNameMax: 'Username must be less than 20 characters.',
+  userNameInvalid:
+    'Username must contain only letters, numbers, and underscores.',
+
+  countryRequired: 'Please select your country.',
+
+  emailRequired: 'Please enter your email.',
+  emailInvalid: 'Please enter a valid email.',
+
+  passwordRequired: 'Please enter your password.',
+  passwordMin: 'Password must be at least 8 characters.',
+  passwordMax: 'Password must be at most 20 characters.',
+  passwordRequirements:
+    'Password must contain at least one uppercase, one lowercase, one number and one special character.',
+
+  confirmPasswordRequired: 'Please re-enter your password.',
+  confirmPasswordMisMatch: 'Passwords do not match.',
+};
+
 export const sidebar = {
   primaryLinks: [
     { title: 'Home', icon: HomeOutlinedIcon, linkTo: '/' },

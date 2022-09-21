@@ -8,13 +8,16 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 // types
 import { DropDownProps } from './type';
+import { FormHelperText } from '@mui/material';
 
 const DropDown = ({
+  name,
   label,
+  error,
+  register,
   dropDownItems,
   containerStyle,
-  onChange,
-  name,
+  errorMessage,
 }: DropDownProps) => {
   return (
     <FormControl
@@ -38,6 +41,7 @@ const DropDown = ({
       </InputLabel>
       <Select
         name={name}
+        {...register(name)}
         labelId='demo-simple-select-label'
         sx={{
           '& .MuiSelect-select.MuiSelect-select': {
@@ -66,7 +70,7 @@ const DropDown = ({
         }}
         fullWidth
         label={label}
-        onChange={(e: SelectChangeEvent) => onChange(e.target.value)}
+        error={error}
       >
         {dropDownItems.map((item, index) => {
           return (
@@ -76,6 +80,14 @@ const DropDown = ({
           );
         })}
       </Select>
+      <FormHelperText
+        sx={{
+          color: 'var(--secondary-900)',
+          fontSize: 'var(--p)',
+        }}
+      >
+        {errorMessage}
+      </FormHelperText>
     </FormControl>
   );
 };

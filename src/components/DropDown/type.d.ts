@@ -5,6 +5,10 @@ export type DropDownProps = {
     name: string;
   }[];
   containerStyle?: string;
-  onChange: (value: string) => void;
+  error?: FieldErrorsImpl<{
+    [x: string]: any;
+  }>;
   name: string;
+  register?: any;
+  errorMessage?: string;
 };

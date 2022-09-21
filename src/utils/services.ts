@@ -102,7 +102,6 @@ async function handleUpload(file: File) {
 //This function is handle profile image
 export async function uploadToCloudinery(
   event: React.ChangeEvent<HTMLInputElement>,
-  setProfileId: React.Dispatch<React.SetStateAction<string | undefined>>,
   previewProfileImage: (file: File | null) => void,
 ) {
   const file: File | null =

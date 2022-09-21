@@ -30,6 +30,7 @@
     "react-toastify": "^9.0.8",
     "sass": "^1.54.4",
     "slick-carousel": "^1.8.1",
+    "universal-cookie": "^4.0.4",
     "vite-tsconfig-paths": "^3.5.0",
     "yup": "^0.32.11"
   },

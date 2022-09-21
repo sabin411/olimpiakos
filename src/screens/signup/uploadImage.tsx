@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // pacakges
+import Cookies from 'universal-cookie';
 import { useMutation } from '@apollo/client';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // components
 import ButtonComp from '@/components/Button';
@@ -10,16 +12,45 @@ import { showToast } from '@/utils/Toast/toast';
 
 // utils
 import { uploadToCloudinery } from '@/utils/services';
+
+// graphql query
+import { CREATE_UPLOAD_FILE } from '@/graphql/query.graphql';
+import { CREATE_USER_INFO } from '@/graphql/mutation';
+
+// graphql generated types
 import {
   CreateUploadFile,
   CreateUploadFileVariables,
 } from '@/graphql/__generated__/CreateUploadFile';
-import { CREATE_UPLOAD_FILE } from '@/graphql/query.graphql';
+import {
+  CreateUserInformation,
+  CreateUserInformationVariables,
+} from '@/graphql/__generated__/CreateUserInformation';
+import { UserInfoDataProps } from './types';
 
 const UploadImage = () => {
-  const [profileId, setProfileId] = useState<string | undefined>('');
+  const [userInfoData, setUserInfoData] = useState<UserInfoDataProps>({
+    fullName: '',
+    phoneNumber: '',
+    country: '',
+    userId: '',
+    profilePic: '',
+  });
+  const navigate = useNavigate();
   const [isImageUploading, setIsImageUploading] = useState(false);
   const [previewSource, setPreviewSource] = useState<string | null>(null);
+  const [searchParameters, setSearchParams] = useSearchParams();
+  const cookies = new Cookies();
+  const [createUserInfo] = useMutation<
+    CreateUserInformation,
+    CreateUserInformationVariables
+  >(CREATE_USER_INFO, {
+    onCompleted: data => {
+      if (data.createUserInformation) {
+        navigate('/');
+      }
+    },
+  }); // mutation query for creating user information
   const [createUploadFile, { data, error }] = useMutation<
     CreateUploadFile,
     CreateUploadFileVariables
@@ -38,10 +69,20 @@ const UploadImage = () => {
     };
   }
 
+  useEffect(() => {
+    setUserInfoData({
+      ...userInfoData,
+      fullName: searchParameters.get('name') as string,
+      userId: searchParameters.get('userId') as string,
+      phoneNumber: searchParameters.get('phoneNumber') as string,
+      country: searchParameters.get('country') as string,
+    });
+  }, []);
+
   // handle profile image upload
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsImageUploading(true);
-    uploadToCloudinery(event, setProfileId, previewProfileImage).then(data => {
+    uploadToCloudinery(event, previewProfileImage).then(data => {
       createUploadFile({
         variables: {
           data: {
@@ -61,8 +102,12 @@ const UploadImage = () => {
         },
       })
         .then(res => {
-          setProfileId(res.data?.createUploadFile?.data?.id || '1'),
-            setIsImageUploading(false);
+          setUserInfoData({
+            ...userInfoData,
+            profilePic: res.data?.createUploadFile?.data?.id || '1',
+          }),
+            console.log({ res });
+          setIsImageUploading(false);
         })
         .catch(err => {
           console.log(err);
@@ -70,7 +115,33 @@ const UploadImage = () => {
         });
     });
   };
-  console.log({ data });
+
+  // handle user information submit
+  const createUserInfoHandler = () => {
+    createUserInfo({
+      variables: {
+        data: {
+          fullName: userInfoData.fullName,
+          phoneNumber: userInfoData.phoneNumber,
+          Country: userInfoData.country,
+          profilePic: userInfoData.profilePic,
+          isOnline: true,
+          users_permissions_user: userInfoData.userId,
+        },
+      },
+      context: {
+        headers: {
+          Authorization: `Bearer ${cookies.get('token')}`,
+        },
+      },
+    }).then(res => {
+      cookies.set(
+        'imageUrl',
+        res.data?.createUserInformation?.data?.attributes?.profilePic.data
+          ?.attributes?.url,
+      );
+    });
+  };
 
   return (
     <section className='h-screen w-full bg-primary-1000 pt-[154px]'>
@@ -140,15 +211,7 @@ const UploadImage = () => {
             variant='contained'
             buttonSize='large'
             type='button'
-            onClick={() => {
-              showToast({
-                title: 'Terms and conditions not checked',
-                subTitle:
-                  'Please indicate that you have read and agree to the Terms of Service and Privacy Policy.',
-                position: 'top-right',
-                type: 'error',
-              });
-            }}
+            onClick={createUserInfoHandler}
             disabled={isImageUploading}
           />
         </div>
