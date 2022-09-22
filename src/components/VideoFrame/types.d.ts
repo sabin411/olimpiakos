@@ -12,4 +12,7 @@ export type VideoFrameProps = {
   videoComments?: CommentDataProp[];
   reportHandler: () => void;
   containerStyle?: string;
+  likedBy?: CommonTypeProps;
+  ViewedBy?: CommonTypeProps;
+  dislikedBy?: CommonTypeProps;
 };

@@ -373,6 +373,22 @@ export interface VideoFiltersInput {
   not?: VideoFiltersInput | null;
 }
 
+export interface VideoInput {
+  embedId?: string | null;
+  title?: string | null;
+  thumbnail?: (string | null)[] | null;
+  description?: string | null;
+  category?: string | null;
+  likedBy?: (string | null)[] | null;
+  dislikedBy?: (string | null)[] | null;
+  viewedBy?: (string | null)[] | null;
+  comments?: (string | null)[] | null;
+  featured_video?: string | null;
+  duration?: string | null;
+  reports?: (string | null)[] | null;
+  publishedAt?: any | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

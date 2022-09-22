@@ -102,3 +102,14 @@ export const CREATE_REPORT = gql`
     }
   }
 `;
+
+// 4. mutate video
+export const UPDATE_VIDEO = gql`
+  mutation UpdateVideoUserInteraction($updateVideoId: ID!, $data: VideoInput!) {
+    updateVideo(id: $updateVideoId, data: $data) {
+      data {
+        id
+      }
+    }
+  }
+`;

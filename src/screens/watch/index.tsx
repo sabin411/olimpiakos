@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // component
 import Title from '@/components/Title';
@@ -8,33 +8,58 @@ import VideoPanel from '@/components/VideoPanel';
 
 // pacakges
 import Cookies from 'universal-cookie';
-import { useQuery } from '@apollo/client';
+import { ApolloQueryResult, useMutation, useQuery } from '@apollo/client';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 // constants
 import { dummyComments } from '@/constants/index';
 import { mapComment, recommendedvids } from './common';
 
+// query
+import { GET_VIDEO_BY_ID } from '@/graphql/query.graphql';
+import { UPDATE_VIDEO } from '@/graphql/mutation.graphql';
+
 // graphql generated types
 import {
   VideoById,
   VideoByIdVariables,
+  VideoById_video_data_attributes,
 } from '@/graphql/__generated__/VideoById';
-import { GET_VIDEO_BY_ID } from '@/graphql/query.graphql';
+import {
+  UpdateVideoUserInteraction,
+  UpdateVideoUserInteractionVariables,
+} from '@/graphql/__generated__/UpdateVideoUserInteraction';
+
+// types
+import { CommonTypeProps } from './type';
 
 function Watch() {
   const cookies = new Cookies();
-  let currentVideo;
-  let comments;
+  const [currentVideo, setCurrentVideo] = useState<
+    VideoById_video_data_attributes | null | undefined
+  >();
+  const [comments, setComments] = useState(dummyComments);
+  // let fetchVideo: (
+  //   variables?: Partial<VideoByIdVariables> | undefined,
+  // ) => Promise<ApolloQueryResult<VideoById>>;
   const [isLiked, setIsLiked] = React.useState(false);
+  const [likedBy, setLikedBy] = React.useState<CommonTypeProps>([]);
+  const [viwedBy, setViwedBy] = React.useState<CommonTypeProps>([]);
+  const [dislikedBy, setDislikedBy] = React.useState<CommonTypeProps>([]);
   const [isDisliked, setIsDisliked] = React.useState(false);
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get('id');
   const embedId = searchParams.get('embedId');
+  const [updateVideo] = useMutation<
+    UpdateVideoUserInteraction,
+    UpdateVideoUserInteractionVariables
+  >(UPDATE_VIDEO);
 
   // if videoId is available then fetch video by id
-  if (videoId) {
-    const { data } = useQuery<VideoById, VideoByIdVariables>(GET_VIDEO_BY_ID, {
+
+  const { data, refetch } = useQuery<VideoById, VideoByIdVariables>(
+    GET_VIDEO_BY_ID,
+    {
       variables: {
         videoId: videoId,
         sort: ['createdAt:desc'],
@@ -42,15 +67,36 @@ function Watch() {
           limit: 20,
         },
       },
-    });
-    currentVideo = data?.video?.data?.attributes;
-    comments = mapComment(currentVideo?.comments?.data).reverse();
-  }
-  console.log(currentVideo);
+    },
+  );
 
   // if use has not liked the video already then like the video and remove dislike if disliked
   const handleLikes = (likeStatus: boolean) => {
-    setIsLiked(likeStatus);
+    // setIsLiked(likeStatus);
+    if (videoId) {
+      let likedByArray = likedBy;
+      // if user liked the video then
+      if (likeStatus) {
+        likedByArray = [...likedBy, cookies.get('userId') as string];
+        // setLikedBy(likedByArray);
+      }
+      // if user disliked the video then
+      if (!likeStatus && likedBy) {
+        likedByArray = likedBy.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+      }
+      updateVideo({
+        variables: {
+          updateVideoId: videoId,
+          data: {
+            likedBy: likedByArray,
+          },
+        },
+      });
+      // setLikedBy(likedByArray);
+      refetch();
+    }
     if (likeStatus) {
       setIsDisliked(false);
     }
@@ -64,17 +110,42 @@ function Watch() {
     }
   };
 
+  useEffect(() => {
+    // Mapping id of user who have liked the video NOTE: this is not the best way to do it
+    const updatedLikedBy = currentVideo?.likedBy?.data.map(item => {
+      return item.id;
+    });
+
+    if (updatedLikedBy?.length) {
+      setIsLiked(updatedLikedBy?.includes(cookies.get('userId')));
+      setLikedBy(updatedLikedBy);
+    }
+  }, [currentVideo]);
+
+  // if video is fetched the set the data to currentVideo
+  useEffect(() => {
+    if (data) {
+      setCurrentVideo(data?.video?.data?.attributes);
+      const updatedComments = mapComment(
+        data.video?.data?.attributes?.comments?.data,
+      ).reverse();
+
+      setComments(updatedComments);
+    }
+  }, [data]);
+
   return (
     <>
       <section className='flex flex-col h-max mt-2 container-custom gap-4 lg:flex-row '>
         <VideoFrame
           containerStyle='w-[70%]'
+          // isLiked={likedBy?.includes(cookies.get('userId'))}
           isLiked={isLiked}
           videoDescription={
             currentVideo?.description || 'Description is not available'
           }
           videoTitle={currentVideo?.title || 'Title is not available'}
-          videoLikes={currentVideo?.likedBy?.data.length || 0}
+          videoLikes={likedBy?.length || 0}
           videoViews={currentVideo?.viewedBy?.data.length || 0}
           videoDislikes={currentVideo?.dislikedBy?.data.length || 0}
           embedId={embedId as string}

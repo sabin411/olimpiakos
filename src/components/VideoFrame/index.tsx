@@ -32,6 +32,9 @@ function VideoFrame({
   videoComments,
   reportHandler,
   containerStyle,
+  likedBy,
+  dislikedBy,
+  ViewedBy,
 }: VideoFrameProps) {
   const [seeMoreDescription, setSeeMoreDescription] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
