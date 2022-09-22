@@ -34,17 +34,19 @@ function Watch() {
 
   // if videoId is available then fetch video by id
   if (videoId) {
-    const { data, loading, error } = useQuery<VideoById, VideoByIdVariables>(
-      GET_VIDEO_BY_ID,
-      {
-        variables: {
-          videoId: videoId,
+    const { data } = useQuery<VideoById, VideoByIdVariables>(GET_VIDEO_BY_ID, {
+      variables: {
+        videoId: videoId,
+        sort: ['createdAt:desc'],
+        pagination: {
+          limit: 20,
         },
       },
-    );
+    });
     currentVideo = data?.video?.data?.attributes;
-    comments = mapComment(currentVideo?.comments?.data);
+    comments = mapComment(currentVideo?.comments?.data).reverse();
   }
+  console.log(currentVideo);
 
   // if use has not liked the video already then like the video and remove dislike if disliked
   const handleLikes = (likeStatus: boolean) => {

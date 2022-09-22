@@ -291,7 +291,7 @@ export const GET_UPCOMING_EVENTS = gql`
 // ! deprecated
 
 export const GET_VIDEO_BY_ID = gql`
-  query VideoById($pagination: PaginationArg, $sort: [String], $videoId: ID) {
+  query VideoById($videoId: ID, $pagination: PaginationArg, $sort: [String]) {
     video(id: $videoId) {
       data {
         id

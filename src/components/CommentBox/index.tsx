@@ -46,7 +46,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         type='text'
         value={value}
         onChange={e => onChange(e.target.value)}
-        className={`h-full w-full pl-3 
+        className={`h-full w-full pl-3 mr-14
         border-none rounded-lg
         text-neutral-400
         bg-primary-800 
@@ -83,12 +83,12 @@ function CommentBox({
   containerStyle?: string;
   videoId: string;
 }) {
-  const bottomRef = useRef(null);
   const cookies = new Cookies();
-  const authorization = `Bearer ${cookies.get('token')}`;
+  const bottomRef = useRef(null);
   const userId = cookies.get('userId');
-  const profilePic = cookies.get('profilePic');
   const fullName = cookies.get('fullName');
+  const profilePic = cookies.get('profilePic');
+  const authorization = `Bearer ${cookies.get('token')}`;
 
   const [value, setValue] = useState('');
   const [liveComments, setLiveComments] = useState(comments);
@@ -123,7 +123,7 @@ function CommentBox({
               </span>
             </h6>
             <Tooltip title={text} className='mt-1'>
-              <p className='text-neutral-500 text-[12px] line-clamp-3'>
+              <p className='text-neutral-500 text-[16px] line-clamp-3'>
                 {text}
               </p>
             </Tooltip>
@@ -179,7 +179,7 @@ function CommentBox({
               avatar={cmnt.commentUserImg ?? dummyImage}
               text={cmnt.comment}
               timeStamp={cmnt.timeStamp}
-              userName={cmnt.userName || 'John Doe'}
+              userName={cmnt.userName || 'Anonymous'}
             />
           );
         })}

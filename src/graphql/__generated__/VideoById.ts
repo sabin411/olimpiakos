@@ -150,7 +150,7 @@ export interface VideoById {
 }
 
 export interface VideoByIdVariables {
+  videoId?: string | null;
   pagination?: PaginationArg | null;
   sort?: (string | null)[] | null;
-  videoId?: string | null;
 }
