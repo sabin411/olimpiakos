@@ -411,3 +411,59 @@ export const CREATE_UPLOAD_FILE = gql`
     }
   }
 `;
+
+export const GET_USER_INFO = gql`
+  query UserInfo($filters: UserInformationFiltersInput) {
+    userInformations(filters: $filters) {
+      data {
+        id
+        attributes {
+          fullName
+          users_permissions_user {
+            data {
+              attributes {
+                email
+              }
+            }
+          }
+          profilePic {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_USER_INFO_BY_ID = gql`
+  query UserInfoById($userInformationId: ID) {
+    userInformation(id: $userInformationId) {
+      data {
+        id
+        attributes {
+          fullName
+          profilePic {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          users_permissions_user {
+            data {
+              id
+              attributes {
+                email
+                username
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

@@ -15,7 +15,7 @@ import { uploadToCloudinery } from '@/utils/services';
 
 // graphql query
 import { CREATE_UPLOAD_FILE } from '@/graphql/query.graphql';
-import { CREATE_USER_INFO } from '@/graphql/mutation';
+import { CREATE_USER_INFO } from '@/graphql/mutation.graphql';
 
 // graphql generated types
 import {
@@ -136,9 +136,13 @@ const UploadImage = () => {
       },
     }).then(res => {
       cookies.set(
-        'imageUrl',
+        'profilePic',
         res.data?.createUserInformation?.data?.attributes?.profilePic.data
           ?.attributes?.url,
+      );
+      cookies.set(
+        'fullName',
+        res.data?.createUserInformation?.data?.attributes?.fullName,
       );
     });
   };

@@ -24,9 +24,6 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-// images
-import dummyImage from '@/assets/images/dummy.jpg';
-
 // global
 import { Logo } from '@/global/common';
 import Menu from '@mui/material/Menu';
@@ -38,9 +35,11 @@ import { SearchForm } from './common';
 function AppBarComp({
   onMenuClick,
   isLoggedIn,
+  profileImage,
 }: {
   onMenuClick: () => void;
   isLoggedIn: boolean;
+  profileImage: string;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [searchValue, setSearchValue] = useState('');
@@ -240,7 +239,7 @@ function AppBarComp({
                   onClick={handleProfileMenuOpen}
                   color='inherit'
                 >
-                  <Avatar src={dummyImage} />
+                  <Avatar src={profileImage} />
                   {/* <AccountCircle /> */}
                 </IconButton>
               </Box>

@@ -7,6 +7,7 @@ import VideoFrame from '@/components/VideoFrame';
 import VideoPanel from '@/components/VideoPanel';
 
 // pacakges
+import Cookies from 'universal-cookie';
 import { useQuery } from '@apollo/client';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ import {
 import { GET_VIDEO_BY_ID } from '@/graphql/query.graphql';
 
 function Watch() {
+  const cookies = new Cookies();
   let currentVideo;
   let comments;
   const [isLiked, setIsLiked] = React.useState(false);
@@ -42,8 +44,6 @@ function Watch() {
     );
     currentVideo = data?.video?.data?.attributes;
     comments = mapComment(currentVideo?.comments?.data);
-
-    console.log({ currentVideo });
   }
 
   // if use has not liked the video already then like the video and remove dislike if disliked
@@ -87,6 +87,7 @@ function Watch() {
           <CommentBox
             comments={comments || dummyComments}
             containerStyle='h-full'
+            videoId={videoId || '1'}
           />
         </div>
       </section>

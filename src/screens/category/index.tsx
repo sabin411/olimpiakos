@@ -4,27 +4,41 @@ import { Outlet } from 'react-router-dom';
 // components
 import SelectionTab from '@/components/SelectionTab';
 
+// packages
+import Cookies from 'universal-cookie';
+
 // constants
 import { categoriesData } from '@/constants';
 import AppBarComp from '@/components/AppBar';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 
+// assets
+import dummyProfilePic from '@/assets/images/dummy.jpg';
+
 function Category() {
   const [openMenu, setOpenMenu] = useState(false);
+  const cookies = new Cookies();
+  const [isLoggedIn] = useState(cookies.get('token') ? true : false);
 
   return (
     <main className='bg-primary-1000'>
       {/* header starts */}
       <AppBarComp
+        profileImage={cookies.get('profilePic') ?? dummyProfilePic}
         onMenuClick={() => {
           setOpenMenu(true);
         }}
+        isLoggedIn={isLoggedIn}
       />
       {/* header ends */}
 
       {/* sidebar starts */}
-      <Sidebar openMenu={openMenu} setOpenMenu={setOpenMenu} />
+      <Sidebar
+        isLoggedIn={isLoggedIn}
+        openMenu={openMenu}
+        setOpenMenu={setOpenMenu}
+      />
       {/* sidebar ends */}
 
       {/* Explore new section starts */}

@@ -30,17 +30,13 @@ import {
 } from '@/global/validation';
 
 // GRAPHQL QUERY
-import { CREATE_USER, CREATE_USER_INFO } from '@/graphql/mutation';
+import { CREATE_USER, CREATE_USER_INFO } from '@/graphql/mutation.graphql';
 
 // graphql generated types
 import {
   Registration,
   RegistrationVariables,
 } from '@/graphql/__generated__/Registration';
-import {
-  CreateUserInformation,
-  CreateUserInformationVariables,
-} from '@/graphql/__generated__/CreateUserInformation';
 
 // Schema
 const schema = yup.object().shape({

@@ -30,8 +30,6 @@ function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
       slidesToScroll={1}
       nextArrow={<NextArrow />}
       prevArrow={<BeforeArrow />}
-      autoplay={true}
-      autoplaySpeed={5000}
     >
       {FeaturedVideos.map((video, i) => {
         return (

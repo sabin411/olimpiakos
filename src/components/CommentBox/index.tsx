@@ -16,6 +16,13 @@ import { CommentDataProp } from '@/global/types';
 
 // CONSTANTS
 import { BASE_URL } from '@/env';
+import { useMutation } from '@apollo/client';
+import { CREATE_COMMENT } from '@/graphql/mutation.graphql';
+import {
+  CreateComment,
+  CreateCommentVariables,
+} from '@/graphql/__generated__/CreateComment';
+import Cookies from 'universal-cookie';
 
 const SearchInput: React.FC<SearchInputProps> = ({
   value,
@@ -70,26 +77,36 @@ const SearchInput: React.FC<SearchInputProps> = ({
 function CommentBox({
   comments,
   containerStyle,
+  videoId,
 }: {
   comments: CommentDataProp[];
   containerStyle?: string;
+  videoId: string;
 }) {
+  const bottomRef = useRef(null);
+  const cookies = new Cookies();
+  const authorization = `Bearer ${cookies.get('token')}`;
+  const userId = cookies.get('userId');
+  const profilePic = cookies.get('profilePic');
+  const fullName = cookies.get('fullName');
+
   const [value, setValue] = useState('');
   const [liveComments, setLiveComments] = useState(comments);
-  const bottomRef = useRef(null);
+  const [createComment, { data }] = useMutation<
+    CreateComment,
+    CreateCommentVariables
+  >(CREATE_COMMENT);
 
   React.useEffect(() => {
     setLiveComments(comments);
   }, [comments]);
 
-  console.log({ liveComments, comments });
-
   // This function returns jsx for each comment
   const Comment = ({
-    avatar,
     text,
-    timeStamp,
+    avatar,
     userName,
+    timeStamp,
   }: SingleCommentProps) => {
     return (
       <div className='py-3 mr-3'>
@@ -124,11 +141,26 @@ function CommentBox({
         commentId: liveComments.length + 1,
         comment: value,
         commentUserImg:
+          profilePic ??
           'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
         timeStamp: new Date(),
-        userName: 'John Doe',
+        userName: fullName,
       },
     ]);
+    createComment({
+      variables: {
+        data: {
+          comment: value,
+          video: videoId,
+          user: userId,
+        },
+      },
+      context: {
+        headers: {
+          authorization: authorization,
+        },
+      },
+    });
     setValue('');
     // 👇️ scroll to bottom every time messages change
     //@ts-ignore

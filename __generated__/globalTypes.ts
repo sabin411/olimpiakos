@@ -204,6 +204,24 @@ export interface PhotoFiltersInput {
   not?: PhotoFiltersInput | null;
 }
 
+export interface ReportFiltersInput {
+  id?: IDFilterInput | null;
+  message?: StringFilterInput | null;
+  video?: VideoFiltersInput | null;
+  User?: UsersPermissionsUserFiltersInput | null;
+  createdAt?: DateTimeFilterInput | null;
+  updatedAt?: DateTimeFilterInput | null;
+  and?: (ReportFiltersInput | null)[] | null;
+  or?: (ReportFiltersInput | null)[] | null;
+  not?: ReportFiltersInput | null;
+}
+
+export interface ReportInput {
+  message?: string | null;
+  video?: string | null;
+  User?: string | null;
+}
+
 export interface StringFilterInput {
   and?: (string | null)[] | null;
   or?: (string | null)[] | null;
@@ -326,6 +344,7 @@ export interface UsersPermissionsUserFiltersInput {
   dislikedFeaturedEvents?: FeaturedEventFiltersInput | null;
   viewedFeaturedEvents?: FeaturedEventFiltersInput | null;
   user_information?: UserInformationFiltersInput | null;
+  reports?: ReportFiltersInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
   and?: (UsersPermissionsUserFiltersInput | null)[] | null;
@@ -345,6 +364,7 @@ export interface VideoFiltersInput {
   comments?: CommentFiltersInput | null;
   featured_video?: FeaturedVideoFiltersInput | null;
   duration?: StringFilterInput | null;
+  reports?: ReportFiltersInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
   publishedAt?: DateTimeFilterInput | null;

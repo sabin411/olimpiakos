@@ -77,6 +77,9 @@ const MainPage = () => {
   >(GET_ALL_NEWS, {
     variables: {
       sort: ['createdAt:desc'],
+      pagination: {
+        limit: 5,
+      },
     },
   });
 

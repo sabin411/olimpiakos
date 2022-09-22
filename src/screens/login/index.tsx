@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // component
 import Input from '@/components/Input';
@@ -6,16 +6,134 @@ import Button from '@/components/Button';
 import DropDown from '@/components/DropDown';
 
 // packages
-import { Checkbox, FormControl, FormControlLabel } from '@mui/material';
+import * as yup from 'yup';
+import Cookies from 'universal-cookie';
+import { useMutation, useQuery } from '@apollo/client';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FieldValues, useForm } from 'react-hook-form';
 
 // image
 import { Logo } from '@/global/common';
 
 // constants
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { login } from '@/constants';
 
+// global
+import {
+  emailValidation,
+  countryValidation,
+  fullNameValidation,
+  userNameValidation,
+  passwordValidation,
+  phoneNumberValidation,
+} from '@/global/validation';
+
+// graphql query
+import { LOGIN } from '@/graphql/mutation.graphql';
+import { GET_USER_INFO, GET_USER_INFO_BY_ID } from '@/graphql/query.graphql';
+import {
+  Login as LoginType,
+  LoginVariables,
+} from '@/graphql/__generated__/Login';
+import {
+  CreateUserInformation,
+  CreateUserInformationVariables,
+} from '@/graphql/__generated__/CreateUserInformation';
+import { UserInfo, UserInfoVariables } from '@/graphql/__generated__/UserInfo';
+import { UserInfoById } from '@/graphql/__generated__/UserInfoById';
+
+// Schema
+const schema = yup.object().shape({
+  email: emailValidation,
+  password: yup.string().required('Password is required'),
+});
+
 export const Login = () => {
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+  const [loginUser, { data: loginResponse }] = useMutation<
+    LoginType,
+    LoginVariables
+  >(LOGIN);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    control,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  // Fetch user Info from the server
+  function fetchUserInfo(userId: string) {
+    useQuery<UserInfoById, UserInfoVariables>(GET_USER_INFO_BY_ID, {
+      variables: {
+        filters: {
+          users_permissions_user: {
+            id: {
+              eq: userId,
+            },
+          },
+        },
+      },
+      onCompleted: data => {
+        navigate('/');
+        cookies.set('token', loginResponse?.login.jwt);
+        cookies.set(
+          'profilePic',
+          data.userInformation?.data?.attributes?.profilePic.data?.attributes
+            ?.url,
+        );
+        cookies.set('userId', loginResponse?.login.user.id);
+      },
+    });
+  }
+
+  const handleLoginUser = (data: FieldValues) => {
+    loginUser({
+      variables: {
+        input: {
+          identifier: data.email,
+          password: data.password,
+          provider: 'local',
+        },
+      },
+    }).then(res => {
+      navigate('/');
+      cookies.set('token', res?.data?.login.jwt);
+      cookies.set('userId', res?.data?.login.user.id);
+    });
+  };
+
+  if (loginResponse?.login.jwt) {
+    const { data: userInfoData } = useQuery<UserInfoById, UserInfoVariables>(
+      GET_USER_INFO_BY_ID,
+      {
+        variables: {
+          filters: {
+            users_permissions_user: {
+              id: {
+                eq: loginResponse?.login.user.id,
+              },
+            },
+          },
+        },
+        onCompleted: data => {
+          navigate('/');
+          cookies.set('token', loginResponse?.login.jwt);
+          cookies.set(
+            'profilePic',
+            data.userInformation?.data?.attributes?.profilePic.data?.attributes
+              ?.url,
+          );
+          cookies.set('userId', loginResponse?.login.user.id);
+        },
+      },
+    );
+  }
+
   return (
     <section className='flex h-screen '>
       <div className='flex-1 h-full hidden md:block'>
@@ -36,16 +154,26 @@ export const Login = () => {
             <h3 className='text-neutral-400'>{login.title}</h3>
             <p className='text-neutral-500'>{login.subTitle}</p>
           </div>
-          <form className=''>
+          <form
+            onSubmit={handleSubmit(data => {
+              handleLoginUser(data);
+            })}
+          >
             <Input
               label={login.form.inputFields.email.label}
               name={login.form.inputFields.email.name}
               type={login.form.inputFields.email.type}
+              error={Boolean(errors.email)}
+              errorMessage={errors.email?.message?.toString()}
+              control={control}
             />
             <Input
               label={login.form.inputFields.password.label}
               name={login.form.inputFields.password.name}
               type={login.form.inputFields.password.type}
+              error={Boolean(errors.password)}
+              errorMessage={errors.password?.message?.toString()}
+              control={control}
             />
             <p className='my-4 text-right'>
               <Link
