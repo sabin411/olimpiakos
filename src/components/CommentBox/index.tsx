@@ -46,7 +46,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         type='text'
         value={value}
         onChange={e => onChange(e.target.value)}
-        className={`h-full w-full pl-3 mr-14
+        className={`h-full w-full pl-3 pr-14
         border-none rounded-lg
         text-neutral-400
         bg-primary-800 

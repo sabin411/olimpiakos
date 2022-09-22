@@ -50,11 +50,6 @@ function Watch() {
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get('id');
   const embedId = searchParams.get('embedId');
-  const [updateVideo] = useMutation<
-    UpdateVideoUserInteraction,
-    UpdateVideoUserInteractionVariables
-  >(UPDATE_VIDEO);
-
   // if videoId is available then fetch video by id
 
   const { data, refetch } = useQuery<VideoById, VideoByIdVariables>(
@@ -69,41 +64,83 @@ function Watch() {
       },
     },
   );
+  const [updateVideo] = useMutation<
+    UpdateVideoUserInteraction,
+    UpdateVideoUserInteractionVariables
+  >(UPDATE_VIDEO, {
+    onCompleted: data => {
+      refetch();
+    },
+  });
 
   // if use has not liked the video already then like the video and remove dislike if disliked
   const handleLikes = (likeStatus: boolean) => {
-    // setIsLiked(likeStatus);
     if (videoId) {
       let likedByArray = likedBy;
+      let dislikedByArray = dislikedBy;
       // if user liked the video then
       if (likeStatus) {
+        // @ts-ignore
         likedByArray = [...likedBy, cookies.get('userId') as string];
-        // setLikedBy(likedByArray);
+        dislikedByArray = dislikedBy?.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+        setIsLiked(true);
+        setIsDisliked(false);
       }
-      // if user disliked the video then
       if (!likeStatus && likedBy) {
         likedByArray = likedBy.filter(
           userId => userId !== cookies.get('userId'),
         );
+        dislikedByArray = [...dislikedBy, cookies.get('userId') as string];
+
+        setIsLiked(false);
+        setIsDisliked(true);
       }
       updateVideo({
         variables: {
           updateVideoId: videoId,
           data: {
             likedBy: likedByArray,
+            dislikedBy: dislikedByArray,
           },
         },
       });
-      // setLikedBy(likedByArray);
-      refetch();
-    }
-    if (likeStatus) {
-      setIsDisliked(false);
     }
   };
 
-  // if use has not disliked the video already then dislike the video and remove like if liked
+  // if user has not disliked the video already then dislike the video and remove like if liked
   const handleDislikes = (dislikeStatus: boolean) => {
+    if (videoId) {
+      let dislikedByArray = dislikedBy;
+      let likedByArray = likedBy;
+      // if user disliked the video then
+      if (dislikeStatus) {
+        dislikedByArray = [...dislikedBy, cookies.get('userId') as string];
+        likedByArray = likedBy?.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+        setIsDisliked(true);
+        setIsLiked(false);
+      }
+      if (!dislikeStatus && dislikedBy) {
+        dislikedByArray = dislikedBy.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+        likedByArray = [...likedBy, cookies.get('userId') as string];
+        setIsDisliked(false);
+        setIsLiked(true);
+      }
+      updateVideo({
+        variables: {
+          updateVideoId: videoId,
+          data: {
+            dislikedBy: dislikedByArray,
+            likedBy: likedByArray,
+          },
+        },
+      });
+    }
     setIsDisliked(dislikeStatus);
     if (dislikeStatus) {
       setIsLiked(false);
@@ -112,13 +149,26 @@ function Watch() {
 
   useEffect(() => {
     // Mapping id of user who have liked the video NOTE: this is not the best way to do it
+    // mapping id of user who have disliked the video NOTE: this is not the best way to do it
     const updatedLikedBy = currentVideo?.likedBy?.data.map(item => {
       return item.id;
     });
+    const updatedDislikedBy = currentVideo?.dislikedBy?.data.map(item => {
+      return item.id;
+    });
+    const updatedViewedBy = currentVideo?.viewedBy?.data.map(item => {
+      return item.id;
+    });
+
+    setLikedBy(updatedLikedBy);
+    setDislikedBy(updatedDislikedBy);
+    setViwedBy(updatedViewedBy);
 
     if (updatedLikedBy?.length) {
       setIsLiked(updatedLikedBy?.includes(cookies.get('userId')));
-      setLikedBy(updatedLikedBy);
+    }
+    if (updatedDislikedBy?.length) {
+      setIsDisliked(updatedDislikedBy?.includes(cookies.get('userId')));
     }
   }, [currentVideo]);
 
