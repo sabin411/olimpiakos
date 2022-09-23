@@ -22,6 +22,7 @@ import NewsFeed from '@/screens/newsFeed';
 import MainPage from '@/screens/mainPage';
 import Category from '@/screens/category';
 import Sports from '@/screens/category/sports';
+import Redirecting from '@/screens/login/redirecting';
 import UploadImage from '@/screens/signup/uploadImage';
 import VideoPanel from '@/screens/previews/VideoPanelPreview';
 
@@ -48,6 +49,7 @@ function App() {
       <Route path='register' element={<Signup />} />
       <Route path='register-upload-image' element={<UploadImage />} />
       <Route path='login' element={<Login />} />
+      <Route path='redirecting' element={<Redirecting />} />
 
       <Route path='category' element={<Category />}>
         <Route path='sports/:game' element={<Sports />} />

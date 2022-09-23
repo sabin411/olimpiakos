@@ -44,17 +44,6 @@ function VideoPanel({
 
   const handleClick = () => {
     navigate(`/watch?id=${videoId}&embedId=${embedId}`);
-    // This useEffect is used to update the video view count and add the user to the video view list
-    // if (videoId) {
-    //   updateVideo({
-    //     variables: {
-    //       updateVideoId: videoId,
-    //       data: {
-    //         viewedBy: [...viwedBy, cookies.get('userId') as string],
-    //       },
-    //     },
-    //   });
-    // }
   };
   return (
     <button onClick={handleClick} className={`${containerStyle}`}>
@@ -83,13 +72,13 @@ function VideoPanel({
             <div className='flex items-center text-neutral-400 mt-2'>
               <IconWithText
                 Icon={RemoveRedEyeIcon}
-                text={(views + 34544).toString()}
+                text={views.toString()}
                 containerStyle='!m-0 text-s'
                 className='!text-p'
               />
               <IconWithText
                 Icon={ThumbUpIcon}
-                text={(likes + 87768).toString()}
+                text={likes.toString()}
                 containerStyle='text-s ml-4'
                 className='!text-p'
               />

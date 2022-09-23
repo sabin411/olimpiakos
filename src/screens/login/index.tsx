@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // component
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import DropDown from '@/components/DropDown';
 
 // packages
 import * as yup from 'yup';
-import Cookies from 'universal-cookie';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FieldValues, useForm } from 'react-hook-form';
 
@@ -20,28 +18,14 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { login } from '@/constants';
 
 // global
-import {
-  emailValidation,
-  countryValidation,
-  fullNameValidation,
-  userNameValidation,
-  passwordValidation,
-  phoneNumberValidation,
-} from '@/global/validation';
+import { emailValidation } from '@/global/validation';
 
 // graphql query
 import { LOGIN } from '@/graphql/mutation.graphql';
-import { GET_USER_INFO, GET_USER_INFO_BY_ID } from '@/graphql/query.graphql';
 import {
   Login as LoginType,
   LoginVariables,
 } from '@/graphql/__generated__/Login';
-import {
-  CreateUserInformation,
-  CreateUserInformationVariables,
-} from '@/graphql/__generated__/CreateUserInformation';
-import { UserInfo, UserInfoVariables } from '@/graphql/__generated__/UserInfo';
-import { UserInfoById } from '@/graphql/__generated__/UserInfoById';
 
 // Schema
 const schema = yup.object().shape({
@@ -50,46 +34,15 @@ const schema = yup.object().shape({
 });
 
 export const Login = () => {
-  const cookies = new Cookies();
   const navigate = useNavigate();
-  const [loginUser, { data: loginResponse }] = useMutation<
-    LoginType,
-    LoginVariables
-  >(LOGIN);
+  const [loginUser] = useMutation<LoginType, LoginVariables>(LOGIN);
   const {
-    register,
     handleSubmit,
     formState: { errors },
-    reset,
     control,
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  // Fetch user Info from the server
-  function fetchUserInfo(userId: string) {
-    useQuery<UserInfoById, UserInfoVariables>(GET_USER_INFO_BY_ID, {
-      variables: {
-        filters: {
-          users_permissions_user: {
-            id: {
-              eq: userId,
-            },
-          },
-        },
-      },
-      onCompleted: data => {
-        navigate('/');
-        cookies.set('token', loginResponse?.login.jwt);
-        cookies.set(
-          'profilePic',
-          data.userInformation?.data?.attributes?.profilePic.data?.attributes
-            ?.url,
-        );
-        cookies.set('userId', loginResponse?.login.user.id);
-      },
-    });
-  }
 
   const handleLoginUser = (data: FieldValues) => {
     loginUser({
@@ -101,38 +54,11 @@ export const Login = () => {
         },
       },
     }).then(res => {
-      navigate('/');
-      cookies.set('token', res?.data?.login.jwt);
-      cookies.set('userId', res?.data?.login.user.id);
+      navigate(
+        `/redirecting?userId=${res.data?.login.user.id}&token=${res.data?.login.jwt}`,
+      );
     });
   };
-
-  if (loginResponse?.login.jwt) {
-    const { data: userInfoData } = useQuery<UserInfoById, UserInfoVariables>(
-      GET_USER_INFO_BY_ID,
-      {
-        variables: {
-          filters: {
-            users_permissions_user: {
-              id: {
-                eq: loginResponse?.login.user.id,
-              },
-            },
-          },
-        },
-        onCompleted: data => {
-          navigate('/');
-          cookies.set('token', loginResponse?.login.jwt);
-          cookies.set(
-            'profilePic',
-            data.userInformation?.data?.attributes?.profilePic.data?.attributes
-              ?.url,
-          );
-          cookies.set('userId', loginResponse?.login.user.id);
-        },
-      },
-    );
-  }
 
   return (
     <section className='flex h-screen '>
@@ -198,7 +124,7 @@ export const Login = () => {
           <p className='mt-4 text-neutral-400 self-end text-right'>
             {login.form.forgotPassword}{' '}
             <Link
-              to='login'
+              to='/register'
               className='text-secondary-800 hover:text-secondary-900'
             >
               {login.form.dontHaveAccount}

@@ -32,7 +32,7 @@ export const Signup = () => {
           <p className='mt-4 text-neutral-400 self-end text-right'>
             {signUp.form.alreadyHaveAccount}{' '}
             <Link
-              to='login'
+              to='/login'
               className='text-secondary-800 hover:text-secondary-900'
             >
               {signUp.form.login}

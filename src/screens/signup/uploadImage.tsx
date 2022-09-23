@@ -106,8 +106,7 @@ const UploadImage = () => {
             ...userInfoData,
             profilePic: res.data?.createUploadFile?.data?.id || '1',
           }),
-            console.log({ res });
-          setIsImageUploading(false);
+            setIsImageUploading(false);
         })
         .catch(err => {
           console.log(err);

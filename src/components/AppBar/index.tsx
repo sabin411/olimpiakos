@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Button from '../Button';
 
 // packages
+import Cookies from 'universal-cookie';
 import Box from '@mui/material/Box';
 import { Link, useNavigate } from 'react-router-dom';
 import Badge from '@mui/material/Badge';
@@ -41,6 +42,7 @@ function AppBarComp({
   isLoggedIn: boolean;
   profileImage: string;
 }) {
+  const cookies = new Cookies();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [searchValue, setSearchValue] = useState('');
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -104,6 +106,14 @@ function AppBarComp({
     handleMobileMenuClose();
   };
 
+  const handleLogout = () => {
+    cookies.remove('token');
+    cookies.remove('userId');
+    cookies.remove('fullName');
+    cookies.remove('profilePic');
+    navigate('/login');
+  };
+
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -128,6 +138,7 @@ function AppBarComp({
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Log out</MenuItem>
     </Menu>
   );
 

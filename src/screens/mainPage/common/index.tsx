@@ -1,7 +1,7 @@
 import React from 'react';
 
 // packages
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 
 // types
@@ -14,14 +14,24 @@ export function LatestNews({
   linkTo,
 }: LatestNewsProps) {
   return (
-    <Link to={linkTo} className={`inline-block group ${containerStyle}`}>
-      <p className='text-neutral-300 line-clamp-2 group-hover:text-secondary-800 group-hover:underline'>
-        {news}
-      </p>
-      <p className='text-neutral-500 mt-1'>
-        {formatDistanceToNowStrict(timeStamp, { addSuffix: true })}
-      </p>
-    </Link>
+    <NavLink to={linkTo} className={`inline-block group ${containerStyle}`}>
+      {({ isActive }) => {
+        return (
+          <>
+            <p
+              className={`text-neutral-300 line-clamp-2 group-hover:text-secondary-800 group-hover:underline ${
+                isActive && 'text-secondary-800 underline'
+              } `}
+            >
+              {news}
+            </p>
+            <p className='text-neutral-500 mt-1'>
+              {formatDistanceToNowStrict(timeStamp, { addSuffix: true })}
+            </p>
+          </>
+        );
+      }}
+    </NavLink>
   );
 }
 
