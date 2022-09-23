@@ -171,6 +171,9 @@ function CommentBox({
     <div
       className={`w-full flex max-h-full flex-col justify-between bg-primary-900 p-5 ${containerStyle}`}
     >
+      <div className='w-full pb-4 border-b-1 border-b-primary-700'>
+        <h4>Comments</h4>
+      </div>
       <div ref={bottomRef} className='flex-1 flex flex-col  overflow-y-scroll'>
         {liveComments.map((cmnt, i) => {
           return (

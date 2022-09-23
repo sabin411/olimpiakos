@@ -110,18 +110,19 @@ function VideoFrame({
           <div className='lg:w-1/2'>
             <h6 className='text-neutral-400'>{videoTitle}</h6>
           </div>
-          <div className='flex mt-4 lg:m-0'>
+          <div className='flex mt-4 gap-x-4 lg:m-0'>
             <IconWithText
               Icon={RemoveRedEyeIcon}
               text={videoViews.toString()}
-              containerStyle='text-neutral-500 ml-0'
+              className='!text-h4 mr-2'
+              containerStyle='text-neutral-500  text-h6'
             />
             <IconWithText
               Icon={isLiked ? ThumbUpIcon : ThumbUpOffAltIcon}
               text={videoLikes.toString()}
-              containerStyle='text-neutral-500 ml-3'
+              containerStyle='text-neutral-500 text-h6'
               enableInteraction
-              className={`${
+              className={`!text-h4 ${
                 isLiked ? 'text-secondary-800' : 'text-neutral-500'
               }`}
               handleUserInteraction={() => {
@@ -132,9 +133,9 @@ function VideoFrame({
             <IconWithText
               Icon={isDisliked ? ThumbDownIcon : ThumbDownOffAltIcon}
               text={videoDislikes.toString()}
-              containerStyle='text-neutral-500 ml-3'
+              containerStyle='text-neutral-500 text-h6'
               enableInteraction
-              className={`${
+              className={`!text-h4 ${
                 isDisliked ? 'text-secondary-800' : 'text-neutral-500'
               }`}
               handleUserInteraction={() => {

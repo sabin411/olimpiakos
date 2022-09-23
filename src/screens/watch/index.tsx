@@ -209,7 +209,7 @@ function Watch() {
     <>
       <section className='flex flex-col h-max mt-2 container-custom gap-4 lg:flex-row '>
         <VideoFrame
-          containerStyle='w-[70%]'
+          containerStyle='lg:w-[70%]'
           // isLiked={likedBy?.includes(cookies.get('userId'))}
           isLiked={isLiked}
           videoDescription={
@@ -227,7 +227,7 @@ function Watch() {
           }}
           handleLikes={handleLikes}
         />
-        <div className='w-[40%] max-h-[600px] lg:max-h-[800px]'>
+        <div className='h-[500px] lg:max-h-[800px] lg:w-[40%]'>
           <CommentBox
             comments={comments || dummyComments}
             containerStyle='h-full'
