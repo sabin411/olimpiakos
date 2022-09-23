@@ -7,6 +7,7 @@ import IconWithText from '@/components/IconWithText';
 import Card from '@mui/material/Card';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
+import { useNavigate } from 'react-router-dom';
 import CardContent from '@mui/material/CardContent';
 
 // icons
@@ -16,6 +17,13 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 // types
 import { videoPanelProps } from './types';
 import { BASE_URL } from '@/env';
+import { useMutation } from '@apollo/client';
+import {
+  UpdateVideoUserInteraction,
+  UpdateVideoUserInteractionVariables,
+} from '@/graphql/__generated__/UpdateVideoUserInteraction';
+import { UPDATE_VIDEO } from '@/graphql/mutation.graphql';
+import Cookies from 'universal-cookie';
 
 function VideoPanel({
   time,
@@ -27,11 +35,29 @@ function VideoPanel({
   containerStyle,
   embedId,
 }: videoPanelProps) {
+  const navigate = useNavigate();
+  const cookies = new Cookies();
+  const [updateVideo] = useMutation<
+    UpdateVideoUserInteraction,
+    UpdateVideoUserInteractionVariables
+  >(UPDATE_VIDEO);
+
+  const handleClick = () => {
+    navigate(`/watch?id=${videoId}&embedId=${embedId}`);
+    // This useEffect is used to update the video view count and add the user to the video view list
+    // if (videoId) {
+    //   updateVideo({
+    //     variables: {
+    //       updateVideoId: videoId,
+    //       data: {
+    //         viewedBy: [...viwedBy, cookies.get('userId') as string],
+    //       },
+    //     },
+    //   });
+    // }
+  };
   return (
-    <Link
-      to={`/watch?id=${videoId}&embedId=${embedId}`}
-      className={`${containerStyle}`}
-    >
+    <button onClick={handleClick} className={`${containerStyle}`}>
       <Card
         sx={{
           backgroundColor: 'var(--primary-800)',
@@ -71,7 +97,7 @@ function VideoPanel({
           </div>
         </CardContent>
       </Card>
-    </Link>
+    </button>
   );
 }
 

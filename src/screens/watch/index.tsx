@@ -184,6 +184,27 @@ function Watch() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (videoId && viwedBy?.length && viwedBy?.length > 0) {
+      console.log(viwedBy.includes(cookies.get('userId')));
+      let alreadyWatched = viwedBy.includes(cookies.get('userId'));
+      if (!alreadyWatched) {
+        updateVideo({
+          variables: {
+            updateVideoId: videoId,
+            data: {
+              viewedBy: [...viwedBy, cookies.get('userId') as string],
+            },
+          },
+        }).then(res => {
+          setViwedBy([...viwedBy, cookies.get('userId') as string]);
+        });
+        return;
+      }
+    }
+  }, [viwedBy]);
+  console.log({ viwedBy });
+
   return (
     <>
       <section className='flex flex-col h-max mt-2 container-custom gap-4 lg:flex-row '>

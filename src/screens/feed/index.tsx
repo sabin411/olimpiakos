@@ -22,10 +22,12 @@ import { mapVideoPanelProps } from '@/utils/mapper';
 
 // types
 import { videoPanelProps } from '@/components/VideoPanel/types';
+import Cookies from 'universal-cookie';
 
 const Feed = () => {
   const { list } = useParams();
-  const userId = '2';
+  const cookies = new Cookies();
+  const userId = cookies.get('userId');
   let variables: any = {
     variables: {
       sort: ['publishedAt:desc'],

@@ -6,5 +6,6 @@ export type videoPanelProps = {
   views: number;
   likes: number;
   time: string;
+  // viwedBy: CommonTypeProps;
   containerStyle?: string;
 };
