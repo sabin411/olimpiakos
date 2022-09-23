@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // component
 import Title from '@/components/Title';
+import { Pagination } from '@mui/material';
 import VideoPanel from '@/components/VideoPanel';
 
 // constants
@@ -28,57 +29,12 @@ const Feed = () => {
   const { list } = useParams();
   const cookies = new Cookies();
   const userId = cookies.get('userId');
-  let variables: any = {
+  const [variables, setVariables] = useState<any>({
     variables: {
       sort: ['publishedAt:desc'],
     },
-  };
+  });
   const [currentList, setCurrentList] = useState<videoPanelProps[]>();
-
-  // Setting variables as per the search params
-  if (list === 'latest') {
-    variables = {
-      variables: {
-        sort: ['publishedAt:desc'],
-      },
-    };
-  }
-
-  if (list === 'trending') {
-    variables = {
-      variables: {
-        sort: ['viewCount:desc'],
-      },
-    };
-  }
-
-  if (list === 'likedVideos') {
-    variables = {
-      variables: {
-        filters: {
-          likedBy: {
-            id: {
-              eq: userId,
-            },
-          },
-        },
-      },
-    };
-  }
-
-  if (list === 'history') {
-    variables = {
-      variables: {
-        filters: {
-          viewedBy: {
-            id: {
-              eq: userId,
-            },
-          },
-        },
-      },
-    };
-  }
 
   // fetching the videos based on the list
   const { data } = useQuery<Videos, VideosVariables>(GET_ALL_VIDEOS, {
@@ -86,10 +42,55 @@ const Feed = () => {
   });
 
   useEffect(() => {
+    // Setting variables as per the search params
+    if (list === 'latest') {
+      setVariables({
+        variables: {
+          sort: ['publishedAt:desc'],
+        },
+      });
+    }
+
+    if (list === 'trending') {
+      setVariables({
+        variables: {
+          sort: ['viewCount:desc'],
+        },
+      });
+    }
+
+    if (list === 'likedVideos') {
+      setVariables({
+        variables: {
+          filters: {
+            likedBy: {
+              id: {
+                eq: userId,
+              },
+            },
+          },
+        },
+      });
+    }
+
+    if (list === 'history') {
+      setVariables({
+        variables: {
+          filters: {
+            viewedBy: {
+              id: {
+                eq: userId,
+              },
+            },
+          },
+        },
+      });
+    }
+  }, [list]);
+
+  useEffect(() => {
     setCurrentList(mapVideoPanelProps(data?.videos?.data));
   }, [data]);
-
-  console.log(currentList);
 
   return (
     <section className='container-custom my-10'>
@@ -123,6 +124,7 @@ const Feed = () => {
           })}
       </div>
       {/* Recommended videos ends */}
+      {/* <Pagination count={21} page={1} size='large' /> */}
     </section>
   );
 };

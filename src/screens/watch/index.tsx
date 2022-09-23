@@ -203,7 +203,6 @@ function Watch() {
       }
     }
   }, [viwedBy]);
-  console.log({ viwedBy });
 
   return (
     <>
@@ -227,7 +226,7 @@ function Watch() {
           }}
           handleLikes={handleLikes}
         />
-        <div className='h-[500px] lg:max-h-[800px] lg:w-[40%]'>
+        <div className='h-[500px] lg:h-[700px] lg:max-h-[800px] lg:w-[40%]'>
           <CommentBox
             comments={comments || dummyComments}
             containerStyle='h-full'

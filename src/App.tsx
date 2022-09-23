@@ -6,6 +6,9 @@ import Button from '@/components/Button';
 // packages
 import { Route, Routes } from 'react-router-dom';
 
+// PROTCTED ROUTER
+import ProtectMe from '@/protctedRouter';
+
 // screens
 import Feed from '@/screens/feed';
 import News from '@/screens/news';
@@ -27,7 +30,14 @@ function App() {
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route path='' element={<MainPage />} />
-        <Route path='watch' element={<Watch />} />
+        <Route
+          path='watch'
+          element={
+            <ProtectMe>
+              <Watch />
+            </ProtectMe>
+          }
+        />
         <Route path='video-panel' element={<VideoPanel />} />
         <Route path='gallery' element={<Gallery />} />
         <Route path='search' element={<Search />} />
