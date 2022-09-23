@@ -116,6 +116,7 @@ function Watch() {
       let likedByArray = likedBy;
       // if user disliked the video then
       if (dislikeStatus) {
+        // @ts-ignore
         dislikedByArray = [...dislikedBy, cookies.get('userId') as string];
         likedByArray = likedBy?.filter(
           userId => userId !== cookies.get('userId'),
@@ -208,6 +209,7 @@ function Watch() {
     <>
       <section className='flex flex-col h-max mt-2 container-custom gap-4 lg:flex-row '>
         <VideoFrame
+          videoId={videoId || '1'}
           containerStyle='lg:w-[70%]'
           // isLiked={likedBy?.includes(cookies.get('userId'))}
           isLiked={isLiked}

@@ -3,8 +3,9 @@ import IconWithText from '../IconWithText';
 
 // packages
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import { Tooltip } from '@mui/material';
+import { useMutation } from '@apollo/client';
+import MenuItem from '@mui/material/MenuItem';
 
 // icons
 import FlagIcon from '@mui/icons-material/Flag';
@@ -15,8 +16,19 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+
 // types
 import { VideoFrameProps } from './types';
+import { ReportDialogBox } from './common';
+
+// graphql generated types
+import { CREATE_REPORT } from '@/graphql/mutation.graphql';
+import {
+  CreateReport,
+  CreateReportVariables,
+} from '@/graphql/__generated__/CreateReport';
+import { CreateCommentVariables } from '@/graphql/__generated__/CreateComment';
+import Cookies from 'universal-cookie';
 
 function VideoFrame({
   embedId,
@@ -29,13 +41,16 @@ function VideoFrame({
   isDisliked,
   handleLikes,
   handleDislikes,
-  videoComments,
   reportHandler,
   containerStyle,
-  likedBy,
-  dislikedBy,
-  ViewedBy,
+  videoId,
 }: VideoFrameProps) {
+  const cookies = new Cookies();
+  const userId = cookies.get('userId');
+  const token = cookies.get('token');
+  const authorization = `Bearer ${token}`;
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [reportExplanation, setReportExplanation] = useState('');
   const [seeMoreDescription, setSeeMoreDescription] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -45,6 +60,10 @@ function VideoFrame({
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [createReport] = useMutation<CreateReport, CreateReportVariables>(
+    CREATE_REPORT,
+  );
+  console.log('videoId', videoId);
   // render more menu
   const RenderMoreMenu = () => {
     return (
@@ -65,14 +84,42 @@ function VideoFrame({
       >
         <MenuItem
           onClick={() => {
-            reportHandler();
-            handleClose();
+            handleClickOpenDialog();
           }}
         >
           <FlagIcon className='mr-2' /> Report
         </MenuItem>
       </Menu>
     );
+  };
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const handleReportSubmission = () => {
+    createReport({
+      variables: {
+        data: {
+          message: reportExplanation,
+          User: userId,
+          video: videoId,
+        },
+      },
+      context: {
+        Headers: {
+          authorization: authorization,
+        },
+      },
+    }).then(res => {
+      if (res.data?.createReport?.data?.id) {
+        setOpenDialog(false);
+      }
+    });
   };
   return (
     <>
@@ -89,21 +136,20 @@ function VideoFrame({
           />
           <div
             className='
-          bg-error-600 h-4 w-4 
-          rounded-full absolute 
-          right-20  top-7
-          
-          after:content-["Live"] 
-          after:absolute after:left-full
-          after:top-1/2 
-          after:-translate-y-1/2
-          after:translate-x-2
-          after:bg-primary-900 
-          after:rounded-4
-          after:text-neutral-400
-          after:py-1 after:px-3
+            bg-error-600 h-4 w-4 
+            rounded-full absolute 
+            right-20  top-7
 
-          '
+            after:content-["Live"] 
+            after:absolute after:left-full
+            after:top-1/2 
+            after:-translate-y-1/2
+            after:translate-x-2
+            after:bg-primary-900 
+            after:rounded-4
+            after:text-neutral-400
+            after:py-1 after:px-3
+            '
           ></div>
         </div>
         <div className='mt-5 flex flex-col justify-start items-start lg:flex-row lg:justify-between'>
@@ -176,6 +222,12 @@ function VideoFrame({
         </Tooltip>
       </div>
       <RenderMoreMenu />
+      <ReportDialogBox
+        open={openDialog}
+        handleClose={handleCloseDialog}
+        setReportExplanation={setReportExplanation}
+        handleReportSubmission={handleReportSubmission}
+      />
     </>
   );
 }

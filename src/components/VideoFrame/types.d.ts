@@ -15,4 +15,5 @@ export type VideoFrameProps = {
   likedBy?: CommonTypeProps;
   ViewedBy?: CommonTypeProps;
   dislikedBy?: CommonTypeProps;
+  videoId: string;
 };

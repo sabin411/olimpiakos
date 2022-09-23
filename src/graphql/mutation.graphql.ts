@@ -81,7 +81,7 @@ export const CREATE_COMMENT = gql`
 
 // 4. Create report
 export const CREATE_REPORT = gql`
-  mutation Mutation($data: ReportInput!) {
+  mutation CreateReport($data: ReportInput!) {
     createReport(data: $data) {
       data {
         id

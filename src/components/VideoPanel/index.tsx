@@ -36,11 +36,6 @@ function VideoPanel({
   embedId,
 }: videoPanelProps) {
   const navigate = useNavigate();
-  const cookies = new Cookies();
-  const [updateVideo] = useMutation<
-    UpdateVideoUserInteraction,
-    UpdateVideoUserInteractionVariables
-  >(UPDATE_VIDEO);
 
   const handleClick = () => {
     navigate(`/watch?id=${videoId}&embedId=${embedId}`);
