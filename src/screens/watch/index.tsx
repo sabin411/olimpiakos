@@ -39,9 +39,6 @@ function Watch() {
     VideoById_video_data_attributes | null | undefined
   >();
   const [comments, setComments] = useState(dummyComments);
-  // let fetchVideo: (
-  //   variables?: Partial<VideoByIdVariables> | undefined,
-  // ) => Promise<ApolloQueryResult<VideoById>>;
   const [isLiked, setIsLiked] = React.useState(false);
   const [likedBy, setLikedBy] = React.useState<CommonTypeProps>([]);
   const [viwedBy, setViwedBy] = React.useState<CommonTypeProps>([]);
@@ -50,8 +47,8 @@ function Watch() {
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get('id');
   const embedId = searchParams.get('embedId');
-  // if videoId is available then fetch video by id
 
+  // if videoId is available then fetch video by id
   const { data, refetch } = useQuery<VideoById, VideoByIdVariables>(
     GET_VIDEO_BY_ID,
     {
@@ -163,7 +160,7 @@ function Watch() {
 
     setLikedBy(updatedLikedBy);
     setDislikedBy(updatedDislikedBy);
-    setViwedBy(updatedViewedBy);
+    setViwedBy(updatedViewedBy || []);
 
     if (updatedLikedBy?.length) {
       setIsLiked(updatedLikedBy?.includes(cookies.get('userId')));
@@ -186,8 +183,17 @@ function Watch() {
   }, [data]);
 
   useEffect(() => {
-    if (videoId && viwedBy?.length && viwedBy?.length > 0) {
-      console.log(viwedBy.includes(cookies.get('userId')));
+    // if (videoId && viwedBy?.length && viwedBy.length < 0) {
+    //   updateVideo({
+    //     variables: {
+    //       updateVideoId: videoId,
+    //       data: {
+    //         viewedBy: [...viwedBy, cookies.get('userId') as string],
+    //       },
+    //     },
+    //   });
+    // }
+    if (videoId && viwedBy?.length && viwedBy.length > 0) {
       let alreadyWatched = viwedBy.includes(cookies.get('userId'));
       if (!alreadyWatched) {
         updateVideo({
@@ -211,7 +217,7 @@ function Watch() {
         <VideoFrame
           videoId={videoId || '1'}
           containerStyle='lg:w-[70%]'
-          // isLiked={likedBy?.includes(cookies.get('userId'))}
+          publishedAt={data?.video?.data?.attributes?.publishedAt ?? new Date()}
           isLiked={isLiked}
           videoDescription={
             currentVideo?.description || 'Description is not available'

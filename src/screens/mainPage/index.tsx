@@ -211,10 +211,8 @@ const MainPage = () => {
                     key={index}
                     videoId={item.id || '1'}
                     embedId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
-                    likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
-                    views={
-                      3450 + (item.attributes?.viewedBy?.data?.length || 0)
-                    }
+                    likes={item.attributes?.likedBy?.data?.length || 0}
+                    views={item.attributes?.viewedBy?.data?.length || 0}
                     time={item.attributes?.duration || '00:00'}
                     title={item.attributes?.title || ''}
                     thumbnail={
@@ -245,8 +243,8 @@ const MainPage = () => {
                     key={index}
                     videoId={item.id || '1'}
                     embedId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
-                    likes={8790 + (item.attributes?.likedBy?.data?.length || 0)}
-                    views={0}
+                    likes={item.attributes?.likedBy?.data?.length || 0}
+                    views={item.attributes?.viewedBy?.data?.length || 0}
                     time={'4:20'}
                     title={item.attributes?.title || ''}
                     thumbnail={

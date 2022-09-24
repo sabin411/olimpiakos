@@ -12,6 +12,7 @@ import ProtectMe from '@/protctedRouter';
 // screens
 import Feed from '@/screens/feed';
 import News from '@/screens/news';
+import Test from '@/screens/test';
 import Watch from '@/screens/watch';
 import Login from '@/screens/login';
 import Signup from '@/screens/signup';
@@ -29,6 +30,8 @@ import VideoPanel from '@/screens/previews/VideoPanelPreview';
 function App() {
   return (
     <Routes>
+      <Route path='test' element={<Test />} />
+
       <Route path='/' element={<Layout />}>
         <Route path='' element={<MainPage />} />
         <Route

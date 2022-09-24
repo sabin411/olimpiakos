@@ -131,6 +131,7 @@ export interface VideoById_video_data_attributes {
   likedBy: VideoById_video_data_attributes_likedBy | null;
   dislikedBy: VideoById_video_data_attributes_dislikedBy | null;
   viewedBy: VideoById_video_data_attributes_viewedBy | null;
+  publishedAt: any | null;
   comments: VideoById_video_data_attributes_comments | null;
 }
 

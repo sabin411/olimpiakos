@@ -20,42 +20,29 @@ import {
 } from '@/graphql/__generated__/LimitedNews';
 import { GET_ALL_NEWS } from '@/graphql/query.graphql';
 import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 export const News = () => {
   const { newsId } = useParams();
-  // const [currentNews, setCurrentNews] = useState<
-  //   LimitedNews_allNews_data | undefined
-  // >(undefined);
 
-  // const [allNews, setAllNews] = useState<
-  //   LimitedNews_allNews_data[] | undefined
-  // >(undefined);
-
-  // querying news
-
-  const {
-    data: currentNews,
-    loading,
-    error,
-  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
-    variables: {
-      sort: ['createdAt:desc'],
-      pagination: {
-        limit: 1,
-      },
-      filters: {
-        id: {
-          eq: newsId,
+  const { data: currentNews } = useQuery<AllNews, AllNewsVariables>(
+    GET_ALL_NEWS,
+    {
+      variables: {
+        sort: ['createdAt:desc'],
+        pagination: {
+          limit: 1,
+        },
+        filters: {
+          id: {
+            eq: newsId,
+          },
         },
       },
     },
-  });
+  );
 
-  const {
-    data: newsData,
-    loading: loadingAllNews,
-    error: errorAllNews,
-  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
+  const { data: newsData } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
     variables: {
       sort: ['createdAt:desc'],
       pagination: {
@@ -68,7 +55,7 @@ export const News = () => {
     <section className='container-custom flex gap-6 mt-4 mb-14'>
       <div className='flex-1'>
         <p className='text-primary-400'>{individualNews.sponser}</p>
-        <h3 className='text-neutral-300'>
+        <h3 className='font-semi-bold text-neutral-300'>
           {currentNews?.allNews?.data[0].attributes?.title}
         </h3>
         <div className='my-5'>
@@ -78,7 +65,7 @@ export const News = () => {
             }
           />
         </div>
-        <p className='text-h6 text-neutral-300'>
+        <p className='text-[18px] font-regular text-neutral-300'>
           {currentNews?.allNews?.data[0].attributes?.description}
         </p>
       </div>

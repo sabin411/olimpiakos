@@ -61,22 +61,29 @@ function VideoPanel({
         <CardContent className='flex'>
           <Avatar src='https://yt3.ggpht.com/ytc/AMLnZu91Flh7ObCO6aMLS5lzF4Z0xBYecb6hXLb26azOGyc=s176-c-k-c0x00ffffff-no-rj' />
           <div className='ml-2'>
-            <h5 className='text-s font-semi-bold text-neutral-100 line-clamp-2'>
+            <h5 className='text-p font-semi-bold text-neutral-100 text-left line-clamp-2'>
               {title}
             </h5>
-            <div className='flex items-center text-neutral-400 mt-2'>
-              <IconWithText
+            <div className='flex items-center text-neutral-400 mt-2 gap-x-2'>
+              <div>
+                <p>{views.toString()} Views</p>
+              </div>
+              <p>.</p>
+              <div>
+                <p>{likes.toString()} Likes</p>
+              </div>
+              {/* <IconWithText
                 Icon={RemoveRedEyeIcon}
                 text={views.toString()}
-                containerStyle='!m-0 text-s'
-                className='!text-p'
+                containerStyle='!m-0 text-p'
+                className='!text-[22px]'
               />
               <IconWithText
                 Icon={ThumbUpIcon}
                 text={likes.toString()}
-                containerStyle='text-s ml-4'
-                className='!text-p'
-              />
+                containerStyle='text-p ml-4'
+                className='!text-[22px]'
+              /> */}
             </div>
           </div>
         </CardContent>

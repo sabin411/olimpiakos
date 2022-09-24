@@ -38,23 +38,22 @@ function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
             className=' w-full relative h-[620px] bg-secondary-700 text-neutral-400'
           >
             <div className='absolute h-full w-full py-5 px-6 lg:py-16 lg:px-16 backdrop-brightness-75'>
-              <div className='lg:max-w-[90%]'>
+              <div className='lg:max-w-[98%]'>
                 <h2 className='font-semi-bold text-neutral-300'>
                   {video.time}
                 </h2>
-                <div className='flex items-center gap-x-3 text-neutral-400 mt-2'>
-                  <IconWithText
-                    Icon={RemoveRedEyeIcon}
-                    text={video.views.toString()}
-                  />
-                  <IconWithText
-                    Icon={ThumbUpIcon}
-                    text={video.likes.toString()}
-                  />
+                <div className='flex items-center text-neutral-400 mt-2 gap-x-2'>
+                  <div>
+                    <p className='text-h6'>{video.views.toString()} Views</p>
+                  </div>
+                  <p className='text-h6'>.</p>
+                  <div>
+                    <p className='text-h6'>{video.likes.toString()} Likes</p>
+                  </div>
                 </div>
-                <p className='mt-2 text-p line-clamp-3'>{video.description}</p>
+                <p className='mt-4 text-h6 line-clamp-3'>{video.description}</p>
               </div>
-              <div className='mt-10 lg:mt-12'>
+              <div className='mt-10 lg:mt-8'>
                 <h3 className='font-semi-bold text-neutral-300 text-h5 md:text-h3 md:max-w-full line-clamp-2'>
                   {video.title}
                 </h3>

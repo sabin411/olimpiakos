@@ -29,6 +29,7 @@ import {
 } from '@/graphql/__generated__/CreateReport';
 import { CreateCommentVariables } from '@/graphql/__generated__/CreateComment';
 import Cookies from 'universal-cookie';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 function VideoFrame({
   embedId,
@@ -44,6 +45,7 @@ function VideoFrame({
   reportHandler,
   containerStyle,
   videoId,
+  publishedAt,
 }: VideoFrameProps) {
   const cookies = new Cookies();
   const userId = cookies.get('userId');
@@ -118,6 +120,7 @@ function VideoFrame({
     }).then(res => {
       if (res.data?.createReport?.data?.id) {
         setOpenDialog(false);
+        setReportExplanation('');
       }
     });
   };
@@ -203,10 +206,15 @@ function VideoFrame({
             </IconButton>
           </div>
         </div>
+        <p className='pt-2 text-h6 text-primary-400'>
+          {formatDistanceToNowStrict(new Date(publishedAt), {
+            addSuffix: true,
+          })}
+        </p>
         <Tooltip title={videoDescription}>
           <>
             <p
-              className={`mt-5 text-neutral-500 max-w-[80%] ${
+              className={`mt-2 text-neutral-500 max-w-[80%] ${
                 seeMoreDescription ? '' : 'line-clamp-3'
               }`}
             >
@@ -223,6 +231,7 @@ function VideoFrame({
       </div>
       <RenderMoreMenu />
       <ReportDialogBox
+        reportExplanation={reportExplanation}
         open={openDialog}
         handleClose={handleCloseDialog}
         setReportExplanation={setReportExplanation}

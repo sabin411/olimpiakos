@@ -322,6 +322,7 @@ export const GET_VIDEO_BY_ID = gql`
               id
             }
           }
+          publishedAt
           comments(pagination: $pagination, sort: $sort) {
             data {
               id

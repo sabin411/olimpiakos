@@ -4,6 +4,7 @@ import App from './App';
 
 // packages
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,6 +14,7 @@ import {
 
 // styles
 import './styles/global.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 // apollo client
 const client = new ApolloClient({
@@ -25,6 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <App />
+        <ToastContainer />
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

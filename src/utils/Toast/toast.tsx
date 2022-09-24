@@ -4,7 +4,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 // types
-import { ToastProps } from './type';
+import { ToastProps } from './types';
 
 export const showToast = ({
   title,

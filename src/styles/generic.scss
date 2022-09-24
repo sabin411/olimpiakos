@@ -10,3 +10,8 @@
 .slick-dots li button:before {
   color: var(--neutral-100);
 }
+
+// toastify css overrides
+.Toastify__toast-body {
+  align-items: flex-start;
+}
