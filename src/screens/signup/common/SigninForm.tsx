@@ -193,14 +193,14 @@ export const SigninForm = () => {
           <p className='text-neutral-300'>
             {signUp.form.termsAndconditions.text}{' '}
             <Link
-              to='/terms-of-services'
+              to='/privacy-policy'
               className='text-secondary-800 hover:text-secondary-900'
             >
               {signUp.form.termsAndconditions.terms}
             </Link>{' '}
             and{' '}
             <Link
-              to='privacy-policy'
+              to='/privacy-policy'
               className='text-secondary-800 hover:text-secondary-900'
             >
               {' '}

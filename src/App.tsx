@@ -27,6 +27,7 @@ import Redirecting from '@/screens/login/redirecting';
 import UploadImage from '@/screens/signup/uploadImage';
 import VideoPanel from '@/screens/previews/VideoPanelPreview';
 import Profile from '@/screens/profile';
+import PolicyPrivacy from '@/screens/policyPrivacy';
 
 function App() {
   return (
@@ -56,10 +57,11 @@ function App() {
         <Route path='all-news' element={<NewsFeed />} />
         <Route path='news/:newsId' element={<News />} />
       </Route>
-      <Route path='register' element={<Signup />} />
-      <Route path='register-upload-image' element={<UploadImage />} />
       <Route path='login' element={<Login />} />
+      <Route path='register' element={<Signup />} />
       <Route path='redirecting' element={<Redirecting />} />
+      <Route path='register-upload-image' element={<UploadImage />} />
+      <Route path='privacy-policy' element={<PolicyPrivacy />} />
 
       <Route path='category' element={<Category />}>
         <Route path='sports/:game' element={<Sports />} />
