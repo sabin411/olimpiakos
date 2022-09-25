@@ -78,6 +78,26 @@ export const Login = () => {
     });
   };
 
+  const ButtonMailto = ({
+    mailto,
+    label,
+  }: {
+    mailto: string;
+    label: string;
+  }) => {
+    return (
+      <Link
+        to='#'
+        onClick={e => {
+          window.location.href = mailto;
+          e.preventDefault();
+        }}
+      >
+        {label}
+      </Link>
+    );
+  };
+
   return (
     <section className='flex h-screen '>
       <div className='flex-1 h-full hidden md:block'>
@@ -120,12 +140,10 @@ export const Login = () => {
               control={control}
             />
             <p className='my-4 text-right'>
-              <Link
-                className='text-neutral-300 hover:text-neutral-500'
-                to={'/forgot-password'}
-              >
-                {login.form.forgotPassword}
-              </Link>
+              <ButtonMailto
+                label={login.form.forgotPassword}
+                mailto='mailto:sherasabin@gmail.com?subject=Forgot password requesting for password change&body=Please change my password and send me the new password'
+              />
             </p>
             <Button
               variant='contained'

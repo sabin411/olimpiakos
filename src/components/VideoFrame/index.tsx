@@ -3,9 +3,11 @@ import IconWithText from '../IconWithText';
 
 // packages
 import Menu from '@mui/material/Menu';
+import Cookies from 'universal-cookie';
 import { Tooltip } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import MenuItem from '@mui/material/MenuItem';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 // icons
 import FlagIcon from '@mui/icons-material/Flag';
@@ -27,9 +29,12 @@ import {
   CreateReport,
   CreateReportVariables,
 } from '@/graphql/__generated__/CreateReport';
-import { CreateCommentVariables } from '@/graphql/__generated__/CreateComment';
-import Cookies from 'universal-cookie';
-import { formatDistanceToNowStrict } from 'date-fns';
+
+// const
+import { report } from '@/constants';
+
+// utils
+import { showToast } from '@/utils/Toast/toast';
 
 function VideoFrame({
   embedId,
@@ -64,6 +69,20 @@ function VideoFrame({
   };
   const [createReport] = useMutation<CreateReport, CreateReportVariables>(
     CREATE_REPORT,
+    {
+      onCompleted: () => {
+        showToast({
+          title: report.successMessage,
+          type: 'success',
+        });
+      },
+      onError: () => {
+        showToast({
+          title: report.errorMessage,
+          type: 'error',
+        });
+      },
+    },
   );
   console.log('videoId', videoId);
   // render more menu

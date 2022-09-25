@@ -218,13 +218,6 @@ const UploadImage = () => {
               onChange={e => handleUpload(e)}
             />
             <label htmlFor='profilePic'>
-              {/* {true && (
-                <div className='absolute w-full h-full top-0 left-0'>
-                  <Box sx={{ display: 'flex' }}>
-                    <CircularProgress />
-                  </Box>
-                </div>
-              )} */}
               <div className='absolute w-full h-full top-0 left-0'>
                 {isImageUploading && (
                   <div className='absolute w-full h-full  top-0 left-0'>

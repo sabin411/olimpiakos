@@ -595,6 +595,8 @@ export const profile = {
   },
 
   errorMessage: {
+    unableToUploadPhoto: 'Unable to upload your profile picture.',
+    failedToChangeProfilePic: 'Failed to change your profile picture.',
     unableToUpdate: 'Unable to update your profile.',
     nameUpdateFailed: 'Unable to update your name.',
     emailUpdateFailed: 'Unable to update your email.',
@@ -607,6 +609,8 @@ export const profile = {
     phoneNumberUpdateSuccess:
       'Your phone number has been successfully updated.',
     passwordUpdateSuccess: 'Your password has been successfully updated.',
+    successfullyUploaded:
+      'Your profile picture has been successfully uploaded.',
   },
 };
 
@@ -677,4 +681,15 @@ export const footer = {
       ],
     },
   ],
+};
+
+// report constant
+export const report = {
+  title: 'Report channel Why are you reporting this user? Explain.',
+  subTitle:
+    'Flagged videos are reviewed by fun-olympic staff 24 hours a day, seven days a week to determine whether they violate Community Guidelines. Accounts are penalized for Community Guidelines violations, and serious or repeated violations can lead to account termination.',
+  cancelButton: 'Cancel',
+  submitButton: 'Submit',
+  successMessage: 'Your report has been successfully submitted.',
+  errorMessage: 'Unable to submit your report. Please try again later.',
 };

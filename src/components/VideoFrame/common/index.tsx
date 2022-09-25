@@ -1,5 +1,8 @@
 import React from 'react';
 
+// conts
+import { report } from '@/constants';
+
 // packages
 import {
   Button,
@@ -16,7 +19,6 @@ export const ReportDialogBox = ({
   handleClose,
   setReportExplanation,
   handleReportSubmission,
-  reportExplanation,
 }: {
   reportExplanation: string;
   open: boolean;
@@ -30,14 +32,10 @@ export const ReportDialogBox = ({
         <DialogTitle className='text-primary-800'>Report the video</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Flagged videos are reviewed by fun-olympic staff 24 hours a day,
-            seven days a week to determine whether they violate Community
-            Guidelines. Accounts are penalized for Community Guidelines
-            violations, and serious or repeated violations can lead to account
-            termination.{' '}
+            {report.subTitle}{' '}
             <span className='font-semi-bold text-primary-900'>
               {' '}
-              Report channel Why are you reporting this user? Explain.
+              {report.title}
             </span>
           </DialogContentText>
           <TextField
@@ -53,8 +51,10 @@ export const ReportDialogBox = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleReportSubmission}>Subscribe</Button>
+          <Button onClick={handleClose}>{report.cancelButton}</Button>
+          <Button onClick={handleReportSubmission}>
+            {report.submitButton}
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

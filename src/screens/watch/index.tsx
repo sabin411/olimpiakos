@@ -160,7 +160,7 @@ function Watch() {
 
     setLikedBy(updatedLikedBy);
     setDislikedBy(updatedDislikedBy);
-    setViwedBy(updatedViewedBy || []);
+    setViwedBy(updatedViewedBy);
 
     if (updatedLikedBy?.length) {
       setIsLiked(updatedLikedBy?.includes(cookies.get('userId')));
@@ -183,16 +183,6 @@ function Watch() {
   }, [data]);
 
   useEffect(() => {
-    // if (videoId && viwedBy?.length && viwedBy.length < 0) {
-    //   updateVideo({
-    //     variables: {
-    //       updateVideoId: videoId,
-    //       data: {
-    //         viewedBy: [...viwedBy, cookies.get('userId') as string],
-    //       },
-    //     },
-    //   });
-    // }
     if (videoId && viwedBy?.length && viwedBy.length > 0) {
       let alreadyWatched = viwedBy.includes(cookies.get('userId'));
       if (!alreadyWatched) {
@@ -224,7 +214,11 @@ function Watch() {
           }
           videoTitle={currentVideo?.title || 'Title is not available'}
           videoLikes={likedBy?.length || 0}
-          videoViews={currentVideo?.viewedBy?.data.length || 0}
+          videoViews={
+            (currentVideo?.viewedBy?.data &&
+              currentVideo?.viewedBy?.data.length) ||
+            0
+          }
           videoDislikes={currentVideo?.dislikedBy?.data.length || 0}
           embedId={embedId as string}
           isDisliked={isDisliked}

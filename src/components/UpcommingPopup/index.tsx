@@ -48,7 +48,7 @@ const UpcomingPopup = ({
           <h4 className='font-semi-bold'>{text}</h4>
 
           <div className='mt-4 w-full border-b-6 border-secondary-800 flex item-center'>
-            <div className='bg-secondary-800 rounded-md py-5 px-4 m-0 -mb-1 font-semi-bold block w-full text-center md:inline-block'>
+            <div className='bg-secondary-800 rounded-md py-5 px-4 m-0 -mb-1 font-semi-bold block w-full text-center md:inline-block md:w-fit'>
               <p>{format(DateTime, 'do LLL, K:mm aaa')}</p>
             </div>
             <p className='text-h5 font-semi-bold ml-2 mt-4 hidden md:block'>
