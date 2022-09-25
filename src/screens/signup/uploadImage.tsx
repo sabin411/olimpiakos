@@ -145,6 +145,11 @@ const UploadImage = () => {
         'fullName',
         res.data?.createUserInformation?.data?.attributes?.fullName,
       );
+      cookies.set(
+        'phoneNumber',
+        res.data?.createUserInformation?.data?.attributes?.phoneNumber,
+      );
+      cookies.set('userInfoId', res.data?.createUserInformation?.data?.id);
     });
   };
 

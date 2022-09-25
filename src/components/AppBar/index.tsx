@@ -33,6 +33,9 @@ import MenuItem from '@mui/material/MenuItem';
 // commons
 import { SearchForm } from './common';
 
+// utils
+import { displayImage } from '@/utils/services';
+
 function AppBarComp({
   onMenuClick,
   isLoggedIn,
@@ -71,8 +74,12 @@ function AppBarComp({
   const logout = () => {
     cookies.remove('token');
     cookies.remove('userId');
+    cookies.remove('userName');
+    cookies.remove('email');
     cookies.remove('fullName');
     cookies.remove('profilePic');
+    cookies.remove('phoneNumber');
+    cookies.remove('userInfoId');
     cookies.remove('ugid');
     navigate('/login');
   };
@@ -208,7 +215,7 @@ function AppBarComp({
                   onClick={handleProfileMenuOpen}
                   color='inherit'
                 >
-                  <Avatar src={profileImage} />
+                  <Avatar src={displayImage(profileImage)} />
                   {/* <AccountCircle /> */}
                 </IconButton>
               </Box>

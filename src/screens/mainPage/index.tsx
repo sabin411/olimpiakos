@@ -188,7 +188,7 @@ const MainPage = () => {
               })}
           <Link
             className='text-secondary-800 hover:text-secondary-900'
-            to={'/news-feed'}
+            to={'/all-news'}
           >
             More news...
           </Link>

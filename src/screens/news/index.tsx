@@ -86,7 +86,7 @@ export const News = () => {
         })}
         <Link
           className='text-secondary-800 hover:text-secondary-900'
-          to={'/news-feed'}
+          to={'/all-news'}
         >
           {individualNews.latestNews.more}
         </Link>

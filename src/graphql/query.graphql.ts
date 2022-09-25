@@ -420,11 +420,12 @@ export const GET_USER_INFO = gql`
         id
         attributes {
           fullName
+          Country
+          phoneNumber
+          isOnline
           users_permissions_user {
             data {
-              attributes {
-                email
-              }
+              id
             }
           }
           profilePic {
@@ -434,6 +435,7 @@ export const GET_USER_INFO = gql`
               }
             }
           }
+          createdAt
         }
       }
     }
@@ -447,6 +449,7 @@ export const GET_USER_INFO_BY_ID = gql`
         id
         attributes {
           fullName
+          phoneNumber
           profilePic {
             data {
               attributes {

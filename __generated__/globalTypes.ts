@@ -352,6 +352,27 @@ export interface UsersPermissionsUserFiltersInput {
   not?: UsersPermissionsUserFiltersInput | null;
 }
 
+export interface UsersPermissionsUserInput {
+  username?: string | null;
+  email?: string | null;
+  provider?: string | null;
+  password?: string | null;
+  resetPasswordToken?: string | null;
+  confirmationToken?: string | null;
+  confirmed?: boolean | null;
+  blocked?: boolean | null;
+  role?: string | null;
+  likedvideos?: (string | null)[] | null;
+  disliked_videos?: (string | null)[] | null;
+  viewed_videos?: (string | null)[] | null;
+  comments?: (string | null)[] | null;
+  LIkedFeaturedEvents?: (string | null)[] | null;
+  dislikedFeaturedEvents?: (string | null)[] | null;
+  viewedFeaturedEvents?: (string | null)[] | null;
+  user_information?: string | null;
+  reports?: (string | null)[] | null;
+}
+
 export interface VideoFiltersInput {
   id?: IDFilterInput | null;
   embedId?: StringFilterInput | null;

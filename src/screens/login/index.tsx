@@ -64,8 +64,9 @@ export const Login = () => {
       },
     }).then(res => {
       if (res.data?.login.jwt) {
+        console.log(res.data.login);
         navigate(
-          `/redirecting?userId=${res.data?.login.user.id}&token=${res.data?.login.jwt}`,
+          `/redirecting?userId=${res.data?.login.user.id}&token=${res.data?.login.jwt}&email=${res.data?.login.user.email}&username=${res.data?.login.user.username}`,
         );
       } else {
         showToast({

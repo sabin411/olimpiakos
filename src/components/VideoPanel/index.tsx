@@ -1,29 +1,16 @@
 import React from 'react';
 
-// component
-import IconWithText from '@/components/IconWithText';
-
 // packages
 import Card from '@mui/material/Card';
-import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
 import CardContent from '@mui/material/CardContent';
 
-// icons
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-
 // types
 import { videoPanelProps } from './types';
-import { BASE_URL } from '@/env';
-import { useMutation } from '@apollo/client';
-import {
-  UpdateVideoUserInteraction,
-  UpdateVideoUserInteractionVariables,
-} from '@/graphql/__generated__/UpdateVideoUserInteraction';
-import { UPDATE_VIDEO } from '@/graphql/mutation.graphql';
-import Cookies from 'universal-cookie';
+
+// utils
+import { displayImage } from '@/utils/services';
 
 function VideoPanel({
   time,
@@ -50,7 +37,7 @@ function VideoPanel({
       >
         <div className='aspect-video relative overflow-hidden'>
           <img
-            src={BASE_URL + thumbnail}
+            src={displayImage(thumbnail)}
             className='w-full h-full object-cover peer hover:scale-105 transition-all duration-200'
             alt={title + 'thumbnail'}
           />
@@ -72,18 +59,6 @@ function VideoPanel({
               <div>
                 <p>{likes.toString()} Likes</p>
               </div>
-              {/* <IconWithText
-                Icon={RemoveRedEyeIcon}
-                text={views.toString()}
-                containerStyle='!m-0 text-p'
-                className='!text-[22px]'
-              />
-              <IconWithText
-                Icon={ThumbUpIcon}
-                text={likes.toString()}
-                containerStyle='text-p ml-4'
-                className='!text-[22px]'
-              /> */}
             </div>
           </div>
         </CardContent>

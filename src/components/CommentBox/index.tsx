@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 // package
+import Cookies from 'universal-cookie';
 import { Avatar, Tooltip } from '@mui/material';
 import { formatDistanceToNowStrict } from 'date-fns';
 
@@ -22,7 +23,9 @@ import {
   CreateComment,
   CreateCommentVariables,
 } from '@/graphql/__generated__/CreateComment';
-import Cookies from 'universal-cookie';
+
+// utils
+import { displayImage } from '@/utils/services';
 
 const SearchInput: React.FC<SearchInputProps> = ({
   value,
@@ -111,10 +114,7 @@ function CommentBox({
     return (
       <div className='py-3 mr-3'>
         <div className='flex'>
-          <Avatar
-            src={avatar.includes('http') ? avatar : BASE_URL + avatar}
-            className='mr-3'
-          />
+          <Avatar src={displayImage(avatar)} className='mr-3' />
           <div>
             <h6 className='text-p font-semi-bold text-neutral-400'>
               {userName}

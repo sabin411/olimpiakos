@@ -9,14 +9,9 @@ import { UserInformationFiltersInput } from "./../../../__generated__/globalType
 // GraphQL query operation: UserInfo
 // ====================================================
 
-export interface UserInfo_userInformations_data_attributes_users_permissions_user_data_attributes {
-  __typename: "UsersPermissionsUser";
-  email: string;
-}
-
 export interface UserInfo_userInformations_data_attributes_users_permissions_user_data {
   __typename: "UsersPermissionsUserEntity";
-  attributes: UserInfo_userInformations_data_attributes_users_permissions_user_data_attributes | null;
+  id: string | null;
 }
 
 export interface UserInfo_userInformations_data_attributes_users_permissions_user {
@@ -42,8 +37,12 @@ export interface UserInfo_userInformations_data_attributes_profilePic {
 export interface UserInfo_userInformations_data_attributes {
   __typename: "UserInformation";
   fullName: string;
+  Country: string;
+  phoneNumber: any;
+  isOnline: boolean | null;
   users_permissions_user: UserInfo_userInformations_data_attributes_users_permissions_user | null;
   profilePic: UserInfo_userInformations_data_attributes_profilePic;
+  createdAt: any | null;
 }
 
 export interface UserInfo_userInformations_data {

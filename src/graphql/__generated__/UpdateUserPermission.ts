@@ -6,34 +6,34 @@
 import { UsersPermissionsUserInput } from "./../../../__generated__/globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: Mutation
+// GraphQL mutation operation: UpdateUserPermission
 // ====================================================
 
-export interface Mutation_updateUsersPermissionsUser_data_attributes {
+export interface UpdateUserPermission_updateUsersPermissionsUser_data_attributes {
   __typename: "UsersPermissionsUser";
   username: string;
   email: string;
 }
 
-export interface Mutation_updateUsersPermissionsUser_data {
+export interface UpdateUserPermission_updateUsersPermissionsUser_data {
   __typename: "UsersPermissionsUserEntity";
   id: string | null;
-  attributes: Mutation_updateUsersPermissionsUser_data_attributes | null;
+  attributes: UpdateUserPermission_updateUsersPermissionsUser_data_attributes | null;
 }
 
-export interface Mutation_updateUsersPermissionsUser {
+export interface UpdateUserPermission_updateUsersPermissionsUser {
   __typename: "UsersPermissionsUserEntityResponse";
-  data: Mutation_updateUsersPermissionsUser_data | null;
+  data: UpdateUserPermission_updateUsersPermissionsUser_data | null;
 }
 
-export interface Mutation {
+export interface UpdateUserPermission {
   /**
    * Update an existing user
    */
-  updateUsersPermissionsUser: Mutation_updateUsersPermissionsUser;
+  updateUsersPermissionsUser: UpdateUserPermission_updateUsersPermissionsUser;
 }
 
-export interface MutationVariables {
+export interface UpdateUserPermissionVariables {
   updateUsersPermissionsUserId: string;
   data: UsersPermissionsUserInput;
 }

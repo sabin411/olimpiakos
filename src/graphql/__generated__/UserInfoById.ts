@@ -42,6 +42,7 @@ export interface UserInfoById_userInformation_data_attributes_users_permissions_
 export interface UserInfoById_userInformation_data_attributes {
   __typename: "UserInformation";
   fullName: string;
+  phoneNumber: any;
   profilePic: UserInfoById_userInformation_data_attributes_profilePic;
   users_permissions_user: UserInfoById_userInformation_data_attributes_users_permissions_user | null;
 }

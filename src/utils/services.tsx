@@ -4,6 +4,7 @@ import { showToast } from './Toast/toast';
 // packages
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '@/env';
 
 // This function takes file as input and uploades the file to cloudinary
 // 1. Upload to cloudinary
@@ -72,17 +73,6 @@ export async function uploadToCloudinery(
 
 // This function loggs out the user
 
-export const useLogout = () => {
-  const logout = () => {
-    const cookies = new Cookies();
-    const navigate = useNavigate();
-    cookies.remove('token');
-    cookies.remove('userId');
-    cookies.remove('fullName');
-    cookies.remove('profilePic');
-    navigate('/login');
-  };
-  return {
-    logout,
-  };
-};
+export function displayImage(imageUrl: string) {
+  return imageUrl.includes('http') ? imageUrl : BASE_URL + imageUrl;
+}

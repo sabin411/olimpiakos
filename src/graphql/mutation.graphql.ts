@@ -113,3 +113,52 @@ export const UPDATE_VIDEO = gql`
     }
   }
 `;
+
+// 5. Update user permission
+export const UPDATE_USER_PERMISSION = gql`
+  mutation UpdateUserPermission(
+    $updateUsersPermissionsUserId: ID!
+    $data: UsersPermissionsUserInput!
+  ) {
+    updateUsersPermissionsUser(id: $updateUsersPermissionsUserId, data: $data) {
+      data {
+        id
+        attributes {
+          username
+          email
+        }
+      }
+    }
+  }
+`;
+
+// 6. Update user information
+export const UPDATE_USER_INFORMATION = gql`
+  mutation UpdateUserInfo(
+    $updateUserInformationId: ID!
+    $data: UserInformationInput!
+  ) {
+    updateUserInformation(id: $updateUserInformationId, data: $data) {
+      data {
+        id
+        attributes {
+          fullName
+          Country
+          phoneNumber
+          profilePic {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          users_permissions_user {
+            data {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+`;

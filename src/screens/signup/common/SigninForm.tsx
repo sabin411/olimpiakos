@@ -30,7 +30,7 @@ import {
 } from '@/global/validation';
 
 // GRAPHQL QUERY
-import { CREATE_USER, CREATE_USER_INFO } from '@/graphql/mutation.graphql';
+import { CREATE_USER } from '@/graphql/mutation.graphql';
 
 // graphql generated types
 import {
@@ -48,7 +48,7 @@ const schema = yup.object().shape({
   country: countryValidation,
 });
 
-export const SigninForm = () => {
+export const SigninForm = ({}) => {
   const { inputFields } = signUp.form;
   const navigate = useNavigate();
   const [createUser] = useMutation<Registration, RegistrationVariables>(
@@ -83,6 +83,8 @@ export const SigninForm = () => {
         const cookies = new Cookies();
         cookies.set('token', res.data?.register.jwt);
         cookies.set('userId', res.data?.register.user.id);
+        cookies.set('userName', res.data?.register.user.username);
+        cookies.set('email', res.data?.register.user.email);
         navigate({
           pathname: '/register-upload-image',
           search: `?userId=${res.data?.register.user.id}&name=${data.fullName}&phoneNumber=${data.phoneNumber}&country=${data.country}`,
@@ -120,14 +122,16 @@ export const SigninForm = () => {
         errorMessage={errors.userName?.message?.toString()}
         control={control}
       />
-      <Input
-        label={inputFields.phoneNumber.label}
-        name={inputFields.phoneNumber.name}
-        type={inputFields.phoneNumber.type}
-        error={Boolean(errors.phoneNumber)}
-        errorMessage={errors.phoneNumber?.message?.toString()}
-        control={control}
-      />
+      {
+        <Input
+          label={inputFields.phoneNumber.label}
+          name={inputFields.phoneNumber.name}
+          type={inputFields.phoneNumber.type}
+          error={Boolean(errors.phoneNumber)}
+          errorMessage={errors.phoneNumber?.message?.toString()}
+          control={control}
+        />
+      }
 
       <DropDown
         label={inputFields.country.label}

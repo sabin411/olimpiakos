@@ -53,7 +53,7 @@ function App() {
         <Route path='gallery' element={<Gallery />} />
         <Route path='search' element={<Search />} />
         <Route path='feed/:list' element={<Feed />} />
-        <Route path='news-feed' element={<NewsFeed />} />
+        <Route path='all-news' element={<NewsFeed />} />
         <Route path='news/:newsId' element={<News />} />
       </Route>
       <Route path='register' element={<Signup />} />
