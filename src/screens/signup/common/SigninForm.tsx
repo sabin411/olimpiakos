@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // component
 import Input from '@/components/Input';
@@ -37,6 +37,7 @@ import {
   Registration,
   RegistrationVariables,
 } from '@/graphql/__generated__/Registration';
+import { showToast } from '@/utils/Toast/toast';
 
 // Schema
 const schema = yup.object().shape({
@@ -48,14 +49,20 @@ const schema = yup.object().shape({
   country: countryValidation,
 });
 
-export const SigninForm = ({}) => {
+export const SigninForm = () => {
+  const cookies = new Cookies();
   const { inputFields } = signUp.form;
+  const [termsAndCondition, setTermsAndCondition] = useState(false);
   const navigate = useNavigate();
   const [createUser] = useMutation<Registration, RegistrationVariables>(
     CREATE_USER,
     {
-      onCompleted: data => {
-        console.log(data);
+      onError: error => {
+        showToast({
+          title: signUp.errorMessage.unableToRegister,
+          subTitle: error?.message,
+          type: 'error',
+        });
       },
     },
   ); // mutation query for creating user
@@ -70,6 +77,15 @@ export const SigninForm = ({}) => {
   });
 
   const handleSignIn = (data: FieldValues) => {
+    if (!termsAndCondition) {
+      showToast({
+        title: signUp.errorMessage.termsAndCondition,
+        subTitle: signUp.errorMessage.acceptTermsAndCondition,
+        type: 'error',
+      });
+      return;
+    }
+
     try {
       createUser({
         variables: {
@@ -80,15 +96,21 @@ export const SigninForm = ({}) => {
           },
         },
       }).then(res => {
-        const cookies = new Cookies();
-        cookies.set('token', res.data?.register.jwt);
-        cookies.set('userId', res.data?.register.user.id);
-        cookies.set('userName', res.data?.register.user.username);
-        cookies.set('email', res.data?.register.user.email);
-        navigate({
-          pathname: '/register-upload-image',
-          search: `?userId=${res.data?.register.user.id}&name=${data.fullName}&phoneNumber=${data.phoneNumber}&country=${data.country}`,
-        });
+        if (res.data?.register.jwt) {
+          cookies.set('token', res.data?.register.jwt);
+          cookies.set('userId', res.data?.register.user.id);
+          cookies.set('userName', res.data?.register.user.username);
+          cookies.set('email', res.data?.register.user.email);
+          navigate({
+            pathname: '/register-upload-image',
+            search: `?userId=${res.data?.register.user.id}&name=${data.fullName}&phoneNumber=${data.phoneNumber}&country=${data.country}`,
+          });
+          showToast({
+            title: signUp.successMessage.successfullyRegistered,
+            subTitle: signUp.successMessage.successfullyRegisteredSubTitle,
+            type: 'success',
+          });
+        }
       });
     } catch (err) {
       console.log(err);
@@ -164,7 +186,7 @@ export const SigninForm = ({}) => {
                 color: 'var(--primary-500)',
               },
             }}
-            defaultChecked
+            onChange={() => setTermsAndCondition(!termsAndCondition)}
           />
         }
         label={

@@ -57,7 +57,7 @@ function Sports() {
 
   return (
     <section className='container-custom mt-10'>
-      <Title title={game + ' Games'} />
+      <Title title={game + 'Games'} />
 
       {currentGames?.length ? (
         <div
@@ -92,13 +92,6 @@ function Sports() {
           <img src={emptyImage} alt='' />
         </div>
       )}
-      {/* <Pagination
-        count={10}
-        color='secondary'
-        sx={{
-          color: 'var(--neutral-200)',
-        }}
-      /> */}
     </section>
   );
 }

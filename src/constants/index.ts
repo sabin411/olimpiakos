@@ -42,6 +42,8 @@ export const errorMessages = {
 
   confirmPasswordRequired: 'Please re-enter your password.',
   confirmPasswordMisMatch: 'Passwords do not match.',
+
+  oldPasswordRequired: 'Please enter your old password.',
 };
 
 export const sidebar = {
@@ -74,6 +76,7 @@ export const sidebar = {
 // latest news constants
 export const latestNews = {
   title: 'Latest News',
+  moreNews: 'More news...',
   news: [
     {
       title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
@@ -101,6 +104,7 @@ export const latestNews = {
 // latest photos
 export const latestPhotos = {
   title: 'Latest Photos',
+  morePhotos: 'More Photos...',
   photos: [
     {
       id: 1,
@@ -433,6 +437,41 @@ export const individualNews = {
 export const signUp = {
   title: "Let's get started",
   subTitle: 'Create an account to get all features',
+  errorMessage: {
+    unableToRegister: 'Unable to register your accont.',
+    description: 'Please try again or contact us.',
+    termsAndCondition: 'Please check the terms and conditions.',
+    acceptTermsAndCondition: 'Your have to accept the terms and conditions.',
+  },
+  successMessage: {
+    successfullyRegistered: 'Your account has been successfully registered',
+    successfullyRegisteredSubTitle:
+      'Please upload your profile picture to complete your profile.',
+  },
+  uploadImage: {
+    title: 'Welcome! Let’s create your profile.',
+    subTitle: 'Upload your profile picture.',
+    addAvatar: 'Add an avatar',
+    successMessages: {
+      successfullyUploaded:
+        'Your profile picture has been successfully uploaded.',
+
+      successfullyCreatedAccount: 'Your account has been successfully created.',
+      successfullyCreatedAccountSubTitle: "Let's get started.",
+    },
+    errorMessages: {
+      unableToUpload: 'Unable to upload your profile picture.',
+
+      fileSize: 'File size is too large.',
+      fileSizeSubTitle: 'Please upload a file less than 4MB.',
+
+      fileFormat: 'File format is not supported.',
+      fileFormatSubtitle: "Please upload 'jpg', 'jpeg' or 'png' file.",
+
+      failedToCreateAccount: 'Failed to create your account.',
+      failedToCreateAccountSubTitle: 'Please try again or contact us.',
+    },
+  },
   form: {
     inputFields: {
       fullName: {
@@ -480,6 +519,10 @@ export const signUp = {
 export const login = {
   title: 'Welcome back',
   subTitle: 'Login to your account',
+  errorMessage: {
+    unableToLogin: 'Unable to login.',
+    description: 'Please try again or contact us.',
+  },
   form: {
     inputFields: {
       email: {
@@ -498,4 +541,125 @@ export const login = {
     dontHaveAccount: "Don't have an account?",
     signUp: 'Sign Up',
   },
+};
+
+// profile constant
+export const profile = {
+  editButton: 'Edit',
+  changeButton: 'Change',
+  signOutButton: 'Sign Out',
+  profileLabels: {
+    displayName: 'Display Name',
+    email: 'Email',
+    userName: 'User Name',
+    phoneNumber: 'Phone Number',
+    password: 'Password',
+  },
+
+  form: {
+    inputFields: {
+      fullName: {
+        name: 'fullName',
+        label: 'Full Name',
+        type: 'text',
+      },
+      email: {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+      },
+      phoneNumber: {
+        name: 'phoneNumber',
+        label: 'Phone Number',
+        type: 'number',
+      },
+      oldPassword: {
+        name: 'oldPassword',
+        label: 'Old Password',
+        type: 'password',
+      },
+      newPassword: {
+        name: 'newPassword',
+        label: 'New Password',
+        type: 'password',
+      },
+    },
+    termsAndconditions: {
+      text: 'I agree to the',
+      terms: 'Terms & Conditions',
+      privacyPolicy: 'Privacy Policy.',
+    },
+    submitButton: 'Register',
+    alreadyHaveAccount: 'Already have an account?',
+    login: 'Login',
+  },
+};
+
+// search screen constant
+export const search = {
+  searchResult: 'Search Result for:',
+};
+
+// footer constants
+export const footer = {
+  exploreMoreButton: 'Explore More',
+  description:
+    'Watch your favorite sports, discover award-winning Original Films and Series and explore our 24/7 thematic linear channels.',
+  footerConst: [
+    {
+      title: 'Games',
+      links: [
+        {
+          title: 'Football',
+          linkTo: '/football',
+        },
+        {
+          title: 'Cricket',
+          linkTo: '/cricket',
+        },
+        {
+          title: 'Tennis',
+          linkTo: '/tennis',
+        },
+        {
+          title: 'Swimming',
+          linkTo: '/swimming',
+        },
+        {
+          title: 'More...',
+          linkTo: '/category/sports/all',
+        },
+      ],
+    },
+    {
+      title: 'Follow us',
+      links: [
+        {
+          title: 'Facebook',
+          linkTo: 'https://www.facebook.com/olympics',
+        },
+        {
+          title: 'Instagram',
+          linkTo: 'https://www.instagram.com/olympics/',
+        },
+        {
+          title: 'Twitter',
+          linkTo: 'https://twitter.com/Olympics',
+        },
+      ],
+    },
+    {
+      title: 'Other',
+      links: [
+        {
+          title: 'News',
+          linkTo: '/news',
+        },
+        {
+          title: 'Gallery',
+          linkTo: '/gallery',
+        },
+      ],
+    },
+  ],
 };

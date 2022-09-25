@@ -11,8 +11,7 @@ import { useQuery } from '@apollo/client';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 
 // constants
-import { latestPhotos, newsFeed } from '@/constants';
-import { newsData } from '@/global/constants';
+import { newsFeed } from '@/constants';
 
 // assets
 import { imageDummy } from '@/assets/images/dummyImages';
@@ -21,14 +20,6 @@ import { imageDummy } from '@/assets/images/dummyImages';
 import { GET_ALL_NEWS, GET_ALL_PHOTOS } from '@/graphql/query.graphql';
 
 // 1. graphql generated types
-import {
-  LimitedNews,
-  LimitedNewsVariables,
-} from '@/graphql/__generated__/LimitedNews';
-import {
-  LimitedPhotos,
-  LimitedPhotosVariables,
-} from '@/graphql/__generated__/LimitedPhotos';
 import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
 import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
 
@@ -36,11 +27,7 @@ const NewsFeed = () => {
   const uniqueId = useId();
 
   // querying news
-  const {
-    data: newsData,
-    loading,
-    error,
-  } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
+  const { data: newsData } = useQuery<AllNews, AllNewsVariables>(GET_ALL_NEWS, {
     variables: {
       sort: ['createdAt:desc'],
       pagination: {
@@ -50,18 +37,17 @@ const NewsFeed = () => {
   });
 
   // querying photos
-  const {
-    data: photosData,
-    loading: loadingPhotos,
-    error: errorPhotos,
-  } = useQuery<Photos, PhotosVariables>(GET_ALL_PHOTOS, {
-    variables: {
-      sort: ['createdAt:desc'],
-      pagination: {
-        limit: 2,
+  const { data: photosData } = useQuery<Photos, PhotosVariables>(
+    GET_ALL_PHOTOS,
+    {
+      variables: {
+        sort: ['createdAt:desc'],
+        pagination: {
+          limit: 2,
+        },
       },
     },
-  });
+  );
 
   return (
     <section className='container-custom flex gap-6 my-4'>

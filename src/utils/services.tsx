@@ -1,9 +1,10 @@
 // components
 import { showToast } from './Toast/toast';
 
+// constants
+import { signUp } from '@/constants';
+
 // packages
-import Cookies from 'universal-cookie';
-import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '@/env';
 
 // This function takes file as input and uploades the file to cloudinary
@@ -31,6 +32,7 @@ export async function uploadToCloudinery(
   setImageLoading: React.Dispatch<React.SetStateAction<boolean>>,
   previewProfileImage: (file: File | null) => void,
 ) {
+  const { errorMessages } = signUp.uploadImage;
   const file: File | null =
     event.target.files?.length && event.target.files[0]
       ? event.target.files[0]
@@ -39,8 +41,8 @@ export async function uploadToCloudinery(
   if (file) {
     if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
       showToast({
-        title: 'Unsupported file type',
-        subTitle: 'Profile image must be in jpeg or png format PLEASE REFRESH',
+        title: errorMessages.fileFormat,
+        subTitle: errorMessages.fileFormatSubtitle,
         position: 'top-right',
         type: 'error',
       });
@@ -51,8 +53,8 @@ export async function uploadToCloudinery(
 
     if (file.size > 4000000) {
       showToast({
-        title: 'Unsupported file type',
-        subTitle: 'Profile image must be less than 4MB',
+        title: errorMessages.fileSize,
+        subTitle: errorMessages.fileSizeSubTitle,
         position: 'top-right',
         type: 'error',
       });

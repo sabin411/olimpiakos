@@ -6,11 +6,7 @@ import HeroSlider from '@/components/HeroSlider';
 import VideoPanel from '@/components/VideoPanel';
 import SelectionTab from '@/components/SelectionTab';
 import UpcomingPopup from '@/components/UpcommingPopup';
-import {
-  VideoPanelSkeleton,
-  NewsSkeleton,
-  PhotosSkeleton,
-} from '@/components/Skeleton/index';
+import { VideoPanelSkeleton, NewsSkeleton } from '@/components/Skeleton/index';
 // import NewsSkeleton from '@/components/Skeleton/News/News';
 
 // apollo client query
@@ -40,11 +36,7 @@ import {
   trendingSection,
   dummyFeaturedVideo,
 } from '@/constants';
-import { newsData } from '@/global/constants';
 import { Link } from 'react-router-dom';
-
-// ENV
-import { BASE_URL } from '@/env';
 
 // graphql generated types
 import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
@@ -57,7 +49,7 @@ import {
   UpcomingEventVariables,
 } from '@/graphql/__generated__/UpcomingEvent';
 
-const MainPage = () => {
+export const MainPage = () => {
   const [openUpcomingModal, setOpenUpcomingModal] = useState(true);
   const [featureEvents, setFeatureEvents] = React.useState<HeroSliderProps>();
   // Query for latest videos
@@ -190,7 +182,7 @@ const MainPage = () => {
             className='text-secondary-800 hover:text-secondary-900'
             to={'/all-news'}
           >
-            More news...
+            {latestNews.moreNews}
           </Link>
         </div>
         {/* Latest News section ends */}
@@ -200,7 +192,7 @@ const MainPage = () => {
 
         {/* Latest photos section starts */}
         <div className='hidden w-[25%] bg-primary-900 py-4 px-5 lg:block'>
-          <h4 className='mb-1'>Latest Photos</h4>
+          <h4 className='mb-1'>{latestPhotos.title}</h4>
           {photosData?.photos?.data.map((items, i) => {
             if (items.attributes)
               return (
@@ -218,7 +210,7 @@ const MainPage = () => {
             className='text-secondary-800 hover:text-secondary-900'
             to={'/gallery'}
           >
-            More Photos...
+            {latestPhotos.morePhotos}
           </Link>
         </div>
         {/* Latest photos section ends */}

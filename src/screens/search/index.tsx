@@ -16,6 +16,9 @@ import { GET_ALL_VIDEOS } from '@/graphql/query.graphql';
 // utils
 import { mapVideoPanelProps } from '@/utils/mapper';
 
+// const
+import { search } from '@/constants';
+
 export const Search = () => {
   const [searchParams] = useSearchParams();
   const searchParam = searchParams.get('v');
@@ -42,7 +45,7 @@ export const Search = () => {
     <section className='container-custom my-10'>
       <Title
         containerStyle='mb-10'
-        title={`Search Result for: "${searchParam}"`}
+        title={`${search.searchResult} "${searchParam}"`}
       />
       {/* Recommended videos starts */}
       <div

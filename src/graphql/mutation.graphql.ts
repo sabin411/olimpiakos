@@ -162,3 +162,24 @@ export const UPDATE_USER_INFORMATION = gql`
     }
   }
 `;
+
+// 7. Change password
+export const CHANGE_PASSWORD = gql`
+  mutation ChangePassword(
+    $currentPassword: String!
+    $password: String!
+    $passwordConfirmation: String!
+  ) {
+    changePassword(
+      currentPassword: $currentPassword
+      password: $password
+      passwordConfirmation: $passwordConfirmation
+    ) {
+      jwt
+      user {
+        username
+        email
+      }
+    }
+  }
+`;

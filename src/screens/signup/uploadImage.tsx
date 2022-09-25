@@ -26,7 +26,12 @@ import {
   CreateUserInformation,
   CreateUserInformationVariables,
 } from '@/graphql/__generated__/CreateUserInformation';
+
+// types
 import { UserInfoDataProps } from './types';
+
+// consts
+import { signUp } from '@/constants';
 
 const UploadImage = () => {
   const [userInfoData, setUserInfoData] = useState<UserInfoDataProps>({
@@ -47,14 +52,37 @@ const UploadImage = () => {
   >(CREATE_USER_INFO, {
     onCompleted: data => {
       if (data.createUserInformation) {
+        showToast({
+          title: signUp.uploadImage.successMessages.successfullyCreatedAccount,
+          subTitle:
+            signUp.uploadImage.successMessages
+              .successfullyCreatedAccountSubTitle,
+          type: 'success',
+        });
         navigate('/');
       }
+    },
+    onError: error => {
+      showToast({
+        title: signUp.uploadImage.errorMessages.failedToCreateAccount,
+        subTitle: error?.message,
+        type: 'error',
+      });
     },
   }); // mutation query for creating user information
   const [createUploadFile] = useMutation<
     CreateUploadFile,
     CreateUploadFileVariables
-  >(CREATE_UPLOAD_FILE);
+  >(CREATE_UPLOAD_FILE, {
+    onError: error => {
+      showToast({
+        title: signUp.uploadImage.errorMessages.unableToUpload,
+        subTitle: error?.message,
+        position: 'top-right',
+        type: 'error',
+      });
+    },
+  });
 
   // a function to display image for optimistic rendering
   function previewProfileImage(file: File | null) {
@@ -82,8 +110,8 @@ const UploadImage = () => {
   // handle profile image upload
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsImageUploading(true);
-    uploadToCloudinery(event, setIsImageUploading, previewProfileImage).then(
-      data => {
+    uploadToCloudinery(event, setIsImageUploading, previewProfileImage)
+      .then(data => {
         createUploadFile({
           variables: {
             data: {
@@ -103,18 +131,29 @@ const UploadImage = () => {
           },
         })
           .then(res => {
-            setUserInfoData({
-              ...userInfoData,
-              profilePic: res.data?.createUploadFile?.data?.id || '1',
-            }),
-              setIsImageUploading(false);
+            if (res.data?.createUploadFile?.data?.id) {
+              setUserInfoData({
+                ...userInfoData,
+                profilePic: res.data?.createUploadFile?.data?.id || '1',
+              }),
+                setIsImageUploading(false);
+              showToast({
+                title: signUp.uploadImage.successMessages.successfullyUploaded,
+                type: 'success',
+              });
+            }
           })
           .catch(err => {
-            console.log(err);
             setIsImageUploading(false);
           });
-      },
-    );
+      })
+      .catch(error => {
+        showToast({
+          title: signUp.uploadImage.errorMessages.unableToUpload,
+          position: 'top-right',
+          type: 'error',
+        });
+      });
   };
 
   // handle user information submit

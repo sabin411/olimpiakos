@@ -3,17 +3,14 @@ import React, { useEffect } from 'react';
 // component
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import DropDown from '@/components/DropDown';
 
-// Package
 // Package
 import * as yup from 'yup';
 import Cookies from 'universal-cookie';
 import { useMutation } from '@apollo/client';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FieldValues, useForm } from 'react-hook-form';
-import { Checkbox, FormControlLabel } from '@mui/material';
 
 // global
 import {
@@ -21,10 +18,13 @@ import {
   fullNameValidation,
   userNameValidation,
   phoneNumberValidation,
+  oldPasswordValidation,
+  passwordValidation,
 } from '@/global/validation';
 
 // constants
-import { signUp } from '@/constants';
+
+import { profile } from '@/constants';
 
 // Schema
 const emailSchema = yup.object().shape({
@@ -39,8 +39,14 @@ const phoneNumberSchema = yup.object().shape({
   phoneNumber: phoneNumberValidation,
 });
 
+const passwordChangeShema = yup.object().shape({
+  // oldPassword: oldPasswordValidation,
+  newPassword: passwordValidation,
+});
+
 // graphql generated types
 import {
+  CHANGE_PASSWORD,
   UPDATE_USER_INFORMATION,
   UPDATE_USER_PERMISSION,
 } from '@/graphql/mutation.graphql';
@@ -54,8 +60,12 @@ import {
   UpdateUserInfo,
   UpdateUserInfoVariables,
 } from '@/graphql/__generated__/UpdateUserInfo';
+import {
+  ChangePassword,
+  ChangePasswordVariables,
+} from '@/graphql/__generated__/ChangePassword';
 
-const EditProfile = ({
+export const EditProfile = ({
   whatToUpdate,
   setOpenModal,
 }: {
@@ -68,14 +78,18 @@ const EditProfile = ({
       ? emailSchema
       : whatToUpdate === 'NAME'
       ? fullNameSchema
-      : phoneNumberSchema;
-  const userInfoId = cookies.get('userInfoId');
-  const { inputFields } = signUp.form;
+      : whatToUpdate === 'PHONE'
+      ? phoneNumberSchema
+      : passwordChangeShema;
+
+  const { inputFields } = profile.form;
   const navigate = useNavigate();
-  const userId = cookies.get('userId');
   const email = cookies.get('email');
+  const userId = cookies.get('userId');
   const name = cookies.get('fullName');
+  const userInfoId = cookies.get('userInfoId');
   const phoneNumber = cookies.get('phoneNumber');
+  const token = cookies.get('token');
   const {
     handleSubmit,
     formState: { errors },
@@ -101,6 +115,19 @@ const EditProfile = ({
     onError: err => {
       showToast({
         title: 'Failed to update user information',
+        subTitle: err?.message,
+        type: 'error',
+      });
+    },
+  }); // update query for updating user information
+
+  const [changePasswordQuery] = useMutation<
+    ChangePassword,
+    ChangePasswordVariables
+  >(CHANGE_PASSWORD, {
+    onError: err => {
+      showToast({
+        title: 'Failed to update user password',
         subTitle: err?.message,
         type: 'error',
       });
@@ -173,6 +200,30 @@ const EditProfile = ({
       });
       return;
     }
+    if (whatToUpdate === 'PASSWORD') {
+      changePasswordQuery({
+        variables: {
+          currentPassword: data.oldPassword,
+          password: data.newPassword,
+          passwordConfirmation: data.newPassword,
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      }).then(res => {
+        if (res.data?.changePassword?.jwt) {
+          showToast({
+            title: 'Password updated successfully',
+            type: 'success',
+          });
+          cookies.set('token', res.data?.changePassword?.jwt);
+        }
+        setOpenModal(false);
+      });
+      return;
+    }
   };
 
   const getInput = () => {
@@ -212,14 +263,24 @@ const EditProfile = ({
         );
       case 'PASSWORD':
         return (
-          <Input
-            label={inputFields.password.label}
-            name={inputFields.password.name}
-            type={inputFields.password.type}
-            error={Boolean(errors.password)}
-            errorMessage={errors.password?.message?.toString()}
-            control={control}
-          />
+          <>
+            <Input
+              label={inputFields.oldPassword.label}
+              name={inputFields.oldPassword.name}
+              type={inputFields.oldPassword.type}
+              error={Boolean(errors.oldPassword)}
+              errorMessage={errors.oldPassword?.message?.toString()}
+              control={control}
+            />
+            <Input
+              label={inputFields.newPassword.label}
+              name={inputFields.newPassword.name}
+              type={inputFields.newPassword.type}
+              error={Boolean(errors.newPassword)}
+              errorMessage={errors.newPassword?.message?.toString()}
+              control={control}
+            />
+          </>
         );
       default:
         return <div>Something went wrong</div>;

@@ -14,7 +14,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { Logo } from '@/global/common';
 
 // constants
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '@/constants';
 
 // global

@@ -54,3 +54,8 @@ export const passwordConfirm = yup
   .string()
   .required(errorMessages.confirmPasswordRequired)
   .oneOf([yup.ref('password'), null], errorMessages.confirmPasswordMisMatch);
+
+// old password validation
+export const oldPasswordValidation = yup
+  .string()
+  .required(errorMessages.oldPasswordRequired);
