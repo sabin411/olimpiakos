@@ -73,6 +73,19 @@ export const EditProfile = ({
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const cookies = new Cookies();
+  const {
+    emailUpdateFailed,
+    nameUpdateFailed,
+    passwordUpdateFailed,
+    phoneNumberUpdateFailed,
+    unableToUpdate,
+  } = profile.errorMessage;
+  const {
+    emailUpdateSuccess,
+    nameUpdateSuccess,
+    passwordUpdateSuccess,
+    phoneNumberUpdateSuccess,
+  } = profile.successMessage;
   const schema =
     whatToUpdate === 'EMAIL'
       ? emailSchema
@@ -114,7 +127,7 @@ export const EditProfile = ({
   >(UPDATE_USER_INFORMATION, {
     onError: err => {
       showToast({
-        title: 'Failed to update user information',
+        title: unableToUpdate,
         subTitle: err?.message,
         type: 'error',
       });
@@ -127,7 +140,7 @@ export const EditProfile = ({
   >(CHANGE_PASSWORD, {
     onError: err => {
       showToast({
-        title: 'Failed to update user password',
+        title: unableToUpdate,
         subTitle: err?.message,
         type: 'error',
       });
@@ -145,7 +158,7 @@ export const EditProfile = ({
         },
       }).then(res => {
         showToast({
-          title: 'Email updated successfully',
+          title: emailUpdateSuccess,
           type: 'success',
         });
         cookies.set(
@@ -166,7 +179,7 @@ export const EditProfile = ({
         },
       }).then(res => {
         showToast({
-          title: 'Name updated successfully',
+          title: nameUpdateSuccess,
           type: 'success',
         });
         cookies.set(
@@ -188,7 +201,7 @@ export const EditProfile = ({
       }).then(res => {
         if (res.data?.updateUserInformation?.data?.id) {
           showToast({
-            title: 'Phone number updated successfully',
+            title: phoneNumberUpdateSuccess,
             type: 'success',
           });
         }

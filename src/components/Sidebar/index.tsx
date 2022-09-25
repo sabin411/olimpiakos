@@ -21,8 +21,8 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 // consts
 import { sidebar as sidebarConst } from '@/constants';
 
-// global
-import { Logo } from '@/global/common';
+// assets
+import Logo from '@/assets/images/logo-bottom.png';
 
 const Sidebar = ({
   openMenu: open,
@@ -139,7 +139,7 @@ const Sidebar = ({
           >
             <Link to='/'>
               <span className='inline-block h-10'>
-                <Logo />
+                <img className='h-full' src={Logo} alt='logo' />
               </span>
             </Link>
           </Typography>

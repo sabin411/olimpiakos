@@ -7,8 +7,8 @@ import Title from '@/components/Title';
 // packages
 import { Button } from '@mui/material';
 
-// global
-import { Logo } from '@/global/common';
+// assets
+import Logo from '@/assets/images/logo-top.png';
 
 // constants
 import { footer } from '@/constants';
@@ -20,7 +20,7 @@ function Footer() {
       <div className='container-custom py-6 flex flex-col gap-y-7 lg:flex-row lg:gap-x-7 lg:gap-y-0'>
         <div className='flex flex-col max-w-[580px]'>
           <Link to='/' className='w-[205px]'>
-            <Logo />
+            <img src={Logo} alt='logo' className='h-full' />
           </Link>
           <p className='mt-5 text-neutral-400 mb-6'>{description}</p>
           <Link className='inline-block w-full' to='/category/sports/all'>

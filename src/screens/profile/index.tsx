@@ -66,9 +66,9 @@ const Profile = () => {
   const profilePic = cookies.get('profilePic');
   const [currentUpdateInfo, setCurrentUpdateInfo] =
     React.useState<whatToUpdateProps>('EMAIL');
-  const wrapperStyle = 'flex items-center justify-between';
-  const labelStyle = 'text-s font-regular text-neutral-500';
-  const valueStyle = 'text-h6 font-regular text-neutral-300';
+  const wrapperStyle = 'flex items-center justify-between gap-x-4';
+  const labelStyle = 'font-regular text-neutral-500 text-s';
+  const valueStyle = 'font-regular text-neutral-300 text-p md:text-h6';
   const containerStyle = {
     backgroundColor: 'var(--primary-700)',
   };
@@ -104,7 +104,7 @@ const Profile = () => {
         setOpenModal={setOpenModal}
       />
       <section className='container-custom'>
-        <div className='lg:w-[800px] mx-auto mt-[128px] '>
+        <div className='lg:w-[800px] mx-auto mt-[50px] md:mt-[128px] '>
           <div className='flex items-start'>
             <img
               className='w-14 h-14 rounded object-cover'

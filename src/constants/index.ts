@@ -593,6 +593,21 @@ export const profile = {
     alreadyHaveAccount: 'Already have an account?',
     login: 'Login',
   },
+
+  errorMessage: {
+    unableToUpdate: 'Unable to update your profile.',
+    nameUpdateFailed: 'Unable to update your name.',
+    emailUpdateFailed: 'Unable to update your email.',
+    phoneNumberUpdateFailed: 'Unable to update your phone number.',
+    passwordUpdateFailed: 'Unable to update your password.',
+  },
+  successMessage: {
+    nameUpdateSuccess: 'Your name has been successfully updated.',
+    emailUpdateSuccess: 'Your email has been successfully updated.',
+    phoneNumberUpdateSuccess:
+      'Your phone number has been successfully updated.',
+    passwordUpdateSuccess: 'Your password has been successfully updated.',
+  },
 };
 
 // search screen constant
@@ -611,23 +626,23 @@ export const footer = {
       links: [
         {
           title: 'Football',
-          linkTo: '/football',
+          linkTo: 'category/sports/football',
         },
         {
           title: 'Cricket',
-          linkTo: '/cricket',
+          linkTo: 'category/sports/cricket',
         },
         {
           title: 'Tennis',
-          linkTo: '/tennis',
+          linkTo: 'category/sports/tennis',
         },
         {
           title: 'Swimming',
-          linkTo: '/swimming',
+          linkTo: 'category/sports/swimming',
         },
         {
           title: 'More...',
-          linkTo: '/category/sports/all',
+          linkTo: 'category/sports/all',
         },
       ],
     },
@@ -653,7 +668,7 @@ export const footer = {
       links: [
         {
           title: 'News',
-          linkTo: '/news',
+          linkTo: '/all-news',
         },
         {
           title: 'Gallery',

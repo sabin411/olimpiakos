@@ -19,14 +19,14 @@ import { styled, alpha } from '@mui/material/styles';
 
 // icons
 import MenuIcon from '@mui/icons-material/Menu';
-import MailIcon from '@mui/icons-material/Mail';
-import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
+// assets
+import Logo from '@/assets/images/logo-bottom.png';
+
 // global
-import { Logo } from '@/global/common';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -126,14 +126,6 @@ function AppBarComp({
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='error'>
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size='large'
           aria-label='show 17 new notifications'
@@ -143,7 +135,7 @@ function AppBarComp({
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p className='text-primary-800'>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -155,7 +147,7 @@ function AppBarComp({
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p className='text-primary-800'>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -189,7 +181,7 @@ function AppBarComp({
             <Link to='/'>
               <span className='inline-block h-10'>
                 {' '}
-                <Logo />{' '}
+                <img src={Logo} className='inline-block h-full' alt='' />
               </span>
             </Link>
           </Typography>
