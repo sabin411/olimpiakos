@@ -51,7 +51,7 @@ const UploadImage = () => {
       }
     },
   }); // mutation query for creating user information
-  const [createUploadFile, { data, error }] = useMutation<
+  const [createUploadFile] = useMutation<
     CreateUploadFile,
     CreateUploadFileVariables
   >(CREATE_UPLOAD_FILE);
@@ -82,37 +82,39 @@ const UploadImage = () => {
   // handle profile image upload
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsImageUploading(true);
-    uploadToCloudinery(event, previewProfileImage).then(data => {
-      createUploadFile({
-        variables: {
-          data: {
-            name: data.original_filename,
-            alternativeText: 'Image',
-            caption: 'Image',
-            height: data.height,
-            width: data.width,
-            hash: data.signature,
-            size: data.bytes,
-            url: data.secure_url,
-            previewUrl: data.secure_url,
-            provider: 'cloudinary',
-            mime: `image/${data.format}`,
-            folderPath: data.folder,
+    uploadToCloudinery(event, setIsImageUploading, previewProfileImage).then(
+      data => {
+        createUploadFile({
+          variables: {
+            data: {
+              name: data.original_filename,
+              alternativeText: 'Image',
+              caption: 'Image',
+              height: data.height,
+              width: data.width,
+              hash: data.signature,
+              size: data.bytes,
+              url: data.secure_url,
+              previewUrl: data.secure_url,
+              provider: 'cloudinary',
+              mime: `image/${data.format}`,
+              folderPath: data.folder,
+            },
           },
-        },
-      })
-        .then(res => {
-          setUserInfoData({
-            ...userInfoData,
-            profilePic: res.data?.createUploadFile?.data?.id || '1',
-          }),
-            setIsImageUploading(false);
         })
-        .catch(err => {
-          console.log(err);
-          setIsImageUploading(false);
-        });
-    });
+          .then(res => {
+            setUserInfoData({
+              ...userInfoData,
+              profilePic: res.data?.createUploadFile?.data?.id || '1',
+            }),
+              setIsImageUploading(false);
+          })
+          .catch(err => {
+            console.log(err);
+            setIsImageUploading(false);
+          });
+      },
+    );
   };
 
   // handle user information submit
@@ -199,7 +201,7 @@ const UploadImage = () => {
                   className='w-full h-full rounded-full object-cover'
                   src={
                     previewSource ||
-                    'https://images.unsplash.com/photo-1552234994-66ba234fd567?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80'
+                    'https://monstar-lab.com/global/wp-content/uploads/sites/11/2019/04/male-placeholder-image.jpeg'
                   }
                   alt='Rounded avatar'
                 ></img>

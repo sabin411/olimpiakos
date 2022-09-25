@@ -4,9 +4,10 @@ import {
   UserInfoById,
   UserInfoByIdVariables,
 } from '@/graphql/__generated__/UserInfoById';
+import { showToast } from '@/utils/Toast/toast';
 import { useQuery } from '@apollo/client';
-import React from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 function Redirecting() {
@@ -15,31 +16,50 @@ function Redirecting() {
   const userId = searchParameters.get('userId');
   const token = searchParameters.get('token');
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = React.useState<UserInfoById | undefined>();
 
   if (userId) {
-    useQuery<UserInfoById, UserInfoByIdVariables>(GET_USER_INFO_BY_ID, {
+    const { data: userInfoData } = useQuery<
+      UserInfoById,
+      UserInfoByIdVariables
+    >(GET_USER_INFO_BY_ID, {
       variables: {
         userInformationId: userId,
       },
       onCompleted: data => {
         if (data.userInformation?.data?.id) {
-          cookies.set('token', token);
-          cookies.set(
-            'profilePic',
-            data.userInformation?.data?.attributes?.profilePic.data?.attributes
-              ?.url,
-          );
-          cookies.set('userId', userId);
-          cookies.set(
-            'fullName',
-            data.userInformation.data.attributes?.fullName,
-          );
-          navigate('/');
+          setUserInfo(data);
         }
+      },
+      onError: error => {
+        showToast({
+          title: 'Failed to get user information',
+          subTitle: error?.message,
+        });
       },
     });
   }
-  return <div>redirecting...</div>;
+  useEffect(() => {
+    if (userInfo?.userInformation?.data?.id) {
+      cookies.set('token', token);
+      cookies.set(
+        'profilePic',
+        userInfo?.userInformation?.data?.attributes?.profilePic.data?.attributes
+          ?.url,
+      );
+      cookies.set('userId', userId);
+      cookies.set(
+        'fullName',
+        userInfo?.userInformation?.data?.attributes?.fullName,
+      );
+      navigate('/');
+    }
+  }, [userInfo]);
+  return (
+    <div>
+      redirecting...<Link to={'/'}>Plese refresh</Link>
+    </div>
+  );
 }
 
 export default Redirecting;

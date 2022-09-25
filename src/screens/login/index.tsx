@@ -26,6 +26,7 @@ import {
   Login as LoginType,
   LoginVariables,
 } from '@/graphql/__generated__/Login';
+import { showToast } from '@/utils/Toast/toast';
 
 // Schema
 const schema = yup.object().shape({
@@ -35,7 +36,15 @@ const schema = yup.object().shape({
 
 export const Login = () => {
   const navigate = useNavigate();
-  const [loginUser] = useMutation<LoginType, LoginVariables>(LOGIN);
+  const [loginUser] = useMutation<LoginType, LoginVariables>(LOGIN, {
+    onError: error => {
+      showToast({
+        title: 'Login Failed!',
+        subTitle: error?.message,
+        type: 'error',
+      });
+    },
+  });
   const {
     handleSubmit,
     formState: { errors },
@@ -54,9 +63,17 @@ export const Login = () => {
         },
       },
     }).then(res => {
-      navigate(
-        `/redirecting?userId=${res.data?.login.user.id}&token=${res.data?.login.jwt}`,
-      );
+      if (res.data?.login.jwt) {
+        navigate(
+          `/redirecting?userId=${res.data?.login.user.id}&token=${res.data?.login.jwt}`,
+        );
+      } else {
+        showToast({
+          title: 'Unable to login',
+          subTitle: 'something went wrong',
+          type: 'error',
+        });
+      }
     });
   };
 

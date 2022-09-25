@@ -26,12 +26,11 @@ import Sports from '@/screens/category/sports';
 import Redirecting from '@/screens/login/redirecting';
 import UploadImage from '@/screens/signup/uploadImage';
 import VideoPanel from '@/screens/previews/VideoPanelPreview';
+import Profile from '@/screens/profile';
 
 function App() {
   return (
     <Routes>
-      <Route path='test' element={<Test />} />
-
       <Route path='/' element={<Layout />}>
         <Route path='' element={<MainPage />} />
         <Route
@@ -39,6 +38,14 @@ function App() {
           element={
             <ProtectMe>
               <Watch />
+            </ProtectMe>
+          }
+        />
+        <Route
+          path='profile'
+          element={
+            <ProtectMe>
+              <Profile />
             </ProtectMe>
           }
         />

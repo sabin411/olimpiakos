@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // components
 import Title from '@/components/Title';
 import HeroSlider from '@/components/HeroSlider';
 import VideoPanel from '@/components/VideoPanel';
 import SelectionTab from '@/components/SelectionTab';
+import UpcomingPopup from '@/components/UpcommingPopup';
 import {
   VideoPanelSkeleton,
   NewsSkeleton,
@@ -18,6 +19,7 @@ import {
   GET_ALL_PHOTOS,
   GET_ALL_VIDEOS,
   GET_FEATURED_EVENTS,
+  GET_UPCOMING_EVENTS,
 } from '@/graphql/query.graphql';
 
 // apollo client
@@ -45,17 +47,18 @@ import { Link } from 'react-router-dom';
 import { BASE_URL } from '@/env';
 
 // graphql generated types
-import {
-  LatestVideos,
-  LatestVideosVariables,
-} from '@/graphql/__generated__/LatestVideos';
 import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
 import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
 import { FeaturedEvents } from '@/graphql/__generated__/FeaturedEvents';
 import { HeroSliderProps } from '@/components/HeroSlider/types';
 import { Videos, VideosVariables } from '@/graphql/__generated__/Videos';
+import {
+  UpcomingEvent,
+  UpcomingEventVariables,
+} from '@/graphql/__generated__/UpcomingEvent';
 
 const MainPage = () => {
+  const [openUpcomingModal, setOpenUpcomingModal] = useState(true);
   const [featureEvents, setFeatureEvents] = React.useState<HeroSliderProps>();
   // Query for latest videos
   const { data: LatestVideosData, loading: loadingLatestVideos } = useQuery<
@@ -96,12 +99,19 @@ const MainPage = () => {
     },
   );
 
+  // querying upcoming event
+  const { data: featuredEventsData } = useQuery<
+    UpcomingEvent,
+    UpcomingEventVariables
+  >(GET_UPCOMING_EVENTS);
+
   // querying for featured event videos
   const {
     data: featuredVideosData,
     loading: loadingFeaturedVideos,
     error: errorFeaturedVideos,
   } = useQuery<FeaturedEvents>(GET_FEATURED_EVENTS);
+
   useEffect(() => {
     if (featuredVideosData) {
       const updatedData =
@@ -126,6 +136,33 @@ const MainPage = () => {
 
   return (
     <>
+      {
+        <UpcomingPopup
+          open={openUpcomingModal}
+          DateTime={
+            new Date(
+              featuredEventsData?.upcommingEvent?.data?.attributes?.Date ||
+                null,
+            )
+          }
+          text={
+            featuredEventsData?.upcommingEvent?.data?.attributes?.text || ''
+          }
+          subText={
+            featuredEventsData?.upcommingEvent?.data?.attributes?.subText || ''
+          }
+          image={
+            featuredEventsData?.upcommingEvent?.data?.attributes?.imageUrl || ''
+          }
+          title={
+            featuredEventsData?.upcommingEvent?.data?.attributes?.title || ''
+          }
+          handleClose={() => {
+            setOpenUpcomingModal(false);
+            localStorage.setItem('isUpcomingPopupOpen', 'true');
+          }}
+        />
+      }
       {/* Slider section starts */}
       <section className='mt-2 container-custom flex  justify-between gap-x-6'>
         {/* Latest News section starts */}
