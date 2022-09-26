@@ -15,7 +15,7 @@ import { Logo } from '@/global/common';
 
 // constants
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '@/constants';
+import { login } from '@/constants/en';
 
 // global
 import { emailValidation } from '@/global/validation';

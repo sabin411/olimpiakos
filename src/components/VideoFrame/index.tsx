@@ -31,7 +31,7 @@ import {
 } from '@/graphql/__generated__/CreateReport';
 
 // const
-import { report } from '@/constants';
+import { report } from '@/constants/en';
 
 // utils
 import { showToast } from '@/utils/Toast/toast';

@@ -1,8 +1,5 @@
 import react from 'react';
 
-// components
-import Button from '@/components/Button';
-
 // packages
 import { Route, Routes } from 'react-router-dom';
 

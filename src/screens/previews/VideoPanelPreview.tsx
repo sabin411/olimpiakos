@@ -12,7 +12,11 @@ import thumbnail from '@/assets/images/thumbnail.webp';
 import Title from '@/components/Title';
 
 // constants
-import { dummyFeaturedVideo, dummyComments, categoriesData } from '@/constants';
+import {
+  dummyFeaturedVideo,
+  dummyComments,
+  categoriesData,
+} from '@/constants/en';
 
 export default function VideoPanelPreview() {
   const [isLiked, setIsLiked] = React.useState(false);

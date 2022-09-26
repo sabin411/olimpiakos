@@ -4,17 +4,18 @@ import React, { useState } from 'react';
 import Button from '../Button';
 
 // packages
-import Cookies from 'universal-cookie';
+import i18n from 'i18next';
 import Box from '@mui/material/Box';
-import { Link, useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import Badge from '@mui/material/Badge';
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Toolbar from '@mui/material/Toolbar';
-import InputBase from '@mui/material/InputBase';
 import { Navigate } from 'react-router-dom';
+import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { Link, useNavigate } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 
 // icons
@@ -35,6 +36,15 @@ import { SearchForm } from './common';
 
 // utils
 import { displayImage } from '@/utils/services';
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+import { language } from '@/screens/signup/common/constants';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 function AppBarComp({
   onMenuClick,
@@ -47,6 +57,8 @@ function AppBarComp({
 }) {
   const cookies = new Cookies();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [language, setLangauge] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -68,6 +80,71 @@ function AppBarComp({
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setLangauge(event.target.value as string);
+    i18next.changeLanguage(event.target.value);
+  };
+
+  const LanguageChanger = () => {
+    return (
+      <FormControl
+        sx={{
+          width: '206px',
+          marginRight: '70px',
+        }}
+      >
+        <InputLabel
+          sx={{
+            color: 'var(--primary-400)',
+            '&.Mui-focused': {
+              color: 'var(--secondary-700)',
+            },
+          }}
+          id='demo-simple-select-label'
+        >
+          Language
+        </InputLabel>
+        <Select
+          sx={{
+            '& .MuiSelect-select.MuiSelect-select': {
+              paddingRight: '0px',
+            },
+            '& .MuiInputBase-input': {
+              color: 'var(--primary-400)',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-400)',
+            },
+
+            '& .MuiSvgIcon-root': {
+              color: 'var(--primary-400)',
+            },
+            '&:hover': {
+              '&& fieldset': {
+                borderColor: 'var(--secondary-700)',
+              },
+            },
+            '&.Mui-focused': {
+              '&& fieldset': {
+                borderColor: 'var(--secondary-700)',
+              },
+            },
+          }}
+          labelId='demo-simple-select-label'
+          id='demo-simple-select'
+          value={language}
+          label='Language'
+          onChange={handleChange}
+        >
+          <MenuItem value={'en'}>English</MenuItem>
+          <MenuItem value={'fr'}>Franch</MenuItem>
+        </Select>
+      </FormControl>
+    );
   };
 
   // handle logout
@@ -189,6 +266,7 @@ function AppBarComp({
             <>
               <SearchForm />
               <Box sx={{ flexGrow: 1 }} />
+              {/* <LanguageChanger /> */}
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton
                   size='large'

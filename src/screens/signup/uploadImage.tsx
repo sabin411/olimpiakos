@@ -31,7 +31,7 @@ import {
 import { UserInfoDataProps } from './types';
 
 // consts
-import { signUp } from '@/constants';
+import { signUp } from '@/constants/en';
 
 const UploadImage = () => {
   const [userInfoData, setUserInfoData] = useState<UserInfoDataProps>({

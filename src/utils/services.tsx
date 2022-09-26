@@ -2,7 +2,7 @@
 import { showToast } from './Toast/toast';
 
 // constants
-import { signUp } from '@/constants';
+import { signUp } from '@/constants/en';
 
 // packages
 import { BASE_URL } from '@/env';

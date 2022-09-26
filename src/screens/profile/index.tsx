@@ -15,7 +15,7 @@ import EditProfile from './EditProfile';
 import { whatToUpdateProps } from './types';
 
 // constants
-import { profile } from '@/constants';
+import { profile } from '@/constants/en';
 
 // utils
 import { displayImage, uploadToCloudinery } from '@/utils/services';

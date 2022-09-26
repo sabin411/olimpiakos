@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Logo } from '@/global/common';
 
 // constants
-import { signUp } from '@/constants';
+import { signUp } from '@/constants/en';
 
 // global
 import { SigninForm } from './common/SigninForm';

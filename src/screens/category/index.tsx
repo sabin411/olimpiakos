@@ -8,15 +8,17 @@ import SelectionTab from '@/components/SelectionTab';
 import Cookies from 'universal-cookie';
 
 // constants
-import { categoriesData } from '@/constants';
+import { categoriesData } from '@/constants/en';
 import AppBarComp from '@/components/AppBar';
 import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 
 // assets
 import dummyProfilePic from '@/assets/images/dummy.jpg';
+import { useTranslation } from 'react-i18next';
 
 function Category() {
+  const { t } = useTranslation();
   const [openMenu, setOpenMenu] = useState(false);
   const cookies = new Cookies();
   const [isLoggedIn] = useState(cookies.get('token') ? true : false);
@@ -43,7 +45,7 @@ function Category() {
 
       {/* Explore new section starts */}
       <section className='my-5 container-custom'>
-        <h4 className='text-neutral-400 mb-2'>{categoriesData.title}</h4>
+        <h4 className='text-neutral-400 mb-2'>{t('categoriesData.title')}</h4>
         <SelectionTab items={categoriesData.items} />
       </section>
       {/* Explore new section ends */}

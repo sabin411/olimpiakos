@@ -1,7 +1,7 @@
 import React from 'react';
 
 // conts
-import { report } from '@/constants';
+import { report } from '@/constants/en';
 
 // packages
 import {

@@ -11,7 +11,7 @@ import { Button } from '@mui/material';
 import Logo from '@/assets/images/logo-top.png';
 
 // constants
-import { footer } from '@/constants';
+import { footer } from '@/constants/en';
 
 function Footer() {
   const { description, exploreMoreButton, footerConst } = footer;

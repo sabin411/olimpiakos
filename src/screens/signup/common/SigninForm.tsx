@@ -15,7 +15,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { Checkbox, FormControlLabel } from '@mui/material';
 
 // constants
-import { signUp } from '@/constants';
+import { signUp } from '@/constants/en';
 import { countries } from './constants';
 
 // global

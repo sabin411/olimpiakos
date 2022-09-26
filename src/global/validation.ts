@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import commonValues from './common.values';
 
 // Constant
-import { errorMessages } from '@/constants';
+import { errorMessages } from '@/constants/en';
 
 // full name validation
 export const fullNameValidation = yup

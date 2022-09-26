@@ -23,7 +23,7 @@ import {
 } from '@/global/validation';
 
 // constants
-import { profile } from '@/constants';
+import { profile } from '@/constants/en';
 
 // Schema
 const emailSchema = yup.object().shape({

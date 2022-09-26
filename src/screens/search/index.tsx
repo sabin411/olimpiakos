@@ -17,7 +17,7 @@ import { GET_ALL_VIDEOS } from '@/graphql/query.graphql';
 import { mapVideoPanelProps } from '@/utils/mapper';
 
 // const
-import { search } from '@/constants';
+import { search } from '@/constants/en';
 
 export const Search = () => {
   const [searchParams] = useSearchParams();

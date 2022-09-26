@@ -19,7 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 // consts
-import { sidebar as sidebarConst } from '@/constants';
+import { sidebar as sidebarConst } from '@/constants/en';
 
 // assets
 import Logo from '@/assets/images/logo-bottom.png';

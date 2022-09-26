@@ -11,7 +11,7 @@ import { useQuery } from '@apollo/client';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 
 // constants
-import { newsFeed } from '@/constants';
+import { newsFeed } from '@/constants/en';
 
 // assets
 import { imageDummy } from '@/assets/images/dummyImages';

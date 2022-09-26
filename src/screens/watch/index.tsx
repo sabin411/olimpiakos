@@ -12,7 +12,7 @@ import { ApolloQueryResult, useMutation, useQuery } from '@apollo/client';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 // constants
-import { dummyComments } from '@/constants/index';
+import { dummyComments } from '@/constants/en';
 import { mapComment, recommendedvids } from './common';
 
 // query

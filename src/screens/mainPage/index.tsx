@@ -9,6 +9,9 @@ import UpcomingPopup from '@/components/UpcommingPopup';
 import { VideoPanelSkeleton, NewsSkeleton } from '@/components/Skeleton/index';
 // import NewsSkeleton from '@/components/Skeleton/News/News';
 
+// packages
+import { useTranslation } from 'react-i18next';
+
 // apollo client query
 import {
   GET_ALL_NEWS,
@@ -35,7 +38,7 @@ import {
   categoriesData,
   trendingSection,
   dummyFeaturedVideo,
-} from '@/constants';
+} from '@/constants/en';
 import { Link } from 'react-router-dom';
 
 // graphql generated types

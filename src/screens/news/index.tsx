@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import ImageCard from '@/components/Cards/ImageCard';
 
 // constants
-import { individualNews } from '@/constants';
+import { individualNews } from '@/constants/en';
 
 // assets
 import { imageDummy } from '@/assets/images/dummyImages';
