@@ -6,6 +6,7 @@ import { Box, Dialog, Modal } from '@mui/material';
 // global
 import { Logo } from '@/global/common';
 import { format } from 'date-fns';
+import { displayImage } from '@/utils/services';
 
 const UpcomingPopup = ({
   image,
@@ -35,7 +36,7 @@ const UpcomingPopup = ({
       <Box className='bg-primary-800 mx-auto flex flex-col h-[395px] md:flex-row'>
         <div className=' flex-1 overflow-hidden md:h-full'>
           <img
-            src={image}
+            src={displayImage(image || '')}
             className='h-full w-full object-cover'
             alt='upcoming event'
           />

@@ -6,6 +6,7 @@ import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 
 // types
 import { LatestNewsProps, LatestPhotoWrapperProps } from './types';
+import { displayImage } from '@/utils/services';
 
 export function LatestNews({
   news,
@@ -47,7 +48,7 @@ export const PhotoWrapper = ({
       <div className='rounded-lg overflow-hidden h-[166px] w-full'>
         <img
           className='w-full h-full object-cover'
-          src={image}
+          src={displayImage(image)}
           alt={image + description}
         />
       </div>

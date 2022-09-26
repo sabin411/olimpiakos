@@ -147,7 +147,8 @@ export const MainPage = () => {
             featuredEventsData?.upcommingEvent?.data?.attributes?.subText || ''
           }
           image={
-            featuredEventsData?.upcommingEvent?.data?.attributes?.imageUrl || ''
+            featuredEventsData?.upcommingEvent?.data?.attributes?.imageUrl.data
+              ?.attributes?.url || ''
           }
           title={
             featuredEventsData?.upcommingEvent?.data?.attributes?.title || ''
@@ -201,7 +202,10 @@ export const MainPage = () => {
               return (
                 <PhotoWrapper
                   key={items.attributes.title + i}
-                  image={items.attributes.imageUrl || imageDummy}
+                  image={
+                    items.attributes.imageUrl.data?.attributes?.url ||
+                    imageDummy
+                  }
                   description={items.attributes.description}
                   timeStamp={new Date(items.attributes.createdAt)}
                   containerStyle='my-3'
@@ -258,7 +262,7 @@ export const MainPage = () => {
       </section>
       {/* Explore latest section ends */}
       {/* Explore Trending section starts */}
-      <section className='my-10 container-custom'>
+      {/* <section className='my-10 container-custom'>
         <Title
           title={trendingSection.title}
           exploreMoreLink='/feed/trending'
@@ -287,7 +291,7 @@ export const MainPage = () => {
                 );
               })}
         </div>
-      </section>
+      </section> */}
       {/* Explore Trending section ends */}
     </>
   );

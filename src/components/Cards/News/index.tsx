@@ -1,3 +1,4 @@
+import { displayImage } from '@/utils/services';
 import React from 'react';
 
 // package
@@ -30,7 +31,7 @@ const NewsCard = ({
       ${hasBorder && 'border-b-1 border-primary-700'} ${containerStyle}`}
     >
       <div className='w-[25%] h-full'>
-        <ImageCard containerStyle='aspect-video' image={image} />
+        <ImageCard containerStyle='aspect-video' image={displayImage(image)} />
       </div>
       <div className='flex-1 flex flex-col justify-between'>
         <div>

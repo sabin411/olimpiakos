@@ -50,18 +50,13 @@ export const sidebar = {
   primaryLinks: [
     { title: 'Home', icon: HomeOutlinedIcon, linkTo: '/' },
     {
-      title: 'Categories',
-      icon: CategoryOutlinedIcon,
-      linkTo: '/category/sports/all',
-    },
-    {
       title: 'Explore',
       icon: ExploreOutlinedIcon,
       linkTo: '/category/sports/all',
     },
   ],
   secondaryLinks: [
-    { title: 'Trending', icon: TrendingUpIcon, linkTo: '/feed/trending' },
+    // { title: 'Trending', icon: TrendingUpIcon, linkTo: '/feed/trending' },
     { title: 'Latest', icon: FiberNewIcon, linkTo: '/feed/latest' },
     {
       title: 'Liked Videos',
@@ -69,7 +64,7 @@ export const sidebar = {
       linkTo: '/feed/likedVideos',
     },
     { title: 'Watched', icon: LiveTvOutlinedIcon, linkTo: '/feed/history' },
-    { title: 'Video Panel', icon: LiveTvOutlinedIcon, linkTo: 'video-panel' },
+    // { title: 'Video Panel', icon: LiveTvOutlinedIcon, linkTo: 'video-panel' },
   ],
 };
 

@@ -123,6 +123,22 @@ export interface VideoById_video_data_attributes_comments {
   data: VideoById_video_data_attributes_comments_data[];
 }
 
+export interface VideoById_video_data_attributes_category_data_attributes {
+  __typename: "Category";
+  name: string;
+}
+
+export interface VideoById_video_data_attributes_category_data {
+  __typename: "CategoryEntity";
+  id: string | null;
+  attributes: VideoById_video_data_attributes_category_data_attributes | null;
+}
+
+export interface VideoById_video_data_attributes_category {
+  __typename: "CategoryEntityResponse";
+  data: VideoById_video_data_attributes_category_data | null;
+}
+
 export interface VideoById_video_data_attributes {
   __typename: "Video";
   embedId: string;
@@ -133,6 +149,7 @@ export interface VideoById_video_data_attributes {
   viewedBy: VideoById_video_data_attributes_viewedBy | null;
   publishedAt: any | null;
   comments: VideoById_video_data_attributes_comments | null;
+  category: VideoById_video_data_attributes_category | null;
 }
 
 export interface VideoById_video_data {
@@ -151,7 +168,7 @@ export interface VideoById {
 }
 
 export interface VideoByIdVariables {
-  videoId?: string | null;
   pagination?: PaginationArg | null;
   sort?: (string | null)[] | null;
+  videoId?: string | null;
 }

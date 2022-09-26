@@ -9,10 +9,26 @@ import { NewsFiltersInput, PaginationArg } from "./../../../__generated__/global
 // GraphQL query operation: AllNews
 // ====================================================
 
+export interface AllNews_allNews_data_attributes_imageUrl_data_attributes {
+  __typename: "UploadFile";
+  url: string;
+}
+
+export interface AllNews_allNews_data_attributes_imageUrl_data {
+  __typename: "UploadFileEntity";
+  id: string | null;
+  attributes: AllNews_allNews_data_attributes_imageUrl_data_attributes | null;
+}
+
+export interface AllNews_allNews_data_attributes_imageUrl {
+  __typename: "UploadFileEntityResponse";
+  data: AllNews_allNews_data_attributes_imageUrl_data | null;
+}
+
 export interface AllNews_allNews_data_attributes {
   __typename: "News";
   title: string;
-  imageUrl: string;
+  imageUrl: AllNews_allNews_data_attributes_imageUrl;
   description: string | null;
   createdAt: any | null;
 }

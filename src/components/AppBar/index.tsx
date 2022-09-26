@@ -39,6 +39,7 @@ import { displayImage } from '@/utils/services';
 import {
   FormControl,
   InputLabel,
+  Popover,
   Select,
   SelectChangeEvent,
 } from '@mui/material';
@@ -184,7 +185,38 @@ function AppBarComp({
     </Menu>
   );
 
-  // for mobile view
+  const [anchorElPop, setAnchorElPop] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  const handlePopUpClose = () => {
+    setAnchorElPop(null);
+  };
+
+  const handlePopUpClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElPop(event.currentTarget);
+  };
+
+  const open = Boolean(anchorElPop);
+  const PopId = open ? 'simple-popover' : undefined;
+
+  const notificationComingSoon = () => {
+    return (
+      <Popover
+        id={PopId}
+        open={open}
+        anchorEl={anchorElPop}
+        onClose={handlePopUpClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+      </Popover>
+    );
+  };
+
+  // For mobile view
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -207,6 +239,8 @@ function AppBarComp({
           size='large'
           aria-label='show 17 new notifications'
           color='inherit'
+          aria-describedby={PopId}
+          onClick={handlePopUpClick}
         >
           <Badge badgeContent={17} color='error'>
             <NotificationsIcon />
@@ -245,6 +279,7 @@ function AppBarComp({
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}
+            aria-describedby={PopId}
             onClick={onMenuClick}
           >
             <MenuIcon />
@@ -332,6 +367,7 @@ function AppBarComp({
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      {notificationComingSoon}
     </>
   );
 }

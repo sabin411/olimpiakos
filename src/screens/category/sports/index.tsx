@@ -41,15 +41,14 @@ function Sports() {
         }
       : null;
 
-  const {
-    data: videoData,
-    loading,
-    error,
-  } = useQuery<Videos, VideosVariables>(GET_ALL_VIDEOS, {
-    variables: {
-      ...isFilter,
+  const { data: videoData } = useQuery<Videos, VideosVariables>(
+    GET_ALL_VIDEOS,
+    {
+      variables: {
+        ...isFilter,
+      },
     },
-  });
+  );
 
   useEffect(() => {
     setCurrentGames(mapVideoPanelProps(videoData?.videos?.data));

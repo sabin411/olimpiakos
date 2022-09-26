@@ -9,17 +9,35 @@ import { PublicationState } from "./../../../__generated__/globalTypes";
 // GraphQL query operation: UpcomingEvent
 // ====================================================
 
+export interface UpcomingEvent_upcommingEvent_data_attributes_imageUrl_data_attributes {
+  __typename: "UploadFile";
+  url: string;
+}
+
+export interface UpcomingEvent_upcommingEvent_data_attributes_imageUrl_data {
+  __typename: "UploadFileEntity";
+  id: string | null;
+  attributes: UpcomingEvent_upcommingEvent_data_attributes_imageUrl_data_attributes | null;
+}
+
+export interface UpcomingEvent_upcommingEvent_data_attributes_imageUrl {
+  __typename: "UploadFileEntityResponse";
+  data: UpcomingEvent_upcommingEvent_data_attributes_imageUrl_data | null;
+}
+
 export interface UpcomingEvent_upcommingEvent_data_attributes {
   __typename: "UpcommingEvent";
-  imageUrl: string;
   text: string | null;
   subText: string | null;
   title: string | null;
   Date: any;
+  imageUrl: UpcomingEvent_upcommingEvent_data_attributes_imageUrl;
+  createdAt: any | null;
 }
 
 export interface UpcomingEvent_upcommingEvent_data {
   __typename: "UpcommingEventEntity";
+  id: string | null;
   attributes: UpcomingEvent_upcommingEvent_data_attributes | null;
 }
 

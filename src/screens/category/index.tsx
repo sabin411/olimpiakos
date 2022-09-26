@@ -45,7 +45,7 @@ function Category() {
 
       {/* Explore new section starts */}
       <section className='my-5 container-custom'>
-        <h4 className='text-neutral-400 mb-2'>{t('categoriesData.title')}</h4>
+        <h4 className='text-neutral-400 mb-2'>{categoriesData.title}</h4>
         <SelectionTab items={categoriesData.items} />
       </section>
       {/* Explore new section ends */}

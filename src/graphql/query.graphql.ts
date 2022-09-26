@@ -133,7 +133,14 @@ export const GET_ALL_NEWS = gql`
         id
         attributes {
           title
-          imageUrl
+          imageUrl {
+            data {
+              id
+              attributes {
+                url
+              }
+            }
+          }
           description
           createdAt
         }
@@ -184,7 +191,14 @@ export const GET_ALL_PHOTOS = gql`
         attributes {
           title
           description
-          imageUrl
+          imageUrl {
+            data {
+              id
+              attributes {
+                url
+              }
+            }
+          }
           createdAt
         }
       }
@@ -240,12 +254,21 @@ export const GET_UPCOMING_EVENTS = gql`
   query UpcomingEvent($publicationState: PublicationState) {
     upcommingEvent(publicationState: $publicationState) {
       data {
+        id
         attributes {
-          imageUrl
           text
           subText
           title
           Date
+          imageUrl {
+            data {
+              id
+              attributes {
+                url
+              }
+            }
+          }
+          createdAt
         }
       }
     }
@@ -291,7 +314,7 @@ export const GET_UPCOMING_EVENTS = gql`
 // ! deprecated
 
 export const GET_VIDEO_BY_ID = gql`
-  query VideoById($videoId: ID, $pagination: PaginationArg, $sort: [String]) {
+  query VideoById($pagination: PaginationArg, $sort: [String], $videoId: ID) {
     video(id: $videoId) {
       data {
         id
@@ -352,6 +375,14 @@ export const GET_VIDEO_BY_ID = gql`
                   }
                 }
                 createdAt
+              }
+            }
+          }
+          category {
+            data {
+              id
+              attributes {
+                name
               }
             }
           }

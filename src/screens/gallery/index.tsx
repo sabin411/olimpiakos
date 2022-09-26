@@ -20,6 +20,7 @@ import {
 } from '@/graphql/__generated__/LimitedPhotos';
 import { GET_ALL_PHOTOS } from '@/graphql/query.graphql';
 import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
+import { displayImage } from '@/utils/services';
 
 // images
 const itemData = [
@@ -121,13 +122,20 @@ function Gallery() {
               return (
                 <ImageListItem key={photo?.id}>
                   <img
-                    src={`${photo.attributes?.imageUrl}`}
-                    srcSet={`${photo.attributes?.imageUrl}`}
+                    src={`${displayImage(
+                      photo.attributes?.imageUrl.data?.attributes?.url || '',
+                    )}`}
+                    srcSet={`${displayImage(
+                      photo.attributes?.imageUrl.data?.attributes?.url || '',
+                    )}`}
                     alt={photo.attributes?.title + 'image'}
                     loading='lazy'
                     onClick={() => {
                       setCurrentImage({
-                        url: photo.attributes?.imageUrl || imageDummy,
+                        url: displayImage(
+                          photo.attributes?.imageUrl.data?.attributes?.url ||
+                            imageDummy,
+                        ),
                         title: photo.attributes?.title,
                         description: photo.attributes?.description,
                       });

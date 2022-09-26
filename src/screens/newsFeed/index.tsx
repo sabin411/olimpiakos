@@ -67,7 +67,9 @@ const NewsFeed = () => {
                   addSuffix: true,
                 },
               )}
-              image={item.attributes?.imageUrl || imageDummy}
+              image={
+                item.attributes?.imageUrl.data?.attributes?.url || imageDummy
+              }
               linkTo={`/news/${item.id}`}
               hasBorder
               containerStyle={`${
@@ -86,7 +88,9 @@ const NewsFeed = () => {
             <PhotoWrapper
               linkTo={`/photo/${items.id}`}
               key={items.attributes?.title && items.attributes?.title + i}
-              image={items.attributes?.imageUrl || imageDummy}
+              image={
+                items.attributes?.imageUrl.data?.attributes?.url || imageDummy
+              }
               description={
                 items.attributes?.description || 'Description not found'
               }

@@ -16,7 +16,7 @@ import { dummyComments } from '@/constants/en';
 import { mapComment, recommendedvids } from './common';
 
 // query
-import { GET_VIDEO_BY_ID } from '@/graphql/query.graphql';
+import { GET_ALL_VIDEOS, GET_VIDEO_BY_ID } from '@/graphql/query.graphql';
 import { UPDATE_VIDEO } from '@/graphql/mutation.graphql';
 
 // graphql generated types
@@ -32,6 +32,7 @@ import {
 
 // types
 import { CommonTypeProps } from './type';
+import { Videos, VideosVariables } from '@/graphql/__generated__/Videos';
 
 function Watch() {
   const cookies = new Cookies();
@@ -43,10 +44,30 @@ function Watch() {
   const [likedBy, setLikedBy] = React.useState<CommonTypeProps>([]);
   const [viwedBy, setViwedBy] = React.useState<CommonTypeProps>([]);
   const [dislikedBy, setDislikedBy] = React.useState<CommonTypeProps>([]);
+  const [videoCategory, setVideoCategory] = React.useState('');
   const [isDisliked, setIsDisliked] = React.useState(false);
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get('id');
   const embedId = searchParams.get('embedId');
+
+  const { data: recommendedVideos } = useQuery<Videos, VideosVariables>(
+    GET_ALL_VIDEOS,
+    {
+      variables: {
+        sort: ['createdAt:desc'],
+        filters: {
+          category: {
+            name: {
+              containsi: videoCategory,
+            },
+          },
+        },
+        pagination: {
+          limit: 100,
+        },
+      },
+    },
+  ); // querying related videros
 
   // if videoId is available then fetch video by id
   const { data, refetch } = useQuery<VideoById, VideoByIdVariables>(
@@ -170,6 +191,8 @@ function Watch() {
     }
   }, [currentVideo]);
 
+  console.log(recommendedVideos, 'fkljdsl');
+
   // if video is fetched the set the data to currentVideo
   useEffect(() => {
     if (data) {
@@ -179,6 +202,9 @@ function Watch() {
       ).reverse();
 
       setComments(updatedComments);
+      setVideoCategory(
+        data.video?.data?.attributes?.category?.data?.attributes?.name || '',
+      );
     }
   }, [data]);
 
@@ -253,20 +279,24 @@ function Watch() {
 
           xl:grid-cols-4 xl:gap-3  '
         >
-          {recommendedvids.map((game, i) => {
-            return (
-              <VideoPanel
-                embedId='kn5uevla61U'
-                key={i + game.embedId}
-                videoId={game.embedId}
-                likes={0}
-                views={0}
-                time={game.videoDuration}
-                title={game.videoTitle}
-                thumbnail={game.thumbnail}
-                containerStyle=''
-              />
-            );
+          {recommendedVideos?.videos?.data.map((item, i) => {
+            if (item?.id) {
+              return (
+                <VideoPanel
+                  key={item.id + i}
+                  videoId={item.id || '1'}
+                  embedId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                  likes={item.attributes?.likedBy?.data?.length || 0}
+                  views={item.attributes?.viewedBy?.data?.length || 0}
+                  time={item.attributes?.duration || '00:00'}
+                  title={item.attributes?.title || ''}
+                  thumbnail={
+                    item.attributes?.thumbnail?.data[0].attributes?.url || ''
+                  }
+                  containerStyle='flex-1'
+                />
+              );
+            }
           })}
         </div>
         {/* Recommended videos ends */}

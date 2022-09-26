@@ -174,7 +174,6 @@ export interface LongFilterInput {
 export interface NewsFiltersInput {
   id?: IDFilterInput | null;
   title?: StringFilterInput | null;
-  imageUrl?: StringFilterInput | null;
   description?: StringFilterInput | null;
   createdAt?: DateTimeFilterInput | null;
   updatedAt?: DateTimeFilterInput | null;
@@ -193,7 +192,6 @@ export interface PaginationArg {
 
 export interface PhotoFiltersInput {
   id?: IDFilterInput | null;
-  imageUrl?: StringFilterInput | null;
   title?: StringFilterInput | null;
   description?: StringFilterInput | null;
   createdAt?: DateTimeFilterInput | null;

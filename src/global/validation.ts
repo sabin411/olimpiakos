@@ -25,8 +25,6 @@ export const emailValidation = yup
 export const userNameValidation = yup
   .string()
   .required(errorMessages.userNameRequired)
-  .min(3, errorMessages.userNameMin)
-  .max(50, errorMessages.userNameMax)
   .matches(commonValues.USERNAME_REGEX, errorMessages.userNameInvalid);
 
 // phone number validation
@@ -45,8 +43,6 @@ export const countryValidation = yup
 export const passwordValidation = yup
   .string()
   .required(errorMessages.passwordRequired)
-  .min(8, errorMessages.passwordMin)
-  .max(20, errorMessages.passwordMax)
   .matches(commonValues.PASSWORD_REGEX, errorMessages.passwordRequirements);
 
 // Password confirm validation

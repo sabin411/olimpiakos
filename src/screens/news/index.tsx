@@ -21,6 +21,7 @@ import {
 import { GET_ALL_NEWS } from '@/graphql/query.graphql';
 import { AllNews, AllNewsVariables } from '@/graphql/__generated__/AllNews';
 import { formatDistanceToNowStrict } from 'date-fns';
+import { displayImage } from '@/utils/services';
 
 export const News = () => {
   const { newsId } = useParams();
@@ -60,9 +61,10 @@ export const News = () => {
         </h3>
         <div className='my-5'>
           <ImageCard
-            image={
-              currentNews?.allNews?.data[0].attributes?.imageUrl || imageDummy
-            }
+            image={displayImage(
+              currentNews?.allNews?.data[0].attributes?.imageUrl.data
+                ?.attributes?.url || imageDummy,
+            )}
           />
         </div>
         <p className='text-[18px] font-regular text-neutral-300'>
