@@ -51,6 +51,7 @@ import {
   UpcomingEvent,
   UpcomingEventVariables,
 } from '@/graphql/__generated__/UpcomingEvent';
+import { differenceInMinutes, differenceInSeconds } from 'date-fns';
 
 export const MainPage = () => {
   const [openUpcomingModal, setOpenUpcomingModal] = useState(true);
@@ -129,35 +130,49 @@ export const MainPage = () => {
     }
   }, [featuredVideosData]);
 
+  console.log(
+    differenceInSeconds(
+      new Date(featuredEventsData?.upcommingEvent?.data?.attributes?.Date),
+      new Date(),
+    ),
+  );
+
   return (
     <>
       {
-        <UpcomingPopup
-          open={openUpcomingModal}
-          DateTime={
-            new Date(
-              featuredEventsData?.upcommingEvent?.data?.attributes?.Date ||
-                null,
-            )
-          }
-          text={
-            featuredEventsData?.upcommingEvent?.data?.attributes?.text || ''
-          }
-          subText={
-            featuredEventsData?.upcommingEvent?.data?.attributes?.subText || ''
-          }
-          image={
-            featuredEventsData?.upcommingEvent?.data?.attributes?.imageUrl.data
-              ?.attributes?.url || ''
-          }
-          title={
-            featuredEventsData?.upcommingEvent?.data?.attributes?.title || ''
-          }
-          handleClose={() => {
-            setOpenUpcomingModal(false);
-            localStorage.setItem('isUpcomingPopupOpen', 'true');
-          }}
-        />
+        // if upcoming event date and time is greater than current date and time then show upcoming event popup
+        differenceInSeconds(
+          new Date(featuredEventsData?.upcommingEvent?.data?.attributes?.Date),
+          new Date(),
+        ) > 0 && (
+          <UpcomingPopup
+            open={openUpcomingModal}
+            DateTime={
+              new Date(
+                featuredEventsData?.upcommingEvent?.data?.attributes?.Date ||
+                  null,
+              )
+            }
+            text={
+              featuredEventsData?.upcommingEvent?.data?.attributes?.text || ''
+            }
+            subText={
+              featuredEventsData?.upcommingEvent?.data?.attributes?.subText ||
+              ''
+            }
+            image={
+              featuredEventsData?.upcommingEvent?.data?.attributes?.imageUrl
+                .data?.attributes?.url || ''
+            }
+            title={
+              featuredEventsData?.upcommingEvent?.data?.attributes?.title || ''
+            }
+            handleClose={() => {
+              setOpenUpcomingModal(false);
+              localStorage.setItem('isUpcomingPopupOpen', 'true');
+            }}
+          />
+        )
       }
       {/* Slider section starts */}
       <section className='mt-2 container-custom flex  justify-between gap-x-6'>

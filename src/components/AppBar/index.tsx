@@ -303,7 +303,7 @@ function AppBarComp({
               <Box sx={{ flexGrow: 1 }} />
               {/* <LanguageChanger /> */}
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <IconButton
+                {/* <IconButton
                   size='large'
                   aria-label='show 17 new notifications'
                   color='inherit'
@@ -311,7 +311,7 @@ function AppBarComp({
                   <Badge badgeContent={17} color='error'>
                     <NotificationsIcon />
                   </Badge>
-                </IconButton>
+                </IconButton> */}
                 <IconButton
                   size='large'
                   edge='end'

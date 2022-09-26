@@ -97,15 +97,14 @@ function Gallery() {
   });
   const { LightBox, isLightBoxOpen } = useLightBox();
 
-  const {
-    data: photosData,
-    loading: loadingPhotos,
-    error: errorPhotos,
-  } = useQuery<Photos, PhotosVariables>(GET_ALL_PHOTOS, {
-    variables: {
-      sort: ['createdAt:desc'],
+  const { data: photosData } = useQuery<Photos, PhotosVariables>(
+    GET_ALL_PHOTOS,
+    {
+      variables: {
+        sort: ['createdAt:desc'],
+      },
     },
-  });
+  );
 
   return (
     <section className='container-custom my-8'>
