@@ -27,7 +27,6 @@ import Profile from '@/screens/profile';
 import PolicyPrivacy from '@/screens/policyPrivacy';
 
 function App() {
-  console.log(import.meta.env.VITE_BASE);
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
