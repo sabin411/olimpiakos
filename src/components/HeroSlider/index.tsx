@@ -19,6 +19,7 @@ import IconWithText from '../IconWithText';
 
 // types
 import { HeroSliderProps } from './types';
+import { displayImage } from '@/utils/services';
 
 function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
   return (
@@ -84,7 +85,7 @@ function HeroSlider({ FeaturedVideos }: { FeaturedVideos: HeroSliderProps }) {
               </div>
             </div>
             <img
-              src={'http://localhost:1337' + video.thumbnail}
+              src={displayImage(video.thumbnail)}
               className='h-full w-full object-cover'
               alt=''
             />

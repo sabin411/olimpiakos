@@ -31,9 +31,13 @@ function Redirecting() {
       },
     },
     onCompleted: data => {
-      console.log(data);
       if (data.userInformations?.data[0].id) {
         setUserInfo(data);
+        showToast({
+          title: 'You have successfully logged in',
+          subTitle: "Let's get started",
+          type: 'success',
+        });
       }
     },
     onError: error => {

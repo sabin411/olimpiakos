@@ -115,7 +115,6 @@ export const SigninForm = () => {
     } catch (err) {
       console.log(err);
     }
-    reset();
   };
 
   return (

@@ -46,6 +46,7 @@ import {
 import { language } from '@/screens/signup/common/constants';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import { showToast } from '@/utils/Toast/toast';
 
 function AppBarComp({
   onMenuClick,
@@ -160,6 +161,10 @@ function AppBarComp({
     cookies.remove('userInfoId');
     cookies.remove('ugid');
     navigate('/login');
+    showToast({
+      title: 'You are logged out',
+      subTitle: "You'll be redirected to login page",
+    });
   };
 
   // for desktop view
