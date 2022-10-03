@@ -45,9 +45,10 @@ export default function VideoPanelPreview() {
         <div className='flex justify-center gap-4'>
           {
             <VideoPanel
+              embedId='2g811Eo7K8U'
               videoId='12343'
-              likes='200323'
-              views='23093'
+              likes={200323}
+              views={23093}
               time='23:12'
               title='Brazil vs Netherland - A dramatic Ending left everybody in shock.'
               thumbnail={thumbnail}
@@ -57,7 +58,7 @@ export default function VideoPanelPreview() {
       </div>
       <div className='my-4'>
         <Title title='Comment Box' containerStyle='mb-4 w-1/4' />
-        <CommentBox comments={dummyComments} />
+        <CommentBox videoId='1' comments={dummyComments} />
       </div>
       <div className='my-4'>
         <Title title='Selection Tab' containerStyle='mb-4 w-1/4' />
@@ -65,21 +66,21 @@ export default function VideoPanelPreview() {
       </div>
       <div className='my-4'>
         <Title title='Video frame' containerStyle='mb-4 w-1/4' />
-        <VideoFrame
+        {/* <VideoFrame
           isLiked={isLiked}
+          embedId='2g811Eo7K8U'
           videoDescription=' The Football final of the Olympic Games 2016 was between the host nation Brazil and the reigning World Cup Champion Germany. With top players like Neymar, Gabriel Jesus, Marquinhos, Niklas Süle and the Bender Twins on the pitch, it promised to be an exciting fight for the gold medal - and indeed, it was a more than thrilling showdown at the Maracanã!'
           videoTitle="Brazil vs Germany - FULL Match - Men's Football Final Rio 2016 | Throwback Thursday"
-          videoLikes='76322'
-          videoViews='8900818'
-          videoDislikes='7235'
-          embedId='kn5uevla61U'
+          videoLikes={76322}
+          videoViews={8900818}
+          videoDislikes={7235}
           isDisliked={isDisliked}
           handleDislikes={handleDislikes}
           reportHandler={() => {
             console.log('kn5uevla61U, reported the video');
           }}
           handleLikes={handleLikes}
-        />
+        /> */}
       </div>
     </section>
   );

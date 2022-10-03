@@ -30,7 +30,7 @@ const Sidebar = ({
   setOpenMenu: setOpen,
 }: {
   openMenu: boolean;
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
   setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // function responsible for toggling the sidebar open/closed

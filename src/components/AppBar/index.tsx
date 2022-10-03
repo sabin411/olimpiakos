@@ -54,8 +54,8 @@ function AppBarComp({
   profileImage,
 }: {
   onMenuClick: () => void;
-  isLoggedIn: boolean;
-  profileImage: string;
+  isLoggedIn?: boolean;
+  profileImage?: string;
 }) {
   const cookies = new Cookies();
   const navigate = useNavigate();
@@ -325,7 +325,12 @@ function AppBarComp({
                   onClick={handleProfileMenuOpen}
                   color='inherit'
                 >
-                  <Avatar src={displayImage(profileImage)} />
+                  <Avatar
+                    src={displayImage(
+                      profileImage ||
+                        'https://images.unsplash.com/photo-1657299143471-231353519c63?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
+                    )}
+                  />
                   {/* <AccountCircle /> */}
                 </IconButton>
               </Box>
