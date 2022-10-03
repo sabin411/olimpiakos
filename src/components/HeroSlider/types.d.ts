@@ -3,7 +3,8 @@ export type HeroSliderProps = {
   title: string;
   description: string;
   thumbnail: string;
-  views: string;
-  likes: string;
-  videoId: string;
+  views: number;
+  likes: number;
+  videoId: string | null;
+  embedId: string;
 }[];

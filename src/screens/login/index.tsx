@@ -3,19 +3,101 @@ import React from 'react';
 // component
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import DropDown from '@/components/DropDown';
 
 // packages
-import { Checkbox, FormControl, FormControlLabel } from '@mui/material';
+import * as yup from 'yup';
+import { useMutation } from '@apollo/client';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FieldValues, useForm } from 'react-hook-form';
 
 // image
 import { Logo } from '@/global/common';
 
 // constants
-import { Link } from 'react-router-dom';
-import { login } from '@/constants';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '@/constants/en';
+
+// global
+import { emailValidation } from '@/global/validation';
+
+// graphql query
+import { LOGIN } from '@/graphql/mutation.graphql';
+import {
+  Login as LoginType,
+  LoginVariables,
+} from '@/graphql/__generated__/Login';
+import { showToast } from '@/utils/Toast/toast';
+
+// Schema
+const schema = yup.object().shape({
+  email: emailValidation,
+  password: yup.string().required('Password is required'),
+});
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const [loginUser] = useMutation<LoginType, LoginVariables>(LOGIN, {
+    onError: error => {
+      showToast({
+        title: 'Login Failed!',
+        subTitle: error?.message,
+        type: 'error',
+      });
+    },
+  });
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleLoginUser = (data: FieldValues) => {
+    loginUser({
+      variables: {
+        input: {
+          identifier: data.email,
+          password: data.password,
+          provider: 'local',
+        },
+      },
+    }).then(res => {
+      if (res.data?.login.jwt) {
+        console.log(res.data.login);
+        navigate(
+          `/redirecting?userId=${res.data?.login.user.id}&token=${res.data?.login.jwt}&email=${res.data?.login.user.email}&username=${res.data?.login.user.username}`,
+        );
+      } else {
+        showToast({
+          title: 'Unable to login',
+          subTitle: 'something went wrong',
+          type: 'error',
+        });
+      }
+    });
+  };
+
+  const ButtonMailto = ({
+    mailto,
+    label,
+  }: {
+    mailto: string;
+    label: string;
+  }) => {
+    return (
+      <Link
+        to='#'
+        onClick={e => {
+          window.location.href = mailto;
+          e.preventDefault();
+        }}
+      >
+        {label}
+      </Link>
+    );
+  };
+
   return (
     <section className='flex h-screen '>
       <div className='flex-1 h-full hidden md:block'>
@@ -36,24 +118,32 @@ export const Login = () => {
             <h3 className='text-neutral-400'>{login.title}</h3>
             <p className='text-neutral-500'>{login.subTitle}</p>
           </div>
-          <form className=''>
+          <form
+            onSubmit={handleSubmit(data => {
+              handleLoginUser(data);
+            })}
+          >
             <Input
               label={login.form.inputFields.email.label}
               name={login.form.inputFields.email.name}
               type={login.form.inputFields.email.type}
+              error={Boolean(errors.email)}
+              errorMessage={errors.email?.message?.toString()}
+              control={control}
             />
             <Input
               label={login.form.inputFields.password.label}
               name={login.form.inputFields.password.name}
               type={login.form.inputFields.password.type}
+              error={Boolean(errors.password)}
+              errorMessage={errors.password?.message?.toString()}
+              control={control}
             />
             <p className='my-4 text-right'>
-              <Link
-                className='text-neutral-300 hover:text-neutral-500'
-                to={'/forgot-password'}
-              >
-                {login.form.forgotPassword}
-              </Link>
+              <ButtonMailto
+                label={login.form.forgotPassword}
+                mailto='mailto:sherasabin@gmail.com?subject=Forgot password requesting for password change&body=Please change my password and send me the new password'
+              />
             </p>
             <Button
               variant='contained'
@@ -70,7 +160,7 @@ export const Login = () => {
           <p className='mt-4 text-neutral-400 self-end text-right'>
             {login.form.forgotPassword}{' '}
             <Link
-              to='login'
+              to='/register'
               className='text-secondary-800 hover:text-secondary-900'
             >
               {login.form.dontHaveAccount}

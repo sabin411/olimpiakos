@@ -1,11 +1,12 @@
 import React from 'react';
 
 // packages
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 
 // types
 import { LatestNewsProps, LatestPhotoWrapperProps } from './types';
+import { displayImage } from '@/utils/services';
 
 export function LatestNews({
   news,
@@ -14,14 +15,24 @@ export function LatestNews({
   linkTo,
 }: LatestNewsProps) {
   return (
-    <Link to={linkTo} className={`inline-block group ${containerStyle}`}>
-      <p className='text-neutral-300 line-clamp-2 group-hover:text-secondary-800'>
-        {news}
-      </p>
-      <p className='text-neutral-500 mt-1'>
-        {formatDistanceToNowStrict(timeStamp, { addSuffix: true })}
-      </p>
-    </Link>
+    <NavLink to={linkTo} className={`inline-block group ${containerStyle}`}>
+      {({ isActive }) => {
+        return (
+          <>
+            <p
+              className={`text-neutral-300 line-clamp-2 group-hover:text-secondary-800 group-hover:underline ${
+                isActive && 'text-secondary-800 underline'
+              } `}
+            >
+              {news}
+            </p>
+            <p className='text-neutral-500 mt-1'>
+              {formatDistanceToNowStrict(timeStamp, { addSuffix: true })}
+            </p>
+          </>
+        );
+      }}
+    </NavLink>
   );
 }
 
@@ -37,7 +48,7 @@ export const PhotoWrapper = ({
       <div className='rounded-lg overflow-hidden h-[166px] w-full'>
         <img
           className='w-full h-full object-cover'
-          src={image}
+          src={displayImage(image)}
           alt={image + description}
         />
       </div>

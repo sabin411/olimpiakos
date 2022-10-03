@@ -2,9 +2,9 @@ export type VideoFrameProps = {
   embedId: string;
   videoTitle: string;
   videoDescription: string;
-  videoLikes: string;
-  videoDislikes: string;
-  videoViews: string;
+  videoLikes: number;
+  videoDislikes: number;
+  videoViews: number;
   isLiked?: boolean;
   isDisliked?: boolean;
   handleLikes: (likeStatus: boolean) => void;
@@ -12,4 +12,9 @@ export type VideoFrameProps = {
   videoComments?: CommentDataProp[];
   reportHandler: () => void;
   containerStyle?: string;
+  likedBy?: CommonTypeProps;
+  ViewedBy?: CommonTypeProps;
+  dislikedBy?: CommonTypeProps;
+  videoId: string;
+  publishedAt: Date;
 };

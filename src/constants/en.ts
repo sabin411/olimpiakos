@@ -13,14 +13,42 @@ import hero2 from '@/assets/images/heroslider/hero2.jpg';
 import hero3 from '@/assets/images/heroslider/hero3.jpg';
 import thumbnail from '../assets/images/thumbnail.webp';
 
+// errror image
+export const errorMessages = {
+  fullNameRequired: 'Please enter your full name.',
+  fullNameMin: 'Name must be at least 3 characters.',
+  fullNameMax: 'Name must be less than 25 characters.',
+
+  phoneNumberRequired: 'Please enter your phone number.',
+  phoneNumberMin: 'Phone number must be at least 10 characters.',
+  phoneNumberMax: 'Phone number must be less than 15 characters.',
+
+  userNameRequired: 'Please enter your username.',
+  userNameMin: 'Username must be at least 4 characters.',
+  userNameMax: 'Username must be less than 20 characters.',
+  userNameInvalid:
+    'Username must contain only letters, numbers, and underscores.',
+
+  countryRequired: 'Please select your country.',
+
+  emailRequired: 'Please enter your email.',
+  emailInvalid: 'Please enter a valid email.',
+
+  passwordRequired: 'Please enter your password.',
+  passwordMin: 'Password must be at least 8 characters.',
+  passwordMax: 'Password must be at most 20 characters.',
+  passwordRequirements:
+    'Password must contain at least one uppercase, one lowercase, one number and one special character.',
+
+  confirmPasswordRequired: 'Please re-enter your password.',
+  confirmPasswordMisMatch: 'Passwords do not match.',
+
+  oldPasswordRequired: 'Please enter your old password.',
+};
+
 export const sidebar = {
   primaryLinks: [
     { title: 'Home', icon: HomeOutlinedIcon, linkTo: '/' },
-    {
-      title: 'Categories',
-      icon: CategoryOutlinedIcon,
-      linkTo: '/category/sports/all',
-    },
     {
       title: 'Explore',
       icon: ExploreOutlinedIcon,
@@ -28,7 +56,7 @@ export const sidebar = {
     },
   ],
   secondaryLinks: [
-    { title: 'Trending', icon: TrendingUpIcon, linkTo: '/feed/trending' },
+    // { title: 'Trending', icon: TrendingUpIcon, linkTo: '/feed/trending' },
     { title: 'Latest', icon: FiberNewIcon, linkTo: '/feed/latest' },
     {
       title: 'Liked Videos',
@@ -36,13 +64,14 @@ export const sidebar = {
       linkTo: '/feed/likedVideos',
     },
     { title: 'Watched', icon: LiveTvOutlinedIcon, linkTo: '/feed/history' },
-    { title: 'Video Panel', icon: LiveTvOutlinedIcon, linkTo: 'video-panel' },
+    // { title: 'Video Panel', icon: LiveTvOutlinedIcon, linkTo: 'video-panel' },
   ],
 };
 
 // latest news constants
 export const latestNews = {
   title: 'Latest News',
+  moreNews: 'More news...',
   news: [
     {
       title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
@@ -70,6 +99,7 @@ export const latestNews = {
 // latest photos
 export const latestPhotos = {
   title: 'Latest Photos',
+  morePhotos: 'More Photos...',
   photos: [
     {
       id: 1,
@@ -95,30 +125,11 @@ export const dummyFeaturedVideo = [
     title: 'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
     description:
       'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
-    thumbnail: hero2,
-    views: '23093',
-    likes: '200323',
-    videoId: '12343',
-  },
-  {
-    time: '2:53',
-    title: 'Marathon',
-    description:
-      'Brazil vs Netherland - A dramatic Ending left everybody in shock.',
     thumbnail: hero1,
-    views: '23093',
-    likes: '200323',
-    videoId: '1223',
-  },
-  {
-    time: '4:53',
-    title: '🏊‍♀️ 🏊🏻‍♂️ The best swimming finals at China2022 | Top Moments',
-    description:
-      ' Caeleb Dressel, Ariarne Titmus, Adam Peaty, Emma McKeon - they all left their marks at the 2022 Olympic Games! Here are the best swimming finals at #China2022 - enjoy watching! ',
-    thumbnail: hero3,
-    views: '23093',
-    likes: '200323',
-    videoId: '1223',
+    views: 23093,
+    likes: 200323,
+    videoId: '12343',
+    embedId: 'dQw4w9WgXcQ',
   },
 ];
 
@@ -127,39 +138,39 @@ export const categoriesData = {
   title: 'Explore More',
   items: [
     {
-      id: 1,
+      id: 8,
       name: 'All',
       linkTo: '/category/sports/all',
     },
     {
-      id: 2,
+      id: 1,
       name: 'Football',
       linkTo: '/category/sports/football',
     },
     {
+      id: 2,
+      name: 'Volleyball',
+      linkTo: '/category/sports/volleyball',
+    },
+    {
       id: 3,
-      name: 'Basketball',
-      linkTo: '/category/sports/basketball',
+      name: 'Cricket',
+      linkTo: '/category/sports/cricket',
     },
     {
       id: 4,
-      name: 'Baseball',
-      linkTo: '/category/sports/baseball',
-    },
-    {
-      id: 5,
-      name: 'Hockey',
-      linkTo: '/category/sports/hockey',
+      name: 'Swimming',
+      linkTo: '/category/sports/swimming',
     },
     {
       id: 6,
-      name: 'Soccer',
-      linkTo: '/category/sports/soccer',
+      name: 'Golf',
+      linkTo: '/category/sports/golf',
     },
     {
       id: 7,
-      name: 'Tennis',
-      linkTo: '/category/sports/tennis',
+      name: 'Marathon',
+      linkTo: '/category/sports/marathon',
     },
     {
       id: 8,
@@ -168,13 +179,13 @@ export const categoriesData = {
     },
     {
       id: 9,
-      name: 'Swimming',
-      linkTo: '/category/sports/swimming',
+      name: 'Basketball',
+      linkTo: '/category/sports/basketball',
     },
     {
       id: 10,
-      name: 'Golf',
-      linkTo: '/category/sports/golf',
+      name: 'Baseball',
+      linkTo: '/category/sports/baseball',
     },
     {
       id: 11,
@@ -343,95 +354,13 @@ export const trendingSection = {
 // comments consts for now
 export const dummyComments = [
   {
-    commentId: 1,
+    commentId: '1',
     comment:
       'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
     commentUserImg:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 2,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 3,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 4,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 5,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 6,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 7,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 8,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 9,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 10,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 11,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 12,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-  },
-  {
-    commentId: 13,
-    comment:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    commentUserImg:
-      'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+    timeStamp: new Date(),
+    userName: 'John Doe',
   },
 ];
 
@@ -503,6 +432,41 @@ export const individualNews = {
 export const signUp = {
   title: "Let's get started",
   subTitle: 'Create an account to get all features',
+  errorMessage: {
+    unableToRegister: 'Unable to register your accont.',
+    description: 'Please try again or contact us.',
+    termsAndCondition: 'Please check the terms and conditions.',
+    acceptTermsAndCondition: 'Your have to accept the terms and conditions.',
+  },
+  successMessage: {
+    successfullyRegistered: 'Your account has been successfully registered',
+    successfullyRegisteredSubTitle:
+      'Please upload your profile picture to complete your profile.',
+  },
+  uploadImage: {
+    title: 'Welcome! Let’s create your profile.',
+    subTitle: 'Upload your profile picture.',
+    addAvatar: 'Add an avatar',
+    successMessages: {
+      successfullyUploaded:
+        'Your profile picture has been successfully uploaded.',
+
+      successfullyCreatedAccount: 'Your account has been successfully created.',
+      successfullyCreatedAccountSubTitle: "Let's get started.",
+    },
+    errorMessages: {
+      unableToUpload: 'Unable to upload your profile picture.',
+
+      fileSize: 'File size is too large.',
+      fileSizeSubTitle: 'Please upload a file less than 4MB.',
+
+      fileFormat: 'File format is not supported.',
+      fileFormatSubtitle: "Please upload 'jpg', 'jpeg' or 'png' file.",
+
+      failedToCreateAccount: 'Failed to create your account.',
+      failedToCreateAccountSubTitle: 'Please try again or contact us.',
+    },
+  },
   form: {
     inputFields: {
       fullName: {
@@ -550,6 +514,10 @@ export const signUp = {
 export const login = {
   title: 'Welcome back',
   subTitle: 'Login to your account',
+  errorMessage: {
+    unableToLogin: 'Unable to login.',
+    description: 'Please try again or contact us.',
+  },
   form: {
     inputFields: {
       email: {
@@ -568,4 +536,155 @@ export const login = {
     dontHaveAccount: "Don't have an account?",
     signUp: 'Sign Up',
   },
+};
+
+// profile constant
+export const profile = {
+  editButton: 'Edit',
+  changeButton: 'Change',
+  signOutButton: 'Sign Out',
+  profileLabels: {
+    displayName: 'Display Name',
+    email: 'Email',
+    userName: 'User Name',
+    phoneNumber: 'Phone Number',
+    password: 'Password',
+  },
+
+  form: {
+    inputFields: {
+      fullName: {
+        name: 'fullName',
+        label: 'Full Name',
+        type: 'text',
+      },
+      email: {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+      },
+      phoneNumber: {
+        name: 'phoneNumber',
+        label: 'Phone Number',
+        type: 'number',
+      },
+      oldPassword: {
+        name: 'oldPassword',
+        label: 'Old Password',
+        type: 'password',
+      },
+      newPassword: {
+        name: 'newPassword',
+        label: 'New Password',
+        type: 'password',
+      },
+    },
+    termsAndconditions: {
+      text: 'I agree to the',
+      terms: 'Terms & Conditions',
+      privacyPolicy: 'Privacy Policy.',
+    },
+    submitButton: 'Register',
+    alreadyHaveAccount: 'Already have an account?',
+    login: 'Login',
+  },
+
+  errorMessage: {
+    unableToUploadPhoto: 'Unable to upload your profile picture.',
+    failedToChangeProfilePic: 'Failed to change your profile picture.',
+    unableToUpdate: 'Unable to update your profile.',
+    nameUpdateFailed: 'Unable to update your name.',
+    emailUpdateFailed: 'Unable to update your email.',
+    phoneNumberUpdateFailed: 'Unable to update your phone number.',
+    passwordUpdateFailed: 'Unable to update your password.',
+  },
+  successMessage: {
+    nameUpdateSuccess: 'Your name has been successfully updated.',
+    emailUpdateSuccess: 'Your email has been successfully updated.',
+    phoneNumberUpdateSuccess:
+      'Your phone number has been successfully updated.',
+    passwordUpdateSuccess: 'Your password has been successfully updated.',
+    successfullyUploaded:
+      'Your profile picture has been successfully uploaded.',
+  },
+};
+
+// search screen constant
+export const search = {
+  searchResult: 'Search Result for:',
+};
+
+// footer constants
+export const footer = {
+  exploreMoreButton: 'Explore More',
+  description:
+    'Watch your favorite sports, discover award-winning Original Films and Series and explore our 24/7 thematic linear channels.',
+  footerConst: [
+    {
+      title: 'Games',
+      links: [
+        {
+          title: 'Football',
+          linkTo: 'category/sports/football',
+        },
+        {
+          title: 'Cricket',
+          linkTo: 'category/sports/cricket',
+        },
+        {
+          title: 'Tennis',
+          linkTo: 'category/sports/tennis',
+        },
+        {
+          title: 'Swimming',
+          linkTo: 'category/sports/swimming',
+        },
+        {
+          title: 'More...',
+          linkTo: 'category/sports/all',
+        },
+      ],
+    },
+    {
+      title: 'Follow us',
+      links: [
+        {
+          title: 'Facebook',
+          linkTo: 'https://www.facebook.com/olympics',
+        },
+        {
+          title: 'Instagram',
+          linkTo: 'https://www.instagram.com/olympics/',
+        },
+        {
+          title: 'Twitter',
+          linkTo: 'https://twitter.com/Olympics',
+        },
+      ],
+    },
+    {
+      title: 'Other',
+      links: [
+        {
+          title: 'News',
+          linkTo: '/all-news',
+        },
+        {
+          title: 'Gallery',
+          linkTo: '/gallery',
+        },
+      ],
+    },
+  ],
+};
+
+// report constant
+export const report = {
+  title: 'Report channel Why are you reporting this user? Explain.',
+  subTitle:
+    'Flagged videos are reviewed by fun-olympic staff 24 hours a day, seven days a week to determine whether they violate Community Guidelines. Accounts are penalized for Community Guidelines violations, and serious or repeated violations can lead to account termination.',
+  cancelButton: 'Cancel',
+  submitButton: 'Submit',
+  successMessage: 'Your report has been successfully submitted.',
+  errorMessage: 'Unable to submit your report. Please try again later.',
 };

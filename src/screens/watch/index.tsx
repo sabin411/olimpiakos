@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // component
 import Title from '@/components/Title';
@@ -7,42 +7,246 @@ import VideoFrame from '@/components/VideoFrame';
 import VideoPanel from '@/components/VideoPanel';
 
 // pacakges
+import Cookies from 'universal-cookie';
+import { ApolloQueryResult, useMutation, useQuery } from '@apollo/client';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
 // constants
-import { dummyComments } from '@/constants/index';
-import { recommendedvids } from './constants';
+import { dummyComments } from '@/constants/en';
+import { mapComment, recommendedvids } from './common';
+
+// query
+import { GET_ALL_VIDEOS, GET_VIDEO_BY_ID } from '@/graphql/query.graphql';
+import { UPDATE_VIDEO } from '@/graphql/mutation.graphql';
+
+// graphql generated types
+import {
+  VideoById,
+  VideoByIdVariables,
+  VideoById_video_data_attributes,
+} from '@/graphql/__generated__/VideoById';
+import {
+  UpdateVideoUserInteraction,
+  UpdateVideoUserInteractionVariables,
+} from '@/graphql/__generated__/UpdateVideoUserInteraction';
+
+// types
+import { CommonTypeProps } from './type';
+import { Videos, VideosVariables } from '@/graphql/__generated__/Videos';
 
 function Watch() {
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-
+  const cookies = new Cookies();
+  const [currentVideo, setCurrentVideo] = useState<
+    VideoById_video_data_attributes | null | undefined
+  >();
+  const [comments, setComments] = useState(dummyComments);
   const [isLiked, setIsLiked] = React.useState(false);
+  const [likedBy, setLikedBy] = React.useState<CommonTypeProps>([]);
+  const [viwedBy, setViwedBy] = React.useState<CommonTypeProps>([]);
+  const [dislikedBy, setDislikedBy] = React.useState<CommonTypeProps>([]);
+  const [videoCategory, setVideoCategory] = React.useState('');
   const [isDisliked, setIsDisliked] = React.useState(false);
+  const [searchParams] = useSearchParams();
+  const videoId = searchParams.get('id');
+  const embedId = searchParams.get('embedId');
+
+  const { data: recommendedVideos } = useQuery<Videos, VideosVariables>(
+    GET_ALL_VIDEOS,
+    {
+      variables: {
+        sort: ['createdAt:desc'],
+        filters: {
+          category: {
+            name: {
+              containsi: videoCategory,
+            },
+          },
+        },
+        pagination: {
+          limit: 100,
+        },
+      },
+    },
+  ); // querying related videros
+
+  // if videoId is available then fetch video by id
+  const { data, refetch } = useQuery<VideoById, VideoByIdVariables>(
+    GET_VIDEO_BY_ID,
+    {
+      variables: {
+        videoId: videoId,
+        sort: ['createdAt:desc'],
+        pagination: {
+          limit: 20,
+        },
+      },
+    },
+  );
+  const [updateVideo] = useMutation<
+    UpdateVideoUserInteraction,
+    UpdateVideoUserInteractionVariables
+  >(UPDATE_VIDEO, {
+    onCompleted: data => {
+      refetch();
+    },
+  });
+
+  // if use has not liked the video already then like the video and remove dislike if disliked
   const handleLikes = (likeStatus: boolean) => {
-    setIsLiked(likeStatus);
-    if (likeStatus) {
-      setIsDisliked(false);
+    if (videoId) {
+      let likedByArray = likedBy;
+      let dislikedByArray = dislikedBy;
+      // if user liked the video then
+      if (likeStatus) {
+        // @ts-ignore
+        likedByArray = [...likedBy, cookies.get('userId') as string];
+        dislikedByArray = dislikedBy?.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+        setIsLiked(true);
+        setIsDisliked(false);
+      }
+      if (!likeStatus && likedBy) {
+        likedByArray = likedBy.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+        dislikedByArray = [...dislikedBy, cookies.get('userId') as string];
+
+        setIsLiked(false);
+        setIsDisliked(true);
+      }
+      updateVideo({
+        variables: {
+          updateVideoId: videoId,
+          data: {
+            likedBy: likedByArray,
+            dislikedBy: dislikedByArray,
+          },
+        },
+      });
     }
   };
+
+  // if user has not disliked the video already then dislike the video and remove like if liked
   const handleDislikes = (dislikeStatus: boolean) => {
+    if (videoId) {
+      let dislikedByArray = dislikedBy;
+      let likedByArray = likedBy;
+      // if user disliked the video then
+      if (dislikeStatus) {
+        // @ts-ignore
+        dislikedByArray = [...dislikedBy, cookies.get('userId') as string];
+        likedByArray = likedBy?.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+        setIsDisliked(true);
+        setIsLiked(false);
+      }
+      if (!dislikeStatus && dislikedBy) {
+        dislikedByArray = dislikedBy.filter(
+          userId => userId !== cookies.get('userId'),
+        );
+        likedByArray = [...likedBy, cookies.get('userId') as string];
+        setIsDisliked(false);
+        setIsLiked(true);
+      }
+      updateVideo({
+        variables: {
+          updateVideoId: videoId,
+          data: {
+            dislikedBy: dislikedByArray,
+            likedBy: likedByArray,
+          },
+        },
+      });
+    }
     setIsDisliked(dislikeStatus);
     if (dislikeStatus) {
       setIsLiked(false);
     }
   };
+
+  useEffect(() => {
+    // Mapping id of user who have liked the video NOTE: this is not the best way to do it
+    // mapping id of user who have disliked the video NOTE: this is not the best way to do it
+    const updatedLikedBy = currentVideo?.likedBy?.data.map(item => {
+      return item.id;
+    });
+    const updatedDislikedBy = currentVideo?.dislikedBy?.data.map(item => {
+      return item.id;
+    });
+    const updatedViewedBy = currentVideo?.viewedBy?.data.map(item => {
+      return item.id;
+    });
+
+    setLikedBy(updatedLikedBy);
+    setDislikedBy(updatedDislikedBy);
+    setViwedBy(updatedViewedBy);
+
+    if (updatedLikedBy?.length) {
+      setIsLiked(updatedLikedBy?.includes(cookies.get('userId')));
+    }
+    if (updatedDislikedBy?.length) {
+      setIsDisliked(updatedDislikedBy?.includes(cookies.get('userId')));
+    }
+  }, [currentVideo]);
+
+  console.log(recommendedVideos, 'fkljdsl');
+
+  // if video is fetched the set the data to currentVideo
+  useEffect(() => {
+    if (data) {
+      setCurrentVideo(data?.video?.data?.attributes);
+      const updatedComments = mapComment(
+        data.video?.data?.attributes?.comments?.data,
+      ).reverse();
+
+      setComments(updatedComments);
+      setVideoCategory(
+        data.video?.data?.attributes?.category?.data?.attributes?.name || '',
+      );
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (videoId && viwedBy?.length && viwedBy.length > 0) {
+      let alreadyWatched = viwedBy.includes(cookies.get('userId'));
+      if (!alreadyWatched) {
+        updateVideo({
+          variables: {
+            updateVideoId: videoId,
+            data: {
+              viewedBy: [...viwedBy, cookies.get('userId') as string],
+            },
+          },
+        }).then(res => {
+          setViwedBy([...viwedBy, cookies.get('userId') as string]);
+        });
+        return;
+      }
+    }
+  }, [viwedBy]);
+
   return (
     <>
       <section className='flex flex-col h-max mt-2 container-custom gap-4 lg:flex-row '>
         <VideoFrame
-          containerStyle='w-[90%]'
+          videoId={videoId || '1'}
+          containerStyle='lg:w-[70%]'
+          publishedAt={data?.video?.data?.attributes?.publishedAt ?? new Date()}
           isLiked={isLiked}
-          videoDescription=' The Football final of the Olympic Games 2016 was between the host nation Brazil and the reigning World Cup Champion Germany. With top players like Neymar, Gabriel Jesus, Marquinhos, Niklas Süle and the Bender Twins on the pitch, it promised to be an exciting fight for the gold medal - and indeed, it was a more than thrilling showdown at the Maracanã!'
-          videoTitle="Brazil vs Germany - FULL Match - Men's Football Final Rio 2016 | Throwback Thursday"
-          videoLikes='76322'
-          videoViews='8900818'
-          videoDislikes='7235'
-          embedId={searchParams.get('id') as string}
+          videoDescription={
+            currentVideo?.description || 'Description is not available'
+          }
+          videoTitle={currentVideo?.title || 'Title is not available'}
+          videoLikes={likedBy?.length || 0}
+          videoViews={
+            (currentVideo?.viewedBy?.data &&
+              currentVideo?.viewedBy?.data.length) ||
+            0
+          }
+          videoDislikes={currentVideo?.dislikedBy?.data.length || 0}
+          embedId={embedId as string}
           isDisliked={isDisliked}
           handleDislikes={handleDislikes}
           reportHandler={() => {
@@ -50,10 +254,13 @@ function Watch() {
           }}
           handleLikes={handleLikes}
         />
-        <CommentBox
-          comments={dummyComments}
-          containerStyle='max-h-[600px] lg:max-h-[800px]'
-        />
+        <div className='h-[500px] lg:h-[700px] lg:max-h-[800px] lg:w-[40%]'>
+          <CommentBox
+            comments={comments || dummyComments}
+            containerStyle='h-full'
+            videoId={videoId || '1'}
+          />
+        </div>
       </section>
       {/* recommended video section starts */}
       <section className='container-custom my-16'>
@@ -72,19 +279,24 @@ function Watch() {
 
           xl:grid-cols-4 xl:gap-3  '
         >
-          {recommendedvids.map((game, i) => {
-            return (
-              <VideoPanel
-                key={i + game.embedId}
-                videoId={game.embedId}
-                likes={game.videoDislikes}
-                views={game.videoDislikes}
-                time={game.videoDuration}
-                title={game.videoTitle}
-                thumbnail={game.thumbnail}
-                containerStyle=''
-              />
-            );
+          {recommendedVideos?.videos?.data.map((item, i) => {
+            if (item?.id) {
+              return (
+                <VideoPanel
+                  key={item.id + i}
+                  videoId={item.id || '1'}
+                  embedId={item.attributes?.embedId || 'Tw_wn6XUfnU'}
+                  likes={item.attributes?.likedBy?.data?.length || 0}
+                  views={item.attributes?.viewedBy?.data?.length || 0}
+                  time={item.attributes?.duration || '00:00'}
+                  title={item.attributes?.title || ''}
+                  thumbnail={
+                    item.attributes?.thumbnail?.data[0].attributes?.url || ''
+                  }
+                  containerStyle='flex-1'
+                />
+              );
+            }
           })}
         </div>
         {/* Recommended videos ends */}

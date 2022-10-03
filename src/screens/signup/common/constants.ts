@@ -243,3 +243,9 @@ export const countries = [
   { name: 'Zambia', value: 'ZM' },
   { name: 'Zimbabwe', value: 'ZW' },
 ];
+
+export const language = [
+  { name: 'English', value: 'en' },
+  // france
+  { name: 'French', value: 'fr' },
+];

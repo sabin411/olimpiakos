@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
 // packages
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   gql,
 } from '@apollo/client';
+import '../src/i18n/i18n';
+
+// constant
+import { footer } from './constants/en';
+import { footer as footerFr } from './constants/fr';
+const translationEn = { footer };
+const translationFr = { footerFr };
 
 // styles
 import './styles/global.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 // apollo client
 const client = new ApolloClient({
@@ -24,7 +33,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <App />
+        <Suspense fallback='Loading...'>
+          <App />
+        </Suspense>
+        <ToastContainer />
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

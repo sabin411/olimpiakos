@@ -26,6 +26,7 @@ const AvatarWithName: React.FC<AvatarWithNameProps> = ({
         className={`
       relative
       bg-primary-500 rounded-full text-primary-100 
+      overflow-hidden
       ${avatarSize === 'sml' && 'h-10 w-10'}
       ${avatarSize === 'lrg' && 'h-60 w-60'}
       ${avatarStyle} 
@@ -42,8 +43,9 @@ const AvatarWithName: React.FC<AvatarWithNameProps> = ({
         }
       >
         {avatarImage ? (
-          <Avatar alt='Remy Sharp' src={avatarImage} sizes='44px' />
+          <img src={avatarImage} alt='' />
         ) : (
+          // <Avatar alt='Remy Sharp' src={avatarImage} sizes='44px' />
           <div className='h-full w-full flex items-center justify-center'>
             <AccountCircleIcon
               sx={{

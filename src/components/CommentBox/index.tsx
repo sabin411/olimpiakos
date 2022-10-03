@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 
 // package
+import Cookies from 'universal-cookie';
 import { Avatar, Tooltip } from '@mui/material';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 //icons
 import SendIcon from '@mui/icons-material/Send';
@@ -10,8 +12,20 @@ import SendIcon from '@mui/icons-material/Send';
 import dummyImage from '@/assets/images/dummy.jpg';
 
 // types
-import { SearchInputProps } from './types';
+import { SearchInputProps, SingleCommentProps } from './types';
 import { CommentDataProp } from '@/global/types';
+
+// CONSTANTS
+import { BASE_URL } from '@/env';
+import { useMutation } from '@apollo/client';
+import { CREATE_COMMENT } from '@/graphql/mutation.graphql';
+import {
+  CreateComment,
+  CreateCommentVariables,
+} from '@/graphql/__generated__/CreateComment';
+
+// utils
+import { displayImage } from '@/utils/services';
 
 const SearchInput: React.FC<SearchInputProps> = ({
   value,
@@ -35,7 +49,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
         type='text'
         value={value}
         onChange={e => onChange(e.target.value)}
-        className={`h-full w-full pl-3 
+        className={`h-full w-full pl-3 pr-14
         border-none rounded-lg
         text-neutral-400
         bg-primary-800 
@@ -66,22 +80,55 @@ const SearchInput: React.FC<SearchInputProps> = ({
 function CommentBox({
   comments,
   containerStyle,
+  videoId,
 }: {
   comments: CommentDataProp[];
   containerStyle?: string;
+  videoId: string;
 }) {
+  const cookies = new Cookies();
+  const bottomRef = useRef(null);
+  const userId = cookies.get('userId');
+  const fullName = cookies.get('fullName');
+  const profilePic = cookies.get('profilePic');
+  const authorization = `Bearer ${cookies.get('token')}`;
+
   const [value, setValue] = useState('');
   const [liveComments, setLiveComments] = useState(comments);
-  const bottomRef = useRef(null);
+  const [createComment, { data }] = useMutation<
+    CreateComment,
+    CreateCommentVariables
+  >(CREATE_COMMENT);
+
+  React.useEffect(() => {
+    setLiveComments(comments);
+  }, [comments]);
 
   // This function returns jsx for each comment
-  const Comment = ({ avatar, text }: { avatar: string; text: string }) => {
+  const Comment = ({
+    text,
+    avatar,
+    userName,
+    timeStamp,
+  }: SingleCommentProps) => {
     return (
-      <div className='flex p-4'>
-        <Avatar src={avatar} className='mt-2' />
-        <Tooltip title={text}>
-          <p className='ml-3 text-neutral-400 line-clamp-3'>{text}</p>
-        </Tooltip>
+      <div className='py-3 mr-3'>
+        <div className='flex'>
+          <Avatar src={displayImage(avatar)} className='mr-3' />
+          <div>
+            <h6 className='text-p font-semi-bold text-neutral-400'>
+              {userName}
+              <span className='text-s font-regular text-primary-600 ml-5'>
+                {formatDistanceToNowStrict(timeStamp, { addSuffix: true })}
+              </span>
+            </h6>
+            <Tooltip title={text} className='mt-1'>
+              <p className='text-neutral-500 text-[16px] line-clamp-3'>
+                {text}
+              </p>
+            </Tooltip>
+          </div>
+        </div>
       </div>
     );
   };
@@ -94,9 +141,26 @@ function CommentBox({
         commentId: liveComments.length + 1,
         comment: value,
         commentUserImg:
+          profilePic ??
           'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+        timeStamp: new Date(),
+        userName: fullName,
       },
     ]);
+    createComment({
+      variables: {
+        data: {
+          comment: value,
+          video: videoId,
+          user: userId,
+        },
+      },
+      context: {
+        headers: {
+          authorization: authorization,
+        },
+      },
+    });
     setValue('');
     // 👇️ scroll to bottom every time messages change
     //@ts-ignore
@@ -107,6 +171,9 @@ function CommentBox({
     <div
       className={`w-full flex max-h-full flex-col justify-between bg-primary-900 p-5 ${containerStyle}`}
     >
+      <div className='w-full pb-4 border-b-1 border-b-primary-700'>
+        <h4>Comments</h4>
+      </div>
       <div ref={bottomRef} className='flex-1 flex flex-col  overflow-y-scroll'>
         {liveComments.map((cmnt, i) => {
           return (
@@ -114,6 +181,8 @@ function CommentBox({
               key={i}
               avatar={cmnt.commentUserImg ?? dummyImage}
               text={cmnt.comment}
+              timeStamp={cmnt.timeStamp}
+              userName={cmnt.userName || 'Anonymous'}
             />
           );
         })}

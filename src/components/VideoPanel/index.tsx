@@ -1,20 +1,16 @@
 import React from 'react';
 
-// component
-import IconWithText from '@/components/IconWithText';
-
 // packages
 import Card from '@mui/material/Card';
-import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
+import { useNavigate } from 'react-router-dom';
 import CardContent from '@mui/material/CardContent';
-
-// icons
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 // types
 import { videoPanelProps } from './types';
+
+// utils
+import { displayImage } from '@/utils/services';
 
 function VideoPanel({
   time,
@@ -24,9 +20,15 @@ function VideoPanel({
   videoId,
   thumbnail,
   containerStyle,
+  embedId,
 }: videoPanelProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/watch?id=${videoId}&embedId=${embedId}`);
+  };
   return (
-    <Link to={`/watch?id=${videoId}`} className={`${containerStyle}`}>
+    <button onClick={handleClick} className={`${containerStyle}`}>
       <Card
         sx={{
           backgroundColor: 'var(--primary-800)',
@@ -35,7 +37,7 @@ function VideoPanel({
       >
         <div className='aspect-video relative overflow-hidden'>
           <img
-            src={thumbnail}
+            src={displayImage(thumbnail)}
             className='w-full h-full object-cover peer hover:scale-105 transition-all duration-200'
             alt={title + 'thumbnail'}
           />
@@ -46,27 +48,22 @@ function VideoPanel({
         <CardContent className='flex'>
           <Avatar src='https://yt3.ggpht.com/ytc/AMLnZu91Flh7ObCO6aMLS5lzF4Z0xBYecb6hXLb26azOGyc=s176-c-k-c0x00ffffff-no-rj' />
           <div className='ml-2'>
-            <h5 className='text-s font-semi-bold text-neutral-100 line-clamp-2'>
+            <h5 className='text-p font-semi-bold text-neutral-100 text-left line-clamp-2'>
               {title}
             </h5>
-            <div className='flex items-center text-neutral-400 mt-2'>
-              <IconWithText
-                Icon={RemoveRedEyeIcon}
-                text={views.toString()}
-                containerStyle='!m-0 text-s'
-                className='!text-p'
-              />
-              <IconWithText
-                Icon={ThumbUpIcon}
-                text={likes.toString()}
-                containerStyle='text-s ml-4'
-                className='!text-p'
-              />
+            <div className='flex items-center text-neutral-400 mt-2 gap-x-2'>
+              <div>
+                <p>{views.toString()} Views</p>
+              </div>
+              <p>.</p>
+              <div>
+                <p>{likes.toString()} Likes</p>
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
-    </Link>
+    </button>
   );
 }
 

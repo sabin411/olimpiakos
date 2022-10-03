@@ -8,14 +8,24 @@ import { useLightBox } from './common';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { useQuery } from '@apollo/client';
 
-// commons
-// const useLightBox = required('./common/index.jsx');
+// assets
+import { imageDummy } from '@/assets/images/dummyImages';
+
+// graphql generated types
+import {
+  LimitedPhotos,
+  LimitedPhotosVariables,
+} from '@/graphql/__generated__/LimitedPhotos';
+import { GET_ALL_PHOTOS } from '@/graphql/query.graphql';
+import { Photos, PhotosVariables } from '@/graphql/__generated__/Photos';
+import { displayImage } from '@/utils/services';
 
 // images
 const itemData = [
   {
-    img: 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80',
+    img: 'https://www.cricbuzz.com/a/img/v1/595x396/i1/c242997/smriti-mandhana-struck-a-fine.jpg',
     title: 'Worlds Most Advanced Essay Outliner',
   },
   {
@@ -76,33 +86,82 @@ const itemData = [
 ];
 
 function Gallery() {
-  const [currentImage, setCurrentImage] = useState('');
+  const [currentImage, setCurrentImage] = useState<{
+    url: string;
+    title?: string;
+    description?: string;
+  }>({
+    url: '',
+    title: '',
+    description: '',
+  });
   const { LightBox, isLightBoxOpen } = useLightBox();
+
+  const { data: photosData } = useQuery<Photos, PhotosVariables>(
+    GET_ALL_PHOTOS,
+    {
+      variables: {
+        sort: ['createdAt:desc'],
+      },
+    },
+  );
 
   return (
     <section className='container-custom my-8'>
       <LightBox
-        imageLink={currentImage}
-        description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
-        title='This is a Title'
+        imageLink={currentImage.url}
+        description={currentImage?.description || 'No Description Available'}
+        title={currentImage?.title || 'No Title Available'}
       />
       <Title containerStyle='mb-10' title='Gallery' />
 
       <ImageList className='' variant='masonry' cols={3} gap={8}>
-        {itemData.map(item => (
-          <ImageListItem key={item.img}>
-            <img
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading='lazy'
-              onClick={() => {
-                setCurrentImage(item.img);
-                isLightBoxOpen(true);
-              }}
-            />
-          </ImageListItem>
-        ))}
+        {photosData?.photos?.data
+          ? photosData?.photos?.data.map((photo, i) => {
+              return (
+                <ImageListItem key={photo?.id}>
+                  <img
+                    src={`${displayImage(
+                      photo.attributes?.imageUrl.data?.attributes?.url || '',
+                    )}`}
+                    srcSet={`${displayImage(
+                      photo.attributes?.imageUrl.data?.attributes?.url || '',
+                    )}`}
+                    alt={photo.attributes?.title + 'image'}
+                    loading='lazy'
+                    onClick={() => {
+                      setCurrentImage({
+                        url: displayImage(
+                          photo.attributes?.imageUrl.data?.attributes?.url ||
+                            imageDummy,
+                        ),
+                        title: photo.attributes?.title,
+                        description: photo.attributes?.description,
+                      });
+                      isLightBoxOpen(true);
+                    }}
+                  />
+                </ImageListItem>
+              );
+            })
+          : itemData.map(item => (
+              <ImageListItem key={item.img}>
+                <img
+                  src={`${item.img}`}
+                  srcSet={`${item.img}`}
+                  alt={item.title}
+                  loading='lazy'
+                  onClick={() => {
+                    setCurrentImage({
+                      url: item.img,
+                      title: item.title,
+                      description: item.author,
+                    });
+                    isLightBoxOpen(true);
+                  }}
+                />
+              </ImageListItem>
+            ))}
       </ImageList>
     </section>
   );

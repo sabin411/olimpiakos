@@ -5,82 +5,24 @@ import { Link } from 'react-router-dom';
 import Title from '@/components/Title';
 
 // packages
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 
-// global
-import { Logo } from '@/global/common';
+// assets
+import Logo from '@/assets/images/logo-top.png';
 
 // constants
-const footerConst = [
-  {
-    title: 'Games',
-    links: [
-      {
-        title: 'Football',
-        linkTo: '/football',
-      },
-      {
-        title: 'Cricket',
-        linkTo: '/cricket',
-      },
-      {
-        title: 'Tennis',
-        linkTo: '/tennis',
-      },
-      {
-        title: 'Swimming',
-        linkTo: '/swimming',
-      },
-      {
-        title: 'More...',
-        linkTo: '/category/sports/all',
-      },
-    ],
-  },
-  {
-    title: 'Follow us',
-    links: [
-      {
-        title: 'Facebook',
-        linkTo: 'https://www.facebook.com/olympics',
-      },
-      {
-        title: 'Instagram',
-        linkTo: 'https://www.instagram.com/olympics/',
-      },
-      {
-        title: 'Twitter',
-        linkTo: 'https://twitter.com/Olympics',
-      },
-    ],
-  },
-  {
-    title: 'Other',
-    links: [
-      {
-        title: 'News',
-        linkTo: '/news',
-      },
-      {
-        title: 'Gallery',
-        linkTo: '/gallery',
-      },
-    ],
-  },
-];
+import { footer } from '@/constants/en';
 
 function Footer() {
+  const { description, exploreMoreButton, footerConst } = footer;
   return (
     <footer className='bg-primary-900'>
       <div className='container-custom py-6 flex flex-col gap-y-7 lg:flex-row lg:gap-x-7 lg:gap-y-0'>
         <div className='flex flex-col max-w-[580px]'>
           <Link to='/' className='w-[205px]'>
-            <Logo />
+            <img src={Logo} alt='logo' className='h-full' />
           </Link>
-          <p className='mt-5 text-neutral-400 mb-6'>
-            Watch your favorite sports, discover award-winning Original Films
-            and Series and explore our 24/7 thematic linear channels.
-          </p>
+          <p className='mt-5 text-neutral-400 mb-6'>{description}</p>
           <Link className='inline-block w-full' to='/category/sports/all'>
             <Button
               variant='contained'
@@ -93,7 +35,7 @@ function Footer() {
                 },
               }}
             >
-              Explore
+              {exploreMoreButton}
             </Button>
           </Link>
         </div>

@@ -1,3 +1,28 @@
+// graphql generated types
+import { VideoById_video_data_attributes_comments_data } from '@/graphql/__generated__/VideoById';
+
+// assets
+import { imageDummy } from '@/assets/images/dummyImages';
+
+export const mapComment = (
+  comments: VideoById_video_data_attributes_comments_data[] | undefined,
+) => {
+  if (!comments) {
+    return [];
+  }
+  return comments.map(comment => ({
+    commentId: comment.id || '32423432',
+    comment: comment.attributes?.comment || 'This comment is unavailable',
+    commentUserImg:
+      comment.attributes?.user?.data?.attributes?.user_information?.data
+        ?.attributes?.profilePic.data?.attributes?.url || imageDummy,
+    timeStamp: new Date(comment.attributes?.createdAt) || new Date(),
+    userName:
+      comment.attributes?.user?.data?.attributes?.user_information?.data
+        ?.attributes?.fullName || 'Anonymous',
+  }));
+};
+
 export const recommendedvids = [
   {
     embedId: 'kn5uevla61U',
@@ -6,9 +31,9 @@ export const recommendedvids = [
       ' The Football final of the Olympic Games 2016 was between the host nation Brazil and the reigning World Cup Champion Germany. With top players like Neymar, Gabriel Jesus, Marquinhos, Niklas Süle and the Bender Twins on the pitch, it promised to be an exciting fight for the gold medal - and indeed, it was a more than thrilling showdown at the Maracanã!',
     videoTitle:
       "Brazil vs Germany - FULL Match - Men's Football Final Rio 2016 | Throwback Thursday",
-    videoLikes: '76322',
-    videoViews: '8900818',
-    videoDislikes: '7235',
+    videoLikes: 76322,
+    videoViews: 8900818,
+    videoDislikes: 7235,
     videoDuration: '5:18',
     isDisliked: false,
     thumbnail:
@@ -21,9 +46,9 @@ export const recommendedvids = [
       'Team USA win fourth straight gold as France take silver and Australia bronze at the Tokyo 2020 Men’s Olympic Basketball Tournament. For France, Tokyo 2020 marks the third time that they played in the Olympic Final – all against the USA and all finishing with France on the second step of the podium. Enjoy watching the FULL replay of the gold medal match!',
     videoTitle:
       "France 🇫🇷 vs USA 🇺🇸 | Men's Basketball Gold Medal Match | Tokyo Replays",
-    videoLikes: '40342',
-    videoViews: '3259079',
-    videoDislikes: '6235',
+    videoLikes: 40342,
+    videoViews: 3259079,
+    videoDislikes: 6235,
     videoDuration: '2:14:39',
     isDisliked: false,
     thumbnail:

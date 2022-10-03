@@ -1,90 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // component
 import Button from '../Button';
 
 // packages
+import i18n from 'i18next';
 import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import Badge from '@mui/material/Badge';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Toolbar from '@mui/material/Toolbar';
+import { Navigate } from 'react-router-dom';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import { Link, useNavigate } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
 
 // icons
 import MenuIcon from '@mui/icons-material/Menu';
-import MailIcon from '@mui/icons-material/Mail';
-import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-// images
-import dummyImage from '@/assets/images/dummy.jpg';
+// assets
+import Logo from '@/assets/images/logo-bottom.png';
 
 // global
-import { Logo } from '@/global/common';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+
+// commons
+import { SearchForm } from './common';
+
+// utils
+import { displayImage } from '@/utils/services';
+import {
+  FormControl,
+  InputLabel,
+  Popover,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
+import { language } from '@/screens/signup/common/constants';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import { showToast } from '@/utils/Toast/toast';
 
 function AppBarComp({
   onMenuClick,
   isLoggedIn,
+  profileImage,
 }: {
   onMenuClick: () => void;
   isLoggedIn: boolean;
+  profileImage: string;
 }) {
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [language, setLangauge] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
-
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '40ch',
-        },
-      },
-    },
-  }));
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -101,6 +82,89 @@ function AppBarComp({
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setLangauge(event.target.value as string);
+    i18next.changeLanguage(event.target.value);
+  };
+
+  const LanguageChanger = () => {
+    return (
+      <FormControl
+        sx={{
+          width: '206px',
+          marginRight: '70px',
+        }}
+      >
+        <InputLabel
+          sx={{
+            color: 'var(--primary-400)',
+            '&.Mui-focused': {
+              color: 'var(--secondary-700)',
+            },
+          }}
+          id='demo-simple-select-label'
+        >
+          Language
+        </InputLabel>
+        <Select
+          sx={{
+            '& .MuiSelect-select.MuiSelect-select': {
+              paddingRight: '0px',
+            },
+            '& .MuiInputBase-input': {
+              color: 'var(--primary-400)',
+              paddingTop: '10px',
+              paddingBottom: '10px',
+            },
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'var(--primary-400)',
+            },
+
+            '& .MuiSvgIcon-root': {
+              color: 'var(--primary-400)',
+            },
+            '&:hover': {
+              '&& fieldset': {
+                borderColor: 'var(--secondary-700)',
+              },
+            },
+            '&.Mui-focused': {
+              '&& fieldset': {
+                borderColor: 'var(--secondary-700)',
+              },
+            },
+          }}
+          labelId='demo-simple-select-label'
+          id='demo-simple-select'
+          value={language}
+          label='Language'
+          onChange={handleChange}
+        >
+          <MenuItem value={'en'}>English</MenuItem>
+          <MenuItem value={'fr'}>Franch</MenuItem>
+        </Select>
+      </FormControl>
+    );
+  };
+
+  // handle logout
+  const logout = () => {
+    cookies.remove('token');
+    cookies.remove('userId');
+    cookies.remove('userName');
+    cookies.remove('email');
+    cookies.remove('fullName');
+    cookies.remove('profilePic');
+    cookies.remove('phoneNumber');
+    cookies.remove('userInfoId');
+    cookies.remove('ugid');
+    navigate('/login');
+    showToast({
+      title: 'You are logged out',
+      subTitle: "You'll be redirected to login page",
+    });
   };
 
   // for desktop view
@@ -121,12 +185,43 @@ function AppBarComp({
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={() => navigate('/profile')}>Profile</MenuItem>
+      <MenuItem onClick={logout}>Log out</MenuItem>
     </Menu>
   );
 
-  // for mobile view
+  const [anchorElPop, setAnchorElPop] =
+    React.useState<HTMLButtonElement | null>(null);
+
+  const handlePopUpClose = () => {
+    setAnchorElPop(null);
+  };
+
+  const handlePopUpClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElPop(event.currentTarget);
+  };
+
+  const open = Boolean(anchorElPop);
+  const PopId = open ? 'simple-popover' : undefined;
+
+  const notificationComingSoon = () => {
+    return (
+      <Popover
+        id={PopId}
+        open={open}
+        anchorEl={anchorElPop}
+        onClose={handlePopUpClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+      </Popover>
+    );
+  };
+
+  // For mobile view
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -145,24 +240,18 @@ function AppBarComp({
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='error'>
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
         <IconButton
           size='large'
           aria-label='show 17 new notifications'
           color='inherit'
+          aria-describedby={PopId}
+          onClick={handlePopUpClick}
         >
           <Badge badgeContent={17} color='error'>
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p className='text-primary-800'>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -174,10 +263,11 @@ function AppBarComp({
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p className='text-primary-800'>Profile</p>
       </MenuItem>
     </Menu>
   );
+
   return (
     <>
       <AppBar
@@ -194,6 +284,7 @@ function AppBarComp({
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}
+            aria-describedby={PopId}
             onClick={onMenuClick}
           >
             <MenuIcon />
@@ -207,24 +298,17 @@ function AppBarComp({
             <Link to='/'>
               <span className='inline-block h-10'>
                 {' '}
-                <Logo />{' '}
+                <img src={Logo} className='inline-block h-full' alt='' />
               </span>
             </Link>
           </Typography>
           {isLoggedIn ? (
             <>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder='Search…'
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </Search>
+              <SearchForm />
               <Box sx={{ flexGrow: 1 }} />
+              {/* <LanguageChanger /> */}
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <IconButton
+                {/* <IconButton
                   size='large'
                   aria-label='show 17 new notifications'
                   color='inherit'
@@ -232,7 +316,7 @@ function AppBarComp({
                   <Badge badgeContent={17} color='error'>
                     <NotificationsIcon />
                   </Badge>
-                </IconButton>
+                </IconButton> */}
                 <IconButton
                   size='large'
                   edge='end'
@@ -241,7 +325,7 @@ function AppBarComp({
                   onClick={handleProfileMenuOpen}
                   color='inherit'
                 >
-                  <Avatar src={dummyImage} />
+                  <Avatar src={displayImage(profileImage)} />
                   {/* <AccountCircle /> */}
                 </IconButton>
               </Box>
@@ -288,6 +372,7 @@ function AppBarComp({
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      {notificationComingSoon}
     </>
   );
 }
