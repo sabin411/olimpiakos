@@ -13,17 +13,14 @@ import {
 } from '@apollo/client';
 import '../src/i18n/i18n';
 
-// constant
-import { footer } from './constants/en';
-import { footer as footerFr } from './constants/fr';
-
 // styles
 import './styles/global.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL_GRAPHQL } from '@/env';
 
 // apollo client
 const client = new ApolloClient({
-  uri: 'http://localhost:1337/graphql',
+  uri: BASE_URL_GRAPHQL,
   cache: new InMemoryCache(),
 });
 
